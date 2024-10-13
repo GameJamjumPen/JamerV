@@ -2,15 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RollDice : MonoBehaviour
-{
-    public RoomManager roomManager;
+public class RollDice : MonoBehaviour ,IDataPersistence
+{   
+    // public RoomManager roomManager;
+    List<int> wentRoom = new List<int>();
+
+    public void LoadData(GameData data)
+    {
+        wentRoom= new List< int>(data.wentRoom);
+    }
+    public void SaveData(ref GameData data)
+    {
+        data.wentRoom = new List<int>(wentRoom);
+    }
     public void MainDiceRoll()
     {
-        List<int> wentRoom = new List<int>(){roomManager.rooms.Length};
         Dice dice = new Dice();
         int rolledRoom = dice.MainRoll(wentRoom);
         Debug.Log("The room rolled is: " + rolledRoom);
-        roomManager.rooms[rolledRoom].OnPlayerAttack();
+        wentRoom.Add(rolledRoom);
+        Debug.Log("Went Room is -----------------------------");
+        foreach(var x in wentRoom){
+            Debug.Log(x);
+        }
+        Debug.Log("-----------------------------");
+
+        SceneChange.ChangeSceneFunc("TurnBaseCombat");
     }
+
 }

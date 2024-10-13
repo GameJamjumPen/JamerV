@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartScene.unity
     guid: abab8abaa5236423693835acf784bfc3
+  - enabled: 1
+    path: Assets/Scenes/TurnBaseCombat.unity
+    guid: cc9c293a3ec514d02aa1eef382ea2759
   m_configObjects: {}

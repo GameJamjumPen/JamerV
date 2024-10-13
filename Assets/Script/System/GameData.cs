@@ -7,6 +7,8 @@ using UnityEngine;
 public class GameData
 {
     public string Name;
+
+    public List<int> wentRoom;
     public Dictionary<string, int> inventoryData;
     public int life;
     public int strength;

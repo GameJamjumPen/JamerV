@@ -47,6 +47,7 @@ public class BattleController : MonoBehaviour
             battleView.UpdateEnemyView(battleModel.enemy);
             if(battleModel.IsBattleOver()){
                 Debug.Log("Over");
+                SceneChange.ChangeSceneFunc("MainBoard");
                 return;
             }
             isPlayerTurn = false;
@@ -60,6 +61,7 @@ public class BattleController : MonoBehaviour
             battleView.UpdatePlayerView(battleModel.player);
             if(battleModel.IsBattleOver()){
                 Debug.Log("Over");
+                SceneChange.ChangeSceneFunc("MainBoard");
                 return;
             }
             isPlayerTurn = true;
