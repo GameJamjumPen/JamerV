@@ -6,6 +6,7 @@ using UnityEngine;
 public class Unit : ScriptableObject , IDamagable
 {
     public string _name;
+    public Type type = Type.easy;
     public int _health;
     public int _attackPower;
     public GameObject _unitPrefab;
@@ -17,4 +18,10 @@ public class Unit : ScriptableObject , IDamagable
     {
         return _health > 0;
     }
+}
+public enum Type{
+    player,
+    easy,
+    medium,
+    hard
 }
