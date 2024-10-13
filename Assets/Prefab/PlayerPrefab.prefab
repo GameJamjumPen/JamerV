@@ -458,6 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: {fileID: 2814723535273160498}
+  damageTextPrefab: {fileID: 8122550278942278447, guid: 4cd02d3cf72e14d4494d07957e97b54d, type: 3}
   healthBar: {fileID: 2460792468079836726}
 --- !u!1 &7366572348365711640
 GameObject:
