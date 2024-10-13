@@ -191,7 +191,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Name
+  m_text: 'Rimuru
 
 '
   m_isRightToLeft: 0
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 2313070089986703025}
   - component: {fileID: 9079355838167533830}
   m_Layer: 0
-  m_Name: PlayerPrefab
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

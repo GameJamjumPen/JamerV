@@ -887,7 +887,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6728637366969356498, guid: 06f780fd626334d458e0a7e12b4e733f, type: 3}
-  enemyPrefab: {fileID: 2273942706162228459, guid: 155830ac66b654d8a922d0ba7b5cbca1, type: 3}
+  enemyPrefab:
+  - prefab: {fileID: 2273942706162228459, guid: 155830ac66b654d8a922d0ba7b5cbca1, type: 3}
+    difficulty: 0
+  - prefab: {fileID: 5427360110145474739, guid: 7029883e6948a44779169838e83e98bb, type: 3}
+    difficulty: 1
+  - prefab: {fileID: 9161269506087077618, guid: dea0e2c2f1d9e47e0ae7cc6900353735, type: 3}
+    difficulty: 2
+  - prefab: {fileID: 1160567799091902003, guid: 253d8da5981104846a570c6488476e88, type: 3}
+    difficulty: 2
+  - prefab: {fileID: 2785326585922015372, guid: 6f8bc1970429743e98a94a0c82778343, type: 3}
+    difficulty: 3
   isPlayerTurn: 1
   waveNumber: 1
   currentWave: 0
