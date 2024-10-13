@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42d9802a292f6a645a94def0adc2ddef, type: 3}
-  m_Name: Player
+  m_Script: {fileID: 11500000, guid: c2b396aeebc9d984da298eee313896bc, type: 3}
+  m_Name: TestScriptableObjectB
   m_EditorClassIdentifier: 
-  _name: Adam
-  type: 0
-  _health: 0
-  _attackPower: 0
-  _unitPrefab: {fileID: 0}
+  slider: {x: 3, y: 7}
