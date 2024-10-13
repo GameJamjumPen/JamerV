@@ -12,8 +12,8 @@ public class BattleController : MonoBehaviour
     public bool isPlayerTurn = true;
 
     void Start() {
-        CharacterModel player = new CharacterModel("Player",100,10);
-        CharacterModel enemy = new CharacterModel("Enemy",100,8);
+        CharacterModel player = new CharacterModel("Prom",100,10);
+        CharacterModel enemy = new CharacterModel("Time",100,8);
 
         GameObject enemmyInstance = Instantiate(enemyPrefab,new Vector3(5,-2,0),quaternion.identity);
         GameObject playerInstance = Instantiate(playerPrefab,new Vector3(-5,-2,0),quaternion.identity);
