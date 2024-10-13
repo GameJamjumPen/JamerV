@@ -16,6 +16,6 @@ public class BattleModel : MonoBehaviour
         target.TakeDamage(attacker.attackPower);
     }
     public bool IsBattleOver(){
-        return !player.IsAlive() || enemy.IsAlive();
+        return !(player.IsAlive() || enemy.IsAlive());
     }
 }

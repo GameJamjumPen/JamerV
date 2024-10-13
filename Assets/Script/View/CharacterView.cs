@@ -12,6 +12,6 @@ public class CharacterView : MonoBehaviour
         Name.text = name;
     }
     public void SetHealth(int health){
-        healthBar.value = health;
+        healthBar.value = health/100f;
     }
 }
