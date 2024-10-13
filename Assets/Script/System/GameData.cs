@@ -6,14 +6,12 @@ using UnityEngine;
 
 public class GameData
 {
-    // public Vector3 playerPos;
-    public int Coin;
+    public string Name;
     public Dictionary<string, int> inventoryData;
 
     public GameData()
     {
-        // playerPos = Vector3.zero;
-        Coin = 100;
+        Name = "Player";
         inventoryData = new Dictionary<string, int>();
     }
 
