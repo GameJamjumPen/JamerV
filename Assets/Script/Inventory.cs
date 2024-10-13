@@ -23,6 +23,7 @@ public class Inventory : MonoBehaviour
     public TextMeshProUGUI cardName;
     public Image cardImage;
     public Image cardType;
+    public TextMeshProUGUI cardStat;
     [Tooltip("Types[0] will be ATK Types[1] will be DEF card")]
     public Sprite[] types;
 
@@ -57,13 +58,21 @@ public class Inventory : MonoBehaviour
         if(!cardName.gameObject.activeSelf) cardName.gameObject.SetActive(true);
         if(!cardImage.gameObject.activeSelf) cardImage.gameObject.SetActive(true);
         if(!cardType.gameObject.activeSelf) cardType.gameObject.SetActive(true);
+        if(!cardStat.gameObject.activeSelf) cardStat.gameObject.SetActive(true);
         cardName.text = cardSelected._cardName;
         cardImage.sprite = cardSelected._cardSprite;
+        cardStat.text = cardSelected._value.ToString();
         if(cardSelected.cardType == CardType.ATK){
             cardType.sprite = types[0];
         }else{
             cardType.sprite = types[1];
         }
+    }
+    public void DisplayDeselected(){
+        cardName.gameObject.SetActive(false);
+        cardImage.gameObject.SetActive(false);
+        cardType.gameObject.SetActive(false);
+        cardStat.gameObject.SetActive(false);
     }
     #endregion
 

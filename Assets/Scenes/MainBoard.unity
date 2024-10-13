@@ -2712,6 +2712,7 @@ MonoBehaviour:
   roomsContainer: []
   roomHolders: []
   rooms: []
+  Scenes: []
 --- !u!114 &1303952817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2768,6 +2769,7 @@ MonoBehaviour:
   cardName: {fileID: 1438531557}
   cardImage: {fileID: 1579605915}
   cardType: {fileID: 2082560492}
+  cardStat: {fileID: 2092976870}
   types:
   - {fileID: 21300000, guid: 312d122717245d84b9b2e98f70c09845, type: 3}
   - {fileID: 21300000, guid: f3ca159e614fe9243a74800bf7ac75d2, type: 3}
