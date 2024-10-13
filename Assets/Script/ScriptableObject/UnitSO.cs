@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Unit" , menuName ="SO/Unit")]
-public class Unit : ScriptableObject , IDamagable
+public class UnitSO : ScriptableObject , IDamagable
 {
     public string _name;
     public Type type = Type.easy;
