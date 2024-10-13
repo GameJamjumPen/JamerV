@@ -42,7 +42,7 @@ public class BattleController : MonoBehaviour
         ClearLists();  // Clear old lists before creating new ones
 
         // Initialize player model and view
-        CharacterModel player = new CharacterModel("Prom", 100, 10);
+        CharacterModel player = new CharacterModel("Prom", 100, 40);
         GameObject playerInstance = Instantiate(playerPrefab, new Vector3(-5, -2, 0), quaternion.identity);
         CharacterView playerView = playerInstance.GetComponent<CharacterView>();
 
@@ -80,93 +80,27 @@ public class BattleController : MonoBehaviour
     {
         if (isPlayerTurn)
         {
-            Debug.Log("==========================================================");
-            Debug.Log("Enemy count = " + enemies.Count);
             for (int i = 0; i < enemies.Count; i++)
             {
-                // Since CharacterModel is a plain class, standard null check suffices
-                // Debug.Log("null? " + (enemies[i] != null).ToString());
-                // Debug.Log("null?2 " + enemies[i].IsAlive().ToString());
-                if (enemies[i].IsAlive())
-                {
-                    battleModel.Attack(battleModel.player, enemies[i]);
-                    Debug.Log($"Enemy {enemies[i].Name} health: {enemies[i].health}");
-
-                    battleView.UpdateEnemyViews(enemies);
-                    // Display damage
-                    Vector3 textPosition = new Vector3(enemyInstances[i].transform.position.x, 290, enemyInstances[i].transform.position.z);
-                    enemyViews[i].ShowDamage(battleModel.player.attackPower, textPosition);
-
-                    if (!enemies[i].IsAlive())
-                    {
-                        enemyInstances[i].SetActive(false);  // Deactivate the dead enemy
-
-                        // Remove the enemy from all lists
-                        enemies.RemoveAt(i);
-                        enemyViews.RemoveAt(i);
-                        enemyInstances.RemoveAt(i);
-                        i--; // Adjust the index since we've removed an element
-                    }
-                    break;  // Stop after attacking the first alive enemy
+                if(attackEnemy(i)){
+                    break;
                 }
             }
-
-            if (battleModel.IsBattleOver())
-            {
-                Debug.Log("Wave Over");
-                if (currentWave < waveNumber - 1 && battleModel.player.IsAlive())
-                {
-                    currentWave++;
-                    StartWave();
-                }
-                else
-                {
-                    SceneChange.ChangeSceneFunc("MainBoard");  // Change scene if game is over
-                }
-                return;
-            }
-
-            isPlayerTurn = false;  // Switch to enemy turn
-            Debug.Log("Finished Player Turn");
-            Debug.Log("==========================================================");
+            GameOver();
+            isPlayerTurn = false;
         }
     }
 
-    // Handle enemy turn
     public void EnemyTurn()
     {
         if (!isPlayerTurn)
         {
             for (int i = 0; i < enemies.Count; i++)
             {
-                if (enemies[i] != null && enemies[i].IsAlive())
-                {
-                    battleModel.Attack(enemies[i], battleModel.player);
-                    Debug.Log($"Player health: {battleModel.player.health}");
-
-                    battleView.UpdatePlayerView(battleModel.player);
-
-                    // Display damage from enemy to player
-                    Vector3 textPosition = new Vector3(battleView.playerView.transform.position.x, 290, battleView.playerView.transform.position.z);
-                    enemyViews[i].ShowDamage(enemies[i].attackPower, textPosition);
-                }
+                attackPlayer(i);
             }
-
-            if (battleModel.IsBattleOver())
-            {
-                if (currentWave < waveNumber - 1 && battleModel.player.IsAlive())
-                {
-                    currentWave++;
-                    StartWave();
-                }
-                else
-                {
-                    SceneChange.ChangeSceneFunc("MainBoard");  // Change scene if game is over
-                }
-                return;
-            }
-
-            isPlayerTurn = true;  // Switch to player turn
+            GameOver();
+            isPlayerTurn = true;
             Debug.Log("Finished Enemy Turn");
         }
     }
@@ -177,5 +111,47 @@ public class BattleController : MonoBehaviour
         enemies.Clear();
         enemyViews.Clear();
         enemyInstances.Clear();
+    }
+    void GameOver(){
+        if (battleModel.IsBattleOver())
+        {
+            Debug.Log("Wave Over");
+            if (currentWave < waveNumber - 1 && battleModel.player.IsAlive())
+            {
+                currentWave++;
+                StartWave();
+            }
+            else
+            {
+                SceneChange.ChangeSceneFunc("MainBoard");  // Change scene if game is over
+            }
+            return;
+        }
+    }
+    bool attackEnemy(int i){
+        if (enemies[i].IsAlive())
+        {
+            battleModel.Attack(battleModel.player, enemies[i]);
+            Debug.Log($"Enemy {enemies[i].Name} health: {enemies[i].health}");
+            battleView.UpdateEnemyViews(enemies);
+            if (!enemies[i].IsAlive())
+            {
+                enemyInstances[i].SetActive(false);
+                enemies.RemoveAt(i);
+                enemyViews.RemoveAt(i);
+                enemyInstances.RemoveAt(i);
+                i--;
+            }
+            return true;
+        }
+        return false;
+    }
+    void attackPlayer(int i){
+        if (enemies[i].IsAlive())
+        {
+            battleModel.Attack(enemies[i], battleModel.player);
+            Debug.Log($"Player health: {battleModel.player.health}");
+            battleView.UpdatePlayerView(battleModel.player);
+        }
     }
 }

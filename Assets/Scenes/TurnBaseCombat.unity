@@ -890,7 +890,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 2273942706162228459, guid: 155830ac66b654d8a922d0ba7b5cbca1, type: 3}
   isPlayerTurn: 1
   waveNumber: 1
-  currentwave: 0
+  currentWave: 0
   enemiesPerWave: 3
 --- !u!4 &910361559
 Transform:
