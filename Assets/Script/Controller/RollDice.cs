@@ -11,23 +11,23 @@ public class RollDice : MonoBehaviour ,IDataPersistence
     {
         wentRoom= new List< int>(data.wentRoom);
     }
+
     public void SaveData(ref GameData data)
     {
         data.wentRoom = new List<int>(wentRoom);
     }
+
     public void MainDiceRoll()
     {
-        Dice dice = new Dice();
-        int rolledRoom = dice.MainRoll(wentRoom);
-        Debug.Log("The room rolled is: " + rolledRoom);
-        wentRoom.Add(rolledRoom);
-        Debug.Log("Went Room is -----------------------------");
-        foreach(var x in wentRoom){
-            Debug.Log(x);
-        }
-        Debug.Log("-----------------------------");
-
+        int rolledRoom = Roll();
         SceneChange.ChangeSceneFunc("TurnBaseCombat");
+    }
+
+    private int Roll()
+    {
+        Dice dice = new Dice();
+        int rolledRooom = dice.MainRoll(wentRoom);
+        return rolledRooom;
     }
 
 }
