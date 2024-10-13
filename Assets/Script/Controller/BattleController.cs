@@ -49,7 +49,7 @@ public class BattleController : MonoBehaviour
         // Create enemies for the wave
         for (int i = 0; i < enemiesPerWave; i++)
         {
-            CharacterModel enemy = new CharacterModel($"Enemy {i + 1}", 100, 6);
+            CharacterModel enemy = new CharacterModel($"Enemy {i + 1}", 100, 1);
             enemies.Add(enemy);
 
             GameObject enemyInstance = Instantiate(enemyPrefab, new Vector3(3 + i * 2, -2, 0), quaternion.identity);
@@ -116,7 +116,7 @@ public class BattleController : MonoBehaviour
         if (battleModel.IsBattleOver())
         {
             Debug.Log("Wave Over");
-            if (currentWave < waveNumber - 1 && battleModel.player.IsAlive())
+            if (currentWave < waveNumber && battleModel.player.IsAlive())
             {
                 currentWave++;
                 StartWave();
