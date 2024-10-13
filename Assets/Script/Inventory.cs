@@ -17,6 +17,7 @@ public class Inventory : MonoBehaviour
     public CardSO cardSelected;
     public InventorySlot[] itemSlots;
     public InventorySlot[] actualSlots;
+    public InventorySlot[] allSlots;
 
     [Header("Display")]
     public TextMeshProUGUI cardName;
@@ -46,13 +47,16 @@ public class Inventory : MonoBehaviour
     }
     #region SlotSelected
     public void DeselectedAllSlot(){
-        foreach (InventorySlot slot in itemSlots)
+        foreach (InventorySlot slot in allSlots)
         {
             slot.OnDeselected();
         } 
     }
 
     public void DisplaySelected(){
+        if(!cardName.gameObject.activeSelf) cardName.gameObject.SetActive(true);
+        if(!cardImage.gameObject.activeSelf) cardImage.gameObject.SetActive(true);
+        if(!cardType.gameObject.activeSelf) cardType.gameObject.SetActive(true);
         cardName.text = cardSelected._cardName;
         cardImage.sprite = cardSelected._cardSprite;
         if(cardSelected.cardType == CardType.ATK){
