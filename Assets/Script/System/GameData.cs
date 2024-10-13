@@ -25,6 +25,7 @@ public class GameData
         defense = 1;
         luck = 1;
         statPoints = 0;
+        wentRoom = new List<int>();
     }
 
 }
