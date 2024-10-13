@@ -11,7 +11,6 @@ public class RoomManager : MonoBehaviour
     [Tooltip("Actual room use for playing and rolling")]
     public Room[] rooms; //actual room use for playing and rolling
     
-    public RollDice rollDice;
     /// <summary>
     /// Generate Room when player enter the scene for the first time
     /// </summary>
