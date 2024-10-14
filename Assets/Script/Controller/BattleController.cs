@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using TMPro;
+using UnityEngine.UI;
 public class BattleController : MonoBehaviour
 {   
     
@@ -22,11 +23,10 @@ public class BattleController : MonoBehaviour
     private List<CharacterView> enemyViews = new List<CharacterView>();
     private List<GameObject> enemyInstances = new List<GameObject>();
     private CharacterView playerView;
-
-    private int currentWave = 1;
+    public TextMeshProUGUI ShowTurn;
+    private int currentWave = -1;
     void Awake()
     {
-        GenerateEnemyWave gen = new GenerateEnemyWave();
         GenerateEnemyWave.Instance.CreateEnemyWaves();
         waves = GenerateEnemyWave.Instance.GetEnemyWaves();
         initPlayer();
@@ -37,10 +37,14 @@ public class BattleController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            if (isPlayerTurn)
+            if (isPlayerTurn){
+                ShowCurrentTurn();
                 PlayerTurn();
-            else
+            }
+            else{
+                ShowCurrentTurn();
                 EnemyTurn();
+            }
         }
     }
 
@@ -49,6 +53,7 @@ public class BattleController : MonoBehaviour
         player = new PlayerModel();
         GameObject playerInstance = Instantiate(playerPrefab, new Vector3(-5, -2, 0), Quaternion.identity);
         playerView = playerInstance.GetComponent<CharacterView>();
+        playerView.MaxHealth = player.Health;
     }
 
     void PlayerTurn()
@@ -109,7 +114,7 @@ public class BattleController : MonoBehaviour
         if (battleModel.IsBattleOver())
         {
             Debug.Log("Wave Over");
-            if (currentWave < 3 && battleModel.player.IsAlive())
+            if (currentWave < 2 && battleModel.player.IsAlive())
             {
                 NewWave();
             }
@@ -128,16 +133,20 @@ public class BattleController : MonoBehaviour
         enemyInstances.Clear();
     }
     void NewWave(){
+        Debug.Log("NEW WAVE !!!");
         currentWave++;
         ClearLists();
         RenderEnemy();
     }
     void RenderEnemy(){
+        Debug.Log("currentWave is : " + currentWave.ToString());
+        Debug.Log("Waves is " + waves.Count.ToString());
         enemies = waves[currentWave];
         for(int i =0;i<enemies.Count;i++){
             GameObject newenemy = GetRandomPrefabOf(enemies[i].Name);
-            GameObject enemyins = Instantiate(newenemy,new Vector3(5+i,-2,10-i),Quaternion.identity);
+            GameObject enemyins = Instantiate(newenemy,new Vector3(3+i*2,-2,10-i),Quaternion.identity);
             CharacterView enemyView = enemyins.GetComponent<CharacterView>();
+            enemyView.MaxHealth = enemies[i].Health;
             enemyInstances.Add(enemyins);
             enemyViews.Add(enemyView);
         }
@@ -161,5 +170,12 @@ public class BattleController : MonoBehaviour
             default:
                 return FishPrefab[UnityEngine.Random.Range(0,FishPrefab.Count)];
         }
+    }
+    void ShowCurrentTurn(){
+        if(isPlayerTurn){
+            ShowTurn.text = "Player Turn !";
+            return;
+        }
+        ShowTurn.text = "Enemy Turn !";
     }
 }
