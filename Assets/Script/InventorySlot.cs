@@ -114,7 +114,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     {
         // DraggableObject.gameObject.SetActive(true);
         inventorySlot = null;
-        ChangeAnimationState(HOVER  , slotImage.GetComponent<Animator>());
+        //ChangeAnimationState(HOVER  , slotImage.GetComponent<Animator>());
         Debug.Log("Begin Drag");
     }
 
@@ -161,7 +161,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
             }
         }
         Debug.Log("End Drag");
-        ChangeAnimationState(NORMAL  , slotImage.GetComponent<Animator>());
+        //ChangeAnimationState(NORMAL  , slotImage.GetComponent<Animator>());
         slotImage.transform.position = beforeDragPos.transform.position;
     }
     #endregion
