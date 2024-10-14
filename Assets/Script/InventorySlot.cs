@@ -36,6 +36,8 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     public string currentstate;
     public static string NORMAL = "Idle";
     public static string HOVER = "OnDragSlot";
+    public static string SELECTED = "OnSelected";
+    public static string BARSELECTED = "OnSelectedBar";
     void Awake()
     {
         inventory = FindObjectOfType<Inventory>();
