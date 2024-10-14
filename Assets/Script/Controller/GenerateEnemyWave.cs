@@ -28,6 +28,7 @@ public class GenerateEnemyWave : MonoBehaviour
     }
     public void CreateEnemyWaves()
     {
+        RandomSetDifficulty();
         waves.Clear();
         for (int i = 0; i < 3; i++)
         {

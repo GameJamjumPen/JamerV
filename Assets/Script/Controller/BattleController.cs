@@ -26,6 +26,7 @@ public class BattleController : MonoBehaviour
     private int currentWave = 1;
     void Awake()
     {
+        GenerateEnemyWave gen = new GenerateEnemyWave();
         GenerateEnemyWave.Instance.CreateEnemyWaves();
         waves = GenerateEnemyWave.Instance.GetEnemyWaves();
         initPlayer();
