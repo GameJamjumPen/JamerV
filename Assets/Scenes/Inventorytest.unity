@@ -1084,7 +1084,7 @@ MonoBehaviour:
         m_MethodName: AddItem
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 2919d37e997d754438311a6e24512933, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 1a8a47280d7f32844a06bcbf26a8d827, type: 2}
           m_ObjectArgumentAssemblyTypeName: CardSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
