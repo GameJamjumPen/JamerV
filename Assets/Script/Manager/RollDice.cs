@@ -23,6 +23,7 @@ public class RollDice : MonoBehaviour ,IDataPersistence
         PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
         playerMovement.PlayerMove(rolledRoom);
         GameManager.singleton.RoomEnter(rolledRoom);
+        Debug.Log("Row");
         //SceneChange.ChangeSceneFunc("TurnBaseCombat");
     }
 
