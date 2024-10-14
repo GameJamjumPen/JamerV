@@ -22,7 +22,7 @@ public class GameData
     public GameData()
     {
         Name = "Player";
-        inventoryData = new List<CardSO>();
+//        inventoryData = new List<CardSO>();
         life = 3;
         strength = 1;
         defense = 1;
