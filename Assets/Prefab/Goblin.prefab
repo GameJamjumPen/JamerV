@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 3357324510166467380}
   - component: {fileID: 4764136555641017560}
   m_Layer: 0
-  m_Name: EnermyPrefab
+  m_Name: Goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: {fileID: 4902755074550653748}
+  damageTextPrefab: {fileID: 8122550278942278447, guid: 4cd02d3cf72e14d4494d07957e97b54d, type: 3}
   healthBar: {fileID: 9169929138276731588}
 --- !u!1 &2777805918520766149
 GameObject:
@@ -678,7 +679,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Name
+  m_text: 'Gobta
 
 '
   m_isRightToLeft: 0

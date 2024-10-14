@@ -191,7 +191,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Name
+  m_text: 'Rimuru
 
 '
   m_isRightToLeft: 0
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 2313070089986703025}
   - component: {fileID: 9079355838167533830}
   m_Layer: 0
-  m_Name: PlayerPrefab
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -458,6 +458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: {fileID: 2814723535273160498}
+  damageTextPrefab: {fileID: 8122550278942278447, guid: 4cd02d3cf72e14d4494d07957e97b54d, type: 3}
   healthBar: {fileID: 2460792468079836726}
 --- !u!1 &7366572348365711640
 GameObject:
