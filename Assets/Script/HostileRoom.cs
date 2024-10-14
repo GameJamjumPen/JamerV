@@ -5,28 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class HostileRoom : Room
 {
-    public string _rewardPoint;
-    public RoomType roomType;
-    public RoomManager roomManager;
-    public void Awake()
-    {
-        roomManager = FindObjectOfType<RoomManager>();
-        switch (roomType)
-        {
-            case RoomType.Easy :
-            roomScene = roomManager.Scenes[0];
-            break;
-            case RoomType.Medium :
-            roomScene = roomManager.Scenes[1];
-            break;
-            case RoomType.Hard :
-            roomScene = roomManager.Scenes[2];
-            break;
-        }
-    }
+    public RoomType roomType ;
+    public EnemyModel[] enemyModels;
+
     public override void OnPlayerAttack()
     {
-        SceneManager.LoadSceneAsync(roomScene);
+        throw new System.NotImplementedException();
     }
 }
 
