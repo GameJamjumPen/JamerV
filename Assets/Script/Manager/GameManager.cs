@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> gridParent;
     public List<GameObject> roomPref;
-    
+    public GameObject startRoom;
+    public List<string> scenes;
 
     void Start()
     {
@@ -26,21 +28,29 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        while (availableRooms.Count > 0 && allGridSlots.Count > 0)
+        Transform firstRoom = allGridSlots[0];
+        Instantiate(startRoom, firstRoom);
+        allGridSlots.RemoveAt(0);
+
+        Shuffle(allGridSlots);
+        Shuffle(availableRooms);
+
+        for(int i=0; i<allGridSlots.Count;i++)
         {
-            int randomRoomIndex = Random.Range(0, availableRooms.Count);
-            GameObject selectedRoom = availableRooms[randomRoomIndex];
-
-            int randomSlotIndex = Random.Range(0, allGridSlots.Count);
-            Transform selectedGridSlot = allGridSlots[randomSlotIndex];
-
-            Instantiate(selectedRoom, selectedGridSlot);
-
-            availableRooms.RemoveAt(randomRoomIndex);
-            allGridSlots.RemoveAt(randomSlotIndex);
+            Instantiate(availableRooms[i],allGridSlots[i]);
         }
     }
 
+    void Shuffle<T>(List<T> arr)
+    {
+        for(int i=0; i<arr.Count; i++)
+        {
+            int rdIndex = Random.Range(i,arr.Count);
+            T temp = arr[i];
+            arr[i] = arr[rdIndex];
+            arr[rdIndex] = temp;
+        }
+    }
     
 
 }
