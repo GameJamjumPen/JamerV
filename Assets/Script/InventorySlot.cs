@@ -14,12 +14,18 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     public bool isFull;
 
     //ITEM SLOT//
+    [Header("Item Slot")]
     [SerializeField]
     private Image slotImage;
+    [SerializeField]private TextMeshProUGUI slotValueText;
+    [SerializeField]private Image slotType;
     public GameObject selectedShader;
     public bool isSelected;
     //[Header("Reference")]
+    [Header("Reference")]
     private Inventory inventory;
+    [Tooltip("index 0 is ATK , 1 is DEF")]
+    public Sprite[] types;
 
     [Header("Drag and Drop")]
 
@@ -32,6 +38,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     #region Add/Remove Item
     public void AddItem(CardSO cardSO){
         slotImage.gameObject.SetActive(true);
+        slotType.gameObject.SetActive(true);
         this.cardSO = cardSO;
         isFull = true;
         UpdateDisplay();
@@ -62,8 +69,20 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     public void UpdateDisplay(){
         if(cardSO != null){
             slotImage.sprite = cardSO._cardSprite;
+            slotValueText.text = cardSO._value.ToString();
+            switch (cardSO.cardType)
+            {
+                case CardType.ATK:
+                slotType.sprite = types[0];
+                break;
+                case CardType.DEF:
+                slotType.sprite = types[1];
+                break;
+            }
         }else{
             slotImage.gameObject.SetActive(false);
+            slotType.gameObject.SetActive(false);
+
         }
     }
     #region Selected/Deselected Slot
@@ -74,11 +93,14 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         if(this.cardSO != null){
             inventory.cardSelected = this.cardSO;
             inventory.DisplaySelected();
+        }else{
+            inventory.DisplayDeselected();
         }
     }
     public void OnDeselected(){
         selectedShader.SetActive(false);
         isSelected = false;
+        inventory.DisplayDeselected();
     }
     #endregion
 

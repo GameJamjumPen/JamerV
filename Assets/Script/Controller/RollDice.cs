@@ -20,10 +20,10 @@ public class RollDice : MonoBehaviour ,IDataPersistence
     public void MainDiceRoll()
     {
         int rolledRoom = Roll();
-        SceneChange.ChangeSceneFunc("TurnBaseCombat");
+        //SceneChange.ChangeSceneFunc("TurnBaseCombat");
     }
 
-    private int Roll()
+    public int Roll()
     {
         Dice dice = new Dice();
         int rolledRooom = dice.MainRoll(wentRoom);
