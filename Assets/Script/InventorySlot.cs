@@ -22,6 +22,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     [SerializeField]private Image slotType;
     public GameObject selectedShader;
     public bool isSelected;
+    public Transform _transform;
     //[Header("Reference")]
     [Header("Reference")]
     private Inventory inventory;
@@ -32,12 +33,16 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
 
     public Transform beforeDragPos;
     public InventorySlot inventorySlot;
-    //public Animator animator;
-    public string currentstate;
-    public static string NORMAL = "Idle";
-    public static string HOVER = "OnDragSlot";
-    public static string SELECTED = "OnSelected";
-    public static string BARSELECTED = "OnSelectedBar";
+    Transform parentAfterDrag;
+    public Transform draggableItem;
+    [Header("Animation")]
+    [SerializeField]private Animator _animator;
+    [SerializeField]private bool isBar;
+    private string currentstate;
+    private static string NORMAL = "Idle";
+    private static string HOVER = "OnDragSlot";
+    private static string SELECTED = "OnSelected";
+    private static string BARSELECTED = "OnSelectedBar";
     void Awake()
     {
         inventory = FindObjectOfType<Inventory>();
@@ -98,6 +103,11 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         inventory.DeselectedAllSlot();
         selectedShader.SetActive(true);
         isSelected = true;
+        if(isBar){
+            ChangeAnimationState(BARSELECTED);
+        }else{
+            ChangeAnimationState(SELECTED);
+        }
         if(this.cardSO != null){
             inventory.cardSelected = this.cardSO;
             inventory.DisplaySelected();
@@ -109,13 +119,23 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         selectedShader.SetActive(false);
         isSelected = false;
         inventory.DisplayDeselected();
+        ChangeAnimationState(NORMAL);
     }
     #endregion
     #region Dragging
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // DraggableObject.gameObject.SetActive(true);
         inventorySlot = null;
+        if(!isSelected) return;
+        else{
+            
+            parentAfterDrag = transform;
+            draggableItem.SetParent(transform.root);
+            draggableItem.SetAsLastSibling();
+        }
+        // DraggableObject.gameObject.SetActive(true);
+        
+        
         //ChangeAnimationState(HOVER  , slotImage.GetComponent<Animator>());
         Debug.Log("Begin Drag");
     }
@@ -125,6 +145,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         if(!isSelected){
             return;
         }else{
+            ChangeAnimationState(HOVER);
             slotImage.transform.position = Input.mousePosition;
         }
         // List to hold all raycast hits
@@ -158,21 +179,24 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
             if(inventorySlot != null && !inventorySlot.isFull){
                 inventorySlot.AddItem(cardSO);
                 RemoveItem();
-                
+                ChangeAnimationState(NORMAL);
                 Debug.Log("Added");
             }
         }
         Debug.Log("End Drag");
         //ChangeAnimationState(NORMAL  , slotImage.GetComponent<Animator>());
-        slotImage.transform.position = beforeDragPos.transform.position;
+        draggableItem.SetParent(parentAfterDrag);
+        draggableItem.transform.position = beforeDragPos.transform.position;
+        slotImage.transform.position = draggableItem.transform.position;
     }
     #endregion
 
-    public void ChangeAnimationState(string state , Animator _animator){
+    public void ChangeAnimationState(string state){
         if(currentstate == state){
             return;
         }
-        state = currentstate;
-        _animator.CrossFadeInFixedTime(state , 0.5f);
+        currentstate = state;
+        _animator.CrossFadeInFixedTime(state , 0.1f);
+        Debug.Log("Change state to" + state);
     }
 }
