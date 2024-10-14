@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterModel : MonoBehaviour
+public class CharacterModel : MonoBehaviour , IDamagable
 {
     public string Name;
     public int health;

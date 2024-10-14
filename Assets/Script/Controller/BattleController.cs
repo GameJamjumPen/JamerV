@@ -37,7 +37,7 @@ public class BattleController : MonoBehaviour
     public int enemiesPerWave = 3;  // Max enemies per wave
 
     private PlayerModel player;
-    private List<EnemyModel> enemies = new List<EnemyModel>();
+    private List<EnemyModel> enemies = new List<EnemyModel>(); //POLYMORPHISM NA KUB PIPI
     private List<CharacterView> enemyViews = new List<CharacterView>();
     private List<GameObject> enemyInstances = new List<GameObject>();
     private CharacterView playerView;
