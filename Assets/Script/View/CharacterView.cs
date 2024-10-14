@@ -9,11 +9,12 @@ public class CharacterView : MonoBehaviour
     public TextMeshProUGUI Name;
     public TextMeshProUGUI damageTextPrefab;
     public Slider healthBar;
+    public float MaxHealth;
     public void setName(string name){
         Name.text = name;
     }
     public void SetHealth(int health){
-        healthBar.value = health/100f;
+        healthBar.value = health/MaxHealth;
     }
     public void ShowDamage(int damage,Vector3 position)
     {

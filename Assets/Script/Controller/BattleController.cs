@@ -23,10 +23,9 @@ public class BattleController : MonoBehaviour
     private List<GameObject> enemyInstances = new List<GameObject>();
     private CharacterView playerView;
 
-    private int currentWave = 1;
+    private int currentWave = -1;
     void Awake()
     {
-        GenerateEnemyWave gen = new GenerateEnemyWave();
         GenerateEnemyWave.Instance.CreateEnemyWaves();
         waves = GenerateEnemyWave.Instance.GetEnemyWaves();
         initPlayer();
@@ -49,6 +48,7 @@ public class BattleController : MonoBehaviour
         player = new PlayerModel();
         GameObject playerInstance = Instantiate(playerPrefab, new Vector3(-5, -2, 0), Quaternion.identity);
         playerView = playerInstance.GetComponent<CharacterView>();
+        playerView.MaxHealth = player.Health;
     }
 
     void PlayerTurn()
@@ -109,7 +109,7 @@ public class BattleController : MonoBehaviour
         if (battleModel.IsBattleOver())
         {
             Debug.Log("Wave Over");
-            if (currentWave < 3 && battleModel.player.IsAlive())
+            if (currentWave < 2 && battleModel.player.IsAlive())
             {
                 NewWave();
             }
@@ -128,16 +128,20 @@ public class BattleController : MonoBehaviour
         enemyInstances.Clear();
     }
     void NewWave(){
+        Debug.Log("NEW WAVE !!!");
         currentWave++;
         ClearLists();
         RenderEnemy();
     }
     void RenderEnemy(){
+        Debug.Log("currentWave is : " + currentWave.ToString());
+        Debug.Log("Waves is " + waves.Count.ToString());
         enemies = waves[currentWave];
         for(int i =0;i<enemies.Count;i++){
             GameObject newenemy = GetRandomPrefabOf(enemies[i].Name);
-            GameObject enemyins = Instantiate(newenemy,new Vector3(5+i,-2,10-i),Quaternion.identity);
+            GameObject enemyins = Instantiate(newenemy,new Vector3(3+i*2,-2,10-i),Quaternion.identity);
             CharacterView enemyView = enemyins.GetComponent<CharacterView>();
+            enemyView.MaxHealth = enemies[i].Health;
             enemyInstances.Add(enemyins);
             enemyViews.Add(enemyView);
         }

@@ -10,7 +10,6 @@ public class GenerateEnemyWave : MonoBehaviour
     private EnemyDifficulty difficulty;
 
     public List<List<EnemyModel> > waves = new List<List<EnemyModel> >();
-
     private void Awake()
     {
         if (Instance == null)
@@ -22,6 +21,9 @@ public class GenerateEnemyWave : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    public GenerateEnemyWave(){
+        difficulty = EnemyDifficulty.Easy;
     }
     public List<List<EnemyModel> > GetEnemyWaves(){
         return waves;
