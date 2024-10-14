@@ -16,13 +16,13 @@ public class DataPersistenceMNG : MonoBehaviour
     private FileDataHandler fileDataHandler;
     private GameData gameData;
 
-    public static DataPersistenceMNG Instance { get; private set;}
-    
+    public static DataPersistenceMNG Instance { get; private set; }
+
     private List<IDataPersistence> dataPersistenceObject;
 
     private void Awake()
     {
-        if(Instance!=null)
+        if (Instance != null)
         {
             Destroy(this.gameObject);
             return;
@@ -30,10 +30,11 @@ public class DataPersistenceMNG : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-        this.fileDataHandler=new FileDataHandler(Application.persistentDataPath,fileName);
+        this.fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
     }
 
-    private void OnEnable() {
+    private void OnEnable()
+    {
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
         Debug.Log("load");
@@ -48,7 +49,7 @@ public class DataPersistenceMNG : MonoBehaviour
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        this.dataPersistenceObject=FindDataPersistenceObjects();
+        this.dataPersistenceObject = FindDataPersistenceObjects();
         LoadGame();
     }
 
@@ -66,12 +67,12 @@ public class DataPersistenceMNG : MonoBehaviour
     public void LoadGame()
     {
         this.gameData = fileDataHandler.Load();
-        if(this.gameData==null && instantdata)
+        if (this.gameData == null && instantdata)
         {
             NewGame();
         }
 
-        if(this.gameData==null)
+        if (this.gameData == null)
         {
             return;
         }
@@ -85,7 +86,7 @@ public class DataPersistenceMNG : MonoBehaviour
 
     public void SaveGame()
     {
-        if(this.gameData==null)
+        if (this.gameData == null)
         {
             Debug.LogWarning("no data");
             return;
@@ -99,7 +100,8 @@ public class DataPersistenceMNG : MonoBehaviour
         Debug.Log("Saved");
     }
 
-    private void OnApplicationQuit() {
+    private void OnApplicationQuit()
+    {
         SaveGame();
     }
 

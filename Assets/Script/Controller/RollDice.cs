@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RollDice : MonoBehaviour ,IDataPersistence
-{   
+{
     // public RoomManager roomManager;
     List<int> wentRoom = new List<int>();
 
@@ -20,6 +20,7 @@ public class RollDice : MonoBehaviour ,IDataPersistence
     public void MainDiceRoll()
     {
         int rolledRoom = Roll();
+        Debug.Log(rolledRoom);
         //SceneChange.ChangeSceneFunc("TurnBaseCombat");
     }
 
@@ -27,6 +28,7 @@ public class RollDice : MonoBehaviour ,IDataPersistence
     {
         Dice dice = new Dice();
         int rolledRooom = dice.MainRoll(wentRoom);
+        wentRoom.Add(rolledRooom);
         return rolledRooom;
     }
 

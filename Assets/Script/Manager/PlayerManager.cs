@@ -43,7 +43,7 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
 
     }
 
-    //เพิ่มปุ่ม
+    //add the button to use stat points
     public void AddPoint()
     {
         if (StatPoints > 0)

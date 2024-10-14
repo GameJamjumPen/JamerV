@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[System.Serializable]
 public class GameData
 {
     public string Name;
@@ -15,6 +16,8 @@ public class GameData
     public int defense;
     public int luck;
     public int statPoints;
+    public List<RoomPlacement> roomPlacement;
+
 
     public GameData()
     {
@@ -26,6 +29,19 @@ public class GameData
         luck = 1;
         statPoints = 0;
         wentRoom = new List<int>();
+        roomPlacement = new List<RoomPlacement>();
     }
-
 }
+
+    [System.Serializable]
+    public class RoomPlacement
+    {
+        public int gridInd;
+        public int roomInd;
+
+        public RoomPlacement(int gridInd, int roomInd)
+        {
+            this.gridInd = gridInd;
+            this.roomInd = roomInd;
+        }
+    }
