@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleController : MonoBehaviour
-{
-    // Difficulty Levels
+{   
+
     public enum Difficulty { Easy, Medium, Hard, Boss }
 
-    // Enemy Prefab Class to Store Prefab and Difficulty
     [Serializable]
     public class EnermyPrefab
     {
@@ -44,9 +43,9 @@ public class BattleController : MonoBehaviour
 
     void Awake()
     {
-        SetRandomDifficulty();  // Assign a random difficulty before starting
-        initPlayer();  // Initialize player
-        StartWave();  // Start the first wave
+        SetRandomDifficulty();
+        initPlayer();
+        StartWave();
     }
 
     void Update()
