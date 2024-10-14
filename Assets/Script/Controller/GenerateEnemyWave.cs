@@ -23,14 +23,14 @@ public class GenerateEnemyWave : MonoBehaviour
         }
     }
     public GenerateEnemyWave(){
-        difficulty = EnemyDifficulty.Easy;
+        difficulty = EnemyDifficulty.Medium;
     }
     public List<List<EnemyModel> > GetEnemyWaves(){
         return waves;
     }
     public void CreateEnemyWaves()
     {
-        RandomSetDifficulty();
+        // RandomSetDifficulty();
         waves.Clear();
         for (int i = 0; i < 3; i++)
         {

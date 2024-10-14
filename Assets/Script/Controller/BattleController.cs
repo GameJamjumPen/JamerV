@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using TMPro;
+using UnityEngine.UI;
 public class BattleController : MonoBehaviour
 {   
     
@@ -22,7 +23,7 @@ public class BattleController : MonoBehaviour
     private List<CharacterView> enemyViews = new List<CharacterView>();
     private List<GameObject> enemyInstances = new List<GameObject>();
     private CharacterView playerView;
-
+    public TextMeshProUGUI ShowTurn;
     private int currentWave = -1;
     void Awake()
     {
@@ -36,10 +37,14 @@ public class BattleController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            if (isPlayerTurn)
+            if (isPlayerTurn){
+                ShowCurrentTurn();
                 PlayerTurn();
-            else
+            }
+            else{
+                ShowCurrentTurn();
                 EnemyTurn();
+            }
         }
     }
 
@@ -165,5 +170,12 @@ public class BattleController : MonoBehaviour
             default:
                 return FishPrefab[UnityEngine.Random.Range(0,FishPrefab.Count)];
         }
+    }
+    void ShowCurrentTurn(){
+        if(isPlayerTurn){
+            ShowTurn.text = "Player Turn !";
+            return;
+        }
+        ShowTurn.text = "Enemy Turn !";
     }
 }
