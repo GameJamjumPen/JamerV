@@ -16,6 +16,7 @@ public class GameData
     public int defense;
     public int luck;
     public int statPoints;
+    public int currentRoom;
     public List<RoomPlacement> roomPlacement;
 
 
@@ -30,6 +31,7 @@ public class GameData
         statPoints = 0;
         wentRoom = new List<int>();
         roomPlacement = new List<RoomPlacement>();
+        currentRoom = 0;
     }
 }
 

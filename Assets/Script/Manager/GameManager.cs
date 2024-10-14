@@ -1,30 +1,37 @@
 using System.Collections.Generic;
+using UnityEditor.PackageManager.Requests;
 using UnityEditor.SearchService;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour, IDataPersistence
 {
-    public List<GameObject> gridParent;
     public List<GameObject> roomPref;
     public List<string> scenes;
     private List<int> wentRoom;
+    public int currentRoom;
     public GameObject went;
 
     private List<GameObject> availableRooms;
-    private List<Transform> allGridSlots;
+
+    public List<GameObject> allrooms;
+
+    public static GameManager singleton{get; private set;}
 
     private void Awake()
     {
-        availableRooms = new List<GameObject>(roomPref);
-        allGridSlots = new List<Transform>();
-
-        foreach (GameObject grid in gridParent)
+        if(singleton != null)
         {
-            foreach (Transform gridSlot in grid.transform)
-            {
-                allGridSlots.Add(gridSlot);
-            }
+            Destroy(gameObject);
+            return;
         }
+        singleton = this;
+
+        availableRooms = new List<GameObject>(roomPref);
+    }
+
+    private void Start()
+    {
+        
     }
 
     public void LoadData(GameData data)
@@ -38,6 +45,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
             wentRoom = new List<int>(data.wentRoom);
             PlaceRooms(data.roomPlacement);
         }
+        this.currentRoom = data.currentRoom;
     }
 
     public void SaveData(ref GameData data)
@@ -52,6 +60,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
             RoomPlacement placementData = new RoomPlacement(i, roomPref.IndexOf(availableRooms[i]));
             data.roomPlacement.Add(placementData);
         }
+
+        data.currentRoom = this.currentRoom;
     }
 
 
@@ -60,25 +70,30 @@ public class GameManager : MonoBehaviour, IDataPersistence
         if (layout != null)
         {
             for (int i = 0; i < layout.Count; i++)
-            {
+            {   
                 int gridSlotIndex = layout[i].gridInd;
                 int roomPrefabIndex = layout[i].roomInd;
-
-                Transform slot = allGridSlots[gridSlotIndex];
+                
+                Transform roomSlot = allrooms[gridSlotIndex].transform;
                 GameObject roomPrefab = roomPref[roomPrefabIndex];
 
                 if (wentRoom.Contains(i))
                 {
-                    Instantiate(went, slot);
+                    Instantiate(went, roomSlot);
                 }
-                else { Instantiate(roomPrefab, slot); }
+                else {
+                    Instantiate(roomPrefab, roomSlot);
+
+                }
             }
+            
         }
         else
         {
-            for (int i = 0; i < allGridSlots.Count; i++)
+            for (int i = 0; i < availableRooms.Count; i++)
             {
-                Instantiate(availableRooms[i], allGridSlots[i]);
+                Transform slotTransform = allrooms[i+1].transform;
+                Instantiate(availableRooms[i], slotTransform);
             }
         }
     }
@@ -87,13 +102,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public void GenerateRandomLayout()
     {
         GameObject startRoom = availableRooms[0];
-        Transform firstSlot = allGridSlots[0];
+        Transform firstSlot = allrooms[0].transform;
         Instantiate(startRoom, firstSlot);
 
-        allGridSlots.RemoveAt(0);
         availableRooms.RemoveAt(0);
 
-        Shuffle(allGridSlots);
         Shuffle(availableRooms);
 
         PlaceRooms();
@@ -111,5 +124,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    public void RoomEnter(int room)
+    {
+        
+    }
 
 }
