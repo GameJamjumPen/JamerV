@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 295176124753228820}
   - component: {fileID: 1129693709579419506}
   - component: {fileID: 5280553264471666974}
+  - component: {fileID: 3271626242210250390}
+  - component: {fileID: 3491142966363126123}
   m_Layer: 0
   m_Name: AllFatherManager
   m_TagString: Untagged
@@ -163,3 +165,33 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &3271626242210250390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665137534177983508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f1ac0fd238253442872d7ed9bb84155, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  escPrefab: {fileID: 0}
+  thisScene:
+    m_Handle: 0
+--- !u!114 &3491142966363126123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665137534177983508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03fd31f33f7515c4b986b83a374fa76b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: d55602cf3bb7ebf4ca71a94edbaeba06, type: 2}
+  musicSlider: {fileID: 0}
+  sfxSlider: {fileID: 0}
