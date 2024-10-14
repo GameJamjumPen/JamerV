@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using Unity.VisualScripting;
+using System.Xml.Serialization;
 
 public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHandler , IDragHandler , IEndDragHandler
 {
@@ -31,9 +32,14 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
 
     public Transform beforeDragPos;
     public InventorySlot inventorySlot;
+    //public Animator animator;
+    public string currentstate;
+    public static string NORMAL = "Idle";
+    public static string HOVER = "OnDragSlot";
     void Awake()
     {
         inventory = FindObjectOfType<Inventory>();
+        currentstate = NORMAL;
     }
     #region Add/Remove Item
     public void AddItem(CardSO cardSO){
@@ -103,11 +109,12 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         inventory.DisplayDeselected();
     }
     #endregion
-
+    #region Dragging
     public void OnBeginDrag(PointerEventData eventData)
     {
         // DraggableObject.gameObject.SetActive(true);
         inventorySlot = null;
+        //ChangeAnimationState(HOVER  , slotImage.GetComponent<Animator>());
         Debug.Log("Begin Drag");
     }
 
@@ -149,10 +156,21 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
             if(inventorySlot != null && !inventorySlot.isFull){
                 inventorySlot.AddItem(cardSO);
                 RemoveItem();
+                
                 Debug.Log("Added");
             }
         }
         Debug.Log("End Drag");
+        //ChangeAnimationState(NORMAL  , slotImage.GetComponent<Animator>());
         slotImage.transform.position = beforeDragPos.transform.position;
+    }
+    #endregion
+
+    public void ChangeAnimationState(string state , Animator _animator){
+        if(currentstate == state){
+            return;
+        }
+        state = currentstate;
+        _animator.CrossFadeInFixedTime(state , 0.5f);
     }
 }

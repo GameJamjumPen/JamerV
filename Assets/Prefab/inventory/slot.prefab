@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 8015105019173340829}
   - component: {fileID: 3070441813939709872}
   - component: {fileID: 7066998767748748510}
+  - component: {fileID: 6895003905546465390}
   m_Layer: 5
   m_Name: SlotImage
   m_TagString: Untagged
@@ -103,7 +104,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7110111129276515929}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -150,6 +151,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &6895003905546465390
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3598747912272069864}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 518658d1d0b04b94ab127ef9b93cf1f3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4117608113439871648
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,6 +276,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 66000df255f1d25409e7c775ee4f0336, type: 3}
   beforeDragPos: {fileID: 3924812108834148568}
   inventorySlot: {fileID: 0}
+  animator: {fileID: 6895003905546465390}
+  currentstate: 
 --- !u!1 &5108098078369099382
 GameObject:
   m_ObjectHideFlags: 0

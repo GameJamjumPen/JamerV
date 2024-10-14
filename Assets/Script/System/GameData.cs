@@ -10,7 +10,7 @@ public class GameData
     public string Name;
 
     public List<int> wentRoom;
-    public Dictionary<string, int> inventoryData;
+    public List<CardSO> inventoryData;
     public int life;
     public int strength;
     public int defense;
@@ -22,7 +22,7 @@ public class GameData
     public GameData()
     {
         Name = "Player";
-        inventoryData = new Dictionary<string, int>();
+//        inventoryData = new List<CardSO>();
         life = 3;
         strength = 1;
         defense = 1;
