@@ -2998,6 +2998,7 @@ MonoBehaviour:
   - {fileID: 395818231841220680, guid: 423767bc588b5fc4c9fee26f846c3f07, type: 3}
   - {fileID: 395818231841220680, guid: 423767bc588b5fc4c9fee26f846c3f07, type: 3}
   scenes: []
+  went: {fileID: 3048389159420068900, guid: c61ca5e8246365142a30d01109e596c9, type: 3}
 --- !u!1001 &1402310179
 PrefabInstance:
   m_ObjectHideFlags: 0
