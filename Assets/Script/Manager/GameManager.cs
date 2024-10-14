@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public List<GameObject> gridParent;
     public List<GameObject> roomPref;
     public List<string> scenes;
+    private List<int> wentRoom;
+    public GameObject went;
 
     private List<GameObject> availableRooms;
     private List<Transform> allGridSlots;
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
         else
         {
+            wentRoom = new List<int>(data.wentRoom);
             PlaceRooms(data.roomPlacement);
         }
     }
@@ -41,7 +44,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         data.roomPlacement.Clear();
 
-        RoomPlacement startRoomPlacement = new RoomPlacement(0, 0); 
+        RoomPlacement startRoomPlacement = new RoomPlacement(0, 0);
         data.roomPlacement.Add(startRoomPlacement);
 
         for (int i = 1; i < availableRooms.Count; i++)
@@ -64,7 +67,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 Transform slot = allGridSlots[gridSlotIndex];
                 GameObject roomPrefab = roomPref[roomPrefabIndex];
 
-                Instantiate(roomPrefab, slot);
+                if (wentRoom.Contains(i))
+                {
+                    Instantiate(went, slot);
+                }
+                else { Instantiate(roomPrefab, slot); }
             }
         }
         else
