@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void RoomEnter(int room) //selectedRoomยังหาไม่เจอ
+    public void RoomEnter(int room) //selectedRoomยังหาไม่ถูกห้อง ไม่รู้ทำไม
     {
         selectedRoom = allrooms[room].GetComponent<Room>();
         if(inventory.CheckFull(inventory.actualSlots)){
