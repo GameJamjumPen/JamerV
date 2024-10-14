@@ -11,7 +11,6 @@ public class GenerateEnemyWave : MonoBehaviour
 
     public List<List<EnemyModel> > waves = new List<List<EnemyModel> >();
 
-
     private void Awake()
     {
         if (Instance == null)
@@ -24,16 +23,17 @@ public class GenerateEnemyWave : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public List<List<EnemyModel> > GetEnemyWaves(){
+        return waves;
+    }
     public void CreateEnemyWaves()
     {
         waves.Clear();
-
         for (int i = 0; i < 3; i++)
         {
             List<EnemyModel> wave = GenerateWave();
             waves.Add(wave);
         }
-
         Debug.Log("Enemy waves created!");
     }
     public void RandomSetDifficulty()
@@ -64,11 +64,11 @@ public class GenerateEnemyWave : MonoBehaviour
             case EnemyDifficulty.Easy:
                 return 3;
             case EnemyDifficulty.Medium:
-                return UnityEngine.Random.Range(2, 4); // 2 to 3 enemies
+                return UnityEngine.Random.Range(2, 4);
             case EnemyDifficulty.Hard:
-                return UnityEngine.Random.Range(1, 3); // 1 to 2 enemies
+                return UnityEngine.Random.Range(1, 3);
             default:
-                return 3; // Default to 3 enemies if something goes wrong
+                return 3;
         }
     }
 

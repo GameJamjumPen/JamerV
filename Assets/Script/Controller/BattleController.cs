@@ -1,51 +1,35 @@
 using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BattleController : MonoBehaviour
 {   
-
-    public enum Difficulty { Easy, Medium, Hard, Boss }
-
-    [Serializable]
-    public class EnermyPrefab
-    {
-        public GameObject prefab;
-        public Difficulty difficulty;
-
-        public EnermyPrefab() { }
-
-        public EnermyPrefab(GameObject prefab, Difficulty difficulty)
-        {
-            this.prefab = prefab;
-            this.difficulty = difficulty;
-        }
-    }
-
-    private Difficulty selectedDifficulty;  // Selected difficulty for the current wave
-
+    
+    public List<GameObject> FishPrefab  = new List<GameObject>();
+    public List<GameObject> KnivePrefab = new List<GameObject>();
+    public List<GameObject> FolkPrefab  = new List<GameObject>();
+    public List<GameObject> SpoonPrefab = new List<GameObject>();
+    public List<GameObject> BeePrefab   = new List<GameObject>();
+    public List<List<EnemyModel> > waves = new List<List<EnemyModel> >();
     public GameObject playerPrefab;
-    public List<EnermyPrefab> enemyPrefab = new List<EnermyPrefab>();  // List of enemy prefabs
-
     private BattleModel battleModel = new BattleModel();
     private BattleView battleView = new BattleView();
     public bool isPlayerTurn = true;
-
-    public int waveNumber = 2;  // Total waves
-    public int currentWave = 0;  // Track the current wave
-    public int enemiesPerWave = 3;  // Max enemies per wave
-
     private PlayerModel player;
     private List<EnemyModel> enemies = new List<EnemyModel>(); //POLYMORPHISM NA KUB PIPI
     private List<CharacterView> enemyViews = new List<CharacterView>();
     private List<GameObject> enemyInstances = new List<GameObject>();
     private CharacterView playerView;
 
+    private int currentWave = 1;
     void Awake()
     {
-        SetRandomDifficulty();
+        GenerateEnemyWave.Instance.CreateEnemyWaves();
+        waves = GenerateEnemyWave.Instance.GetEnemyWaves();
         initPlayer();
-        StartWave();
+        NewWave();
     }
 
     void Update()
@@ -59,13 +43,6 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    void StartWave()
-    {
-        ClearLists();
-        createEnemyWave();
-        updateViewAndModel();
-    }
-
     void initPlayer()
     {
         player = new PlayerModel();
@@ -73,52 +50,11 @@ public class BattleController : MonoBehaviour
         playerView = playerInstance.GetComponent<CharacterView>();
     }
 
-    void createEnemyWave()
-    {
-        List<EnermyPrefab> filteredEnemies = enemyPrefab.FindAll(e => e.difficulty == selectedDifficulty);
-
-        if (filteredEnemies.Count == 0)
-        {
-            return;
-        }
-
-        for (int i = 0; i < enemiesPerWave; i++)
-        {
-            EnermyPrefab randomEnemyPrefab = filteredEnemies[UnityEngine.Random.Range(0, filteredEnemies.Count)];
-
-            EnemyModel enemy = new EnemyModel(randomEnemyPrefab.prefab.name, 100, 1);
-            enemies.Add(enemy);
-
-            
-            GameObject enemyInstance = Instantiate(
-                randomEnemyPrefab.prefab, 
-                new Vector3(3 + i * 2, -2, 0), 
-                Quaternion.identity
-            );
-            CharacterView enemyView = enemyInstance.GetComponent<CharacterView>();
-            enemyViews.Add(enemyView);
-            enemyInstances.Add(enemyInstance);
-
-        }
-    }
-
     void PlayerTurn()
     {
         if (isPlayerTurn)
-
-        {   for(int i =0;i<enemies.Count;i++)
-            {
-                
-                if (enemies[i].IsAlive())
-                {
-                    AttackCharacter(player, enemies[i]);
-                    if(!enemies[i].IsAlive()){
-                        Debug.Log("Is Dead");
-                        enemyInstances[i].SetActive(false);
-                    }
-                    break;
-                }
-            }
+        {   
+            FindEnemyAddAttack();
             isPlayerTurn = false;
             GameOver();
         }
@@ -146,14 +82,20 @@ public class BattleController : MonoBehaviour
             battleView.UpdateEnemyViews(enemies);
         }
     }
-
-    void ClearLists()
-    {
-        enemies.Clear();
-        enemyViews.Clear();
-        enemyInstances.Clear();
+    void FindEnemyAddAttack(){
+        for(int i =0;i<enemies.Count;i++)
+        {
+            if (enemies[i].IsAlive())
+            {
+                AttackCharacter(player, enemies[i]);
+                if(!enemies[i].IsAlive()){
+                    Debug.Log("Is Dead");
+                    enemyInstances[i].SetActive(false);
+                }
+                break;
+            }
+        }
     }
-
     void updateViewAndModel()
     {
         battleModel = new BattleModel(player, enemies);
@@ -162,33 +104,61 @@ public class BattleController : MonoBehaviour
         battleView.UpdatePlayerView(player);
         battleView.UpdateEnemyViews(enemies);
     }
-
-    void SetRandomDifficulty()
-    {
-        Difficulty[] difficulties = (Difficulty[])Enum.GetValues(typeof(Difficulty));
-        selectedDifficulty = difficulties[UnityEngine.Random.Range(0, difficulties.Length)];
-
-        if (selectedDifficulty == Difficulty.Boss)
-        {
-            waveNumber = 1;
-            enemiesPerWave = 1;
-        }
-
-    }
     void GameOver(){
         if (battleModel.IsBattleOver())
         {
             Debug.Log("Wave Over");
-            if (currentWave < waveNumber - 1 && battleModel.player.IsAlive())
+            if (currentWave < 3 && battleModel.player.IsAlive())
             {
-                currentWave++;
-                StartWave();
+                NewWave();
             }
             else
             {
                 SceneChange.ChangeSceneFunc("MainBoard");
             }
             return;
+        }
+    }
+
+    void ClearLists()
+    {
+        enemies.Clear();
+        enemyViews.Clear();
+        enemyInstances.Clear();
+    }
+    void NewWave(){
+        currentWave++;
+        ClearLists();
+        RenderEnemy();
+    }
+    void RenderEnemy(){
+        enemies = waves[currentWave];
+        for(int i =0;i<enemies.Count;i++){
+            GameObject newenemy = GetRandomPrefabOf(enemies[i].Name);
+            GameObject enemyins = Instantiate(newenemy,new Vector3(5+i,-2,10-i),Quaternion.identity);
+            CharacterView enemyView = enemyins.GetComponent<CharacterView>();
+            enemyInstances.Add(enemyins);
+            enemyViews.Add(enemyView);
+        }
+        updateViewAndModel();
+    }
+
+    GameObject GetRandomPrefabOf(String Name){
+        
+        switch (Name)
+        {
+            case "Fish":
+                return FishPrefab[UnityEngine.Random.Range(0,FishPrefab.Count)];
+            case "Knive":
+                return KnivePrefab[UnityEngine.Random.Range(0,KnivePrefab.Count)];
+            case "Folk":
+                return FolkPrefab[UnityEngine.Random.Range(0,FolkPrefab.Count)];
+            case "Spoon":
+                return SpoonPrefab[UnityEngine.Random.Range(0,SpoonPrefab.Count)];
+            case "Bee":
+                return BeePrefab[UnityEngine.Random.Range(0,BeePrefab.Count)];
+            default:
+                return FishPrefab[UnityEngine.Random.Range(0,FishPrefab.Count)];
         }
     }
 }
