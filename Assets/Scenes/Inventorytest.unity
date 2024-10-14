@@ -620,9 +620,28 @@ MonoBehaviour:
   - {fileID: 558941905}
   - {fileID: 1384411920}
   - {fileID: 816448365}
+  allSlots:
+  - {fileID: 3121719249970757302}
+  - {fileID: 1561902809}
+  - {fileID: 1013173972}
+  - {fileID: 1900214338}
+  - {fileID: 1226592913}
+  - {fileID: 1878117734}
+  - {fileID: 1409524293}
+  - {fileID: 1619725739}
+  - {fileID: 1458289606}
+  - {fileID: 1903510043}
+  - {fileID: 1853625864}
+  - {fileID: 2095528630}
+  - {fileID: 1391710985}
+  - {fileID: 1515504859}
+  - {fileID: 558941905}
+  - {fileID: 1384411920}
+  - {fileID: 816448365}
   cardName: {fileID: 2035044594}
   cardImage: {fileID: 473571642}
   cardType: {fileID: 1284901779}
+  cardStat: {fileID: 1705760745}
   types:
   - {fileID: 21300000, guid: 312d122717245d84b9b2e98f70c09845, type: 3}
   - {fileID: 21300000, guid: f3ca159e614fe9243a74800bf7ac75d2, type: 3}
