@@ -17,6 +17,7 @@ public class BattleModel : MonoBehaviour
     }
 
     // Attack method using CharacterBase to handle both player and enemy attacks
+    //POLYMORPHISM NA KUB PIPI
     public void Attack(CharacterBase attacker, CharacterBase target)
     {
         if (attacker.IsAlive())

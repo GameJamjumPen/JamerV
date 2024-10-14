@@ -18,7 +18,7 @@ public class DataPersistenceMNG : MonoBehaviour
 
     public static DataPersistenceMNG Instance { get; private set; }
 
-    private List<IDataPersistence> dataPersistenceObject;
+    private List<IDataPersistence> dataPersistenceObject; //POLYMORPHISM NA KUB PIPI
 
     private void Awake()
     {

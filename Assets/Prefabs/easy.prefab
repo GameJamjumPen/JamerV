@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5670172129772092926}
   - component: {fileID: 7943389551092692370}
   - component: {fileID: 3813644341653409660}
+  - component: {fileID: 3770185736426494496}
   m_Layer: 0
   m_Name: easy
   m_TagString: Untagged
@@ -75,3 +76,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3770185736426494496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395818231841220680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 541c19d5a3f101d45b2b16447233268f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOwned: 0
+  roomScene: CutScene
+  _rewardPoint: 
+  roomType: 0
+  roomManager: {fileID: 0}
