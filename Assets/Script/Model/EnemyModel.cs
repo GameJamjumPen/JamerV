@@ -14,10 +14,20 @@ public abstract class EnemyModel : CharacterBase
 {
     public EnemyDifficulty Difficulty { get; private set; }
 
-    public EnemyModel(string name, int health, int attackPower, EnemyDifficulty difficulty) 
-        : base(name, health, attackPower)
+    public EnemyModel(string name, int health, int baseAttackPower, EnemyDifficulty difficulty) 
+        : base(name, health, RandomizeAttackPower(baseAttackPower))
     {
         Difficulty = difficulty;
+    }
+
+    // Randomize the attack power by ±20%
+    private static int RandomizeAttackPower(int baseAttackPower)
+    {
+        float minMultiplier = 1.0f;
+        float maxMultiplier = 1.2f;
+        float randomMultiplier = Random.Range(minMultiplier, maxMultiplier);
+
+        return Mathf.RoundToInt(baseAttackPower * randomMultiplier);
     }
 
     public override void Attack(ICharacter target)
