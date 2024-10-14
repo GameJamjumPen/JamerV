@@ -43,6 +43,11 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
 
     }
 
+    public void SetLife(int life)
+    {
+        this.Life = life;
+    }
+
     //add the button to use stat points
     public void AddPoint()
     {
