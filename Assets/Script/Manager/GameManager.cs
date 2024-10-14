@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     private List<GameObject> availableRooms;
     public List<GameObject> allrooms;
     [Header("Inventory Related")]
-    [HideInInspector]public Room selectedRoom;
+    public Room selectedRoom;
     public Inventory inventory;
     public CardSO[] cardSOs;
     public GameObject lockIn;
@@ -33,10 +33,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
         availableRooms = new List<GameObject>(roomPref);
     }
-
-    private void Start()
-    {
-        
+    public void Debugger(string a){
+        Debug.Log(a);
     }
 
     public void LoadData(GameData data)
@@ -130,13 +128,23 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void RoomEnter(int room)
+    public void RoomEnter(int room) //selectedRoomยังหาไม่เจอ
     {
         selectedRoom = allrooms[room].GetComponent<Room>();
         if(inventory.CheckFull(inventory.actualSlots)){
-            for(int i = 0;i<inventory.actualSlots.Length;i++){
-            cardSOs[i] = inventory.actualSlots[i].cardSO;
+            if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
+        {
+            cardSOs = new CardSO[inventory.actualSlots.Length];
+        }
+
+        // Assign cardSOs
+        for (int i = 0; i < inventory.actualSlots.Length; i++)
+        {
+            if (inventory.actualSlots[i] != null)
+            {
+                cardSOs[i] = inventory.actualSlots[i].cardSO;
             }
+        }
             selectedRoom.OnPlayerAttack();
         }else{
             if(!inventory.pocketSystem.activeSelf){
@@ -155,8 +163,18 @@ public class GameManager : MonoBehaviour, IDataPersistence
             Debug.Log("make all not null");
             return;
         }
-        for(int i = 0;i<inventory.actualSlots.Length;i++){
-            cardSOs[i] = inventory.actualSlots[i].cardSO;
+        if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
+        {
+            cardSOs = new CardSO[inventory.actualSlots.Length];
+        }
+
+        // Assign cardSOs
+        for (int i = 0; i < inventory.actualSlots.Length; i++)
+        {
+            if (inventory.actualSlots[i] != null)
+            {
+                cardSOs[i] = inventory.actualSlots[i].cardSO;
+            }
         }
         selectedRoom.OnPlayerAttack();
     }
