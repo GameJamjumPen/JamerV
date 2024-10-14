@@ -1,33 +1,46 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleModel : MonoBehaviour
 {
-    public CharacterModel player;
-    public List<CharacterModel> enemies;
-    public BattleModel(){
-        
-    }
+    public PlayerModel player;  // Player object
+    public List<EnemyModel> enemies;  // List of enemies
 
-    public BattleModel(CharacterModel player, List<CharacterModel> enemies)
+    // Default constructor
+    public BattleModel() { }
+
+    // Constructor to initialize the player and enemy list
+    public BattleModel(PlayerModel player, List<EnemyModel> enemies)
     {
         this.player = player;
         this.enemies = enemies;
     }
 
-    public void Attack(CharacterModel attacker,CharacterModel target){
-        target.TakeDamage(attacker.attackPower);
+    // Attack method using CharacterBase to handle both player and enemy attacks
+    public void Attack(CharacterBase attacker, CharacterBase target)
+    {
+        if (attacker.IsAlive())
+        {
+            target.TakeDamage(attacker.AttackPower);
+            Debug.Log($"{attacker.Name} attacked {target.Name} for {attacker.AttackPower} damage!");
+        }
     }
+
+    // Check if the battle is over
     public bool IsBattleOver()
     {
+        // If the player is dead, the battle is over
         if (!player.IsAlive()) return true;
-        // return enemies.TrueForAll(enemy => !enemy.IsAlive());
-        foreach(var x in enemies){
-            if(x.IsAlive()){
-                return false;
+
+        // Check if all enemies are dead
+        foreach (var enemy in enemies)
+        {
+            if (enemy.IsAlive())
+            {
+                return false;  // If any enemy is alive, the battle continues
             }
         }
-        return true;
+
+        return true;  // All enemies are dead, battle is over
     }
 }
