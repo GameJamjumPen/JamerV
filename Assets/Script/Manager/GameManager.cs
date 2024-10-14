@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
+        this.currentRoom = data.currentRoom;
         if (data.roomPlacement == null || data.roomPlacement.Count == 0)
         {
             GenerateRandomLayout();
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
             wentRoom = new List<int>(data.wentRoom);
             PlaceRooms(data.roomPlacement);
         }
-        this.currentRoom = data.currentRoom;
+        transform.position = allrooms[currentRoom].transform.position;
     }
 
     public void SaveData(ref GameData data)
@@ -126,7 +127,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void RoomEnter(int room)
     {
-        
+
     }
 
 }
