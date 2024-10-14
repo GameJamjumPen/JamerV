@@ -7,7 +7,12 @@ using NaughtyAttributes;
 public abstract class Room : MonoBehaviour
 {
     public bool isOwned;
-    [Scene]
-    public string roomScene;
+    public Transform buildPos;
+    public GameObject OwnedRoom;
     public abstract void OnPlayerAttack();
+    public virtual void DisplayRoom(){
+        if(isOwned){
+            Instantiate(OwnedRoom ,buildPos.position ,Quaternion.identity , this.transform);
+        }
+    }
 }

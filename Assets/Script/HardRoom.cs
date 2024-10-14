@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class HardRoom : MonoBehaviour
+public class HardRoom : HostileRoom
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Awake()
     {
-        
+        roomType = RoomType.Hard;
     }
-
-    // Update is called once per frame
-    void Update()
+    public override void OnPlayerAttack()
     {
-        
+        base.OnPlayerAttack();
+        paper.SetEnemyDifficulty(EnemyDifficulty.Hard);
+        SceneManager.LoadSceneAsync(combatScene);
     }
 }

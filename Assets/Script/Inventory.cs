@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
 {
     #region Declare Variable
     public KeyCode openCloseKey = KeyCode.Tab;
+    public bool istoggleable;
     public GameObject backPackSystem;
     public GameObject pocketSystem;
 
@@ -28,11 +29,19 @@ public class Inventory : MonoBehaviour
     public Sprite[] types;
 
     #endregion
+    public void Awake(){
+        istoggleable = true;
+    }
     public void Update(){
-        if(Input.GetKeyDown(openCloseKey)){
-            if(backPackSystem.activeSelf){
-                backPackSystem.SetActive(false);
-            }else backPackSystem.SetActive(true);
+        if(istoggleable){
+            if(Input.GetKeyDown(openCloseKey)){
+                if(backPackSystem.activeSelf){
+                    backPackSystem.SetActive(false);
+                    pocketSystem.SetActive(false);
+                }else{ backPackSystem.SetActive(true);
+                pocketSystem.SetActive(true);
+                }
+            }
         }
     }
     // public void Update(){
@@ -45,6 +54,15 @@ public class Inventory : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public bool CheckFull(InventorySlot[] slots){
+        for(int i = 0;i< slots.Length;i++){
+            if(!slots[i].isFull){
+                return false;
+            }
+        }
+        return true;
     }
     #region SlotSelected
     public void DeselectedAllSlot(){

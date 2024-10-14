@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager.Requests;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -12,8 +13,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public GameObject went;
 
     private List<GameObject> availableRooms;
-
     public List<GameObject> allrooms;
+    [Header("Inventory Related")]
+    [HideInInspector]public Room selectedRoom;
+    public Inventory inventory;
+    public CardSO[] cardSOs;
+    public GameObject lockIn;
 
     public static GameManager singleton{get; private set;}
 
@@ -127,7 +132,33 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void RoomEnter(int room)
     {
+        selectedRoom = allrooms[room].GetComponent<Room>();
+        if(inventory.CheckFull(inventory.actualSlots)){
+            for(int i = 0;i<inventory.actualSlots.Length;i++){
+            cardSOs[i] = inventory.actualSlots[i].cardSO;
+            }
+            selectedRoom.OnPlayerAttack();
+        }else{
+            if(!inventory.pocketSystem.activeSelf){
+                inventory.pocketSystem.SetActive(true);
+            }
+            if(!inventory.backPackSystem.activeSelf){
+                inventory.backPackSystem.SetActive(true);
+            }
+            inventory.istoggleable = false;
+            lockIn.SetActive(true);
+        }
+    }
 
+    public void Lock(){
+        if(!inventory.CheckFull(inventory.actualSlots)){
+            Debug.Log("make all not null");
+            return;
+        }
+        for(int i = 0;i<inventory.actualSlots.Length;i++){
+            cardSOs[i] = inventory.actualSlots[i].cardSO;
+        }
+        selectedRoom.OnPlayerAttack();
     }
 
 }

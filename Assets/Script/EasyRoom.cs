@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class EasyRoom : MonoBehaviour
+public class EasyRoom : HostileRoom
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Awake()
     {
-        
+        roomType = RoomType.Easy;
     }
-
-    // Update is called once per frame
-    void Update()
+    public override void OnPlayerAttack()
     {
-        
+        base.OnPlayerAttack();
+        paper.SetEnemyDifficulty(EnemyDifficulty.Easy);
+        SceneManager.LoadSceneAsync(combatScene);
     }
 }
