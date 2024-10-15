@@ -7,17 +7,15 @@ using UnityEngine.SceneManagement;
 public class HostileRoom : Room
 {
     public RoomType roomType;
-    public Paper paper;
     public Sprite _background;
     [Scene]
     public string combatScene;
     public void Awake(){
-        paper = FindObjectOfType<Paper>();
     }
     public override void OnPlayerAttack()
     {
-        paper.SetCard(GameManager.singleton.cardSOs);
-        paper.SetBackground(_background);
+        Paper.Instance.SetCard(GameManager.singleton.cardSOs);
+        Paper.Instance.SetBackground(_background);
     }
 }
 

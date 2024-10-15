@@ -12,7 +12,7 @@ public class HardRoom : HostileRoom
     public override void OnPlayerAttack()
     {
         base.OnPlayerAttack();
-        paper.SetEnemyDifficulty(EnemyDifficulty.Hard);
+        Paper.Instance.SetEnemyDifficulty(EnemyDifficulty.Hard);
         SceneManager.LoadSceneAsync(combatScene);
     }
 }

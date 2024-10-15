@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         room -=1;
         Debug.Log("room"+room);
-        selectedRoom = allrooms[room].GetComponent<Room>();
+        selectedRoom = allrooms[room].GetComponentInChildren<Room>();
         if(inventory.CheckFull(inventory.actualSlots)){
             if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
         {
