@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour,IInventorable
 {
     #region Declare Variable
     public KeyCode openCloseKey = KeyCode.Tab;
@@ -73,7 +73,7 @@ public class Inventory : MonoBehaviour
         foreach (InventorySlot slot in allSlots)
         {
             slot.OnDeselected();
-        } 
+        }
     }
 
     public void DisplaySelected(){
