@@ -3,32 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenerateEnemyWave : MonoBehaviour
+public class GenerateEnemyWave : Singleton<GenerateEnemyWave>
 {
-    public static GenerateEnemyWave Instance;
 
     private EnemyDifficulty difficulty;
 
     public List<List<EnemyModel> > waves = new List<List<EnemyModel> >();
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+
     public List<List<EnemyModel> > GetEnemyWaves(){
         return waves;
     }
     public void CreateEnemyWaves()
     {
         // RandomSetDifficulty();
-        difficulty = Paper.Instance.enemyDifficulty;
+        RandomSetDifficulty();
         waves.Clear();
         for (int i = 0; i < 3; i++)
         {

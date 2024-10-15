@@ -7,32 +7,43 @@ using TMPro;
 using UnityEngine.UI;
 public class BattleController : MonoBehaviour
 {   
-    
-    public List<GameObject> FishPrefab  = new List<GameObject>();
-    public List<GameObject> KnivePrefab = new List<GameObject>();
-    public List<GameObject> FolkPrefab  = new List<GameObject>();
-    public List<GameObject> SpoonPrefab = new List<GameObject>();
-    public List<GameObject> BeePrefab   = new List<GameObject>();
+    public EnemyUIManager enemyUIManager;
+    public PlayerUIManager playerUIManager;
+    public Sprite playerSprite; 
+    public List<Sprite> FishSprites = new List<Sprite>();
+    public List<Sprite> KniveSprites = new List<Sprite>();
+    public List<Sprite> FolkSprites = new List<Sprite>();
+    public List<Sprite> SpoonSprites = new List<Sprite>();
+    public List<Sprite> BeeSprites = new List<Sprite>();
     public List<List<EnemyModel> > waves = new List<List<EnemyModel> >();
     public GameObject playerPrefab;
-    private BattleModel battleModel = new BattleModel();
-    private BattleView battleView = new BattleView();
+    private BattleModel battleModel;
     public bool isPlayerTurn = true;
     private PlayerModel player;
     private List<EnemyModel> enemies = new List<EnemyModel>(); //POLYMORPHISM NA KUB PIPI
     private List<CharacterView> enemyViews = new List<CharacterView>();
-    private List<GameObject> enemyInstances = new List<GameObject>();
-    private CharacterView playerView;
     public TextMeshProUGUI ShowTurn;
     public Image background;
     private int currentWave = -1;
+
     void Awake()
     {
+        enemyUIManager = FindObjectOfType<EnemyUIManager>();
+        playerUIManager = FindObjectOfType<PlayerUIManager>();
+
+        if (enemyUIManager == null)
+        {
+            Debug.LogError("EnemyUIManager not found in the scene! Make sure it's attached to a GameObject.");
+            return;
+        }
+        if(GenerateEnemyWave.Instance == null){
+            Debug.LogError("WTF Singleton bug");
+        }
         GenerateEnemyWave.Instance.CreateEnemyWaves();
         waves = GenerateEnemyWave.Instance.GetEnemyWaves();
         initPlayer();
         NewWave();
-        background.sprite = Paper.Instance.sprite;
+        // background.sprite = Paper.Instance.sprite;
     }
 
     void Update()
@@ -49,32 +60,31 @@ public class BattleController : MonoBehaviour
             }
         }
     }
-
     void initPlayer()
     {
         player = new PlayerModel();
-        GameObject playerInstance = Instantiate(playerPrefab, new Vector3(-5, -2, 0), Quaternion.identity);
-        playerView = playerInstance.GetComponent<CharacterView>();
-        playerView.MaxHealth = player.Health;
+        playerUIManager.UpdatePlayerUI(player, playerSprite);
     }
 
     void PlayerTurn()
     {
-        if (isPlayerTurn)
-        {   
-            FindEnemyAddAttack();
-            isPlayerTurn = false;
-            GameOver();
-        }
+        FindEnemyAddAttack();
+        Debug.Log("PlayerTurn");
+        GameOver();
+        isPlayerTurn = false;
     }
-
     void EnemyTurn()
     {
+        Debug.Log("EnemyTurn");
+        Debug.Log(enemies.Count.ToString());
         foreach (var enemy in enemies)
         {
+            Debug.Log(enemy.IsAlive().ToString());
             if (enemy.IsAlive())
             {
+                Debug.Log("Attack player");
                 AttackCharacter(enemy, player);
+                playerUIManager.UpdatePlayerHealth(player.Health);
             }
             GameOver();
         }
@@ -86,33 +96,35 @@ public class BattleController : MonoBehaviour
         if (attacker.IsAlive() && target.IsAlive())
         {
             attacker.Attack(target);
-            battleView.UpdatePlayerView(player);
-            battleView.UpdateEnemyViews(enemies);
+            Debug.Log(target.Name + " current health is " + target.Health.ToString());
         }
     }
     void FindEnemyAddAttack(){
         for(int i =0;i<enemies.Count;i++)
         {
             if (enemies[i].IsAlive())
-            {
+            {   
+                Debug.Log("Attack");
                 AttackCharacter(player, enemies[i]);
                 if(!enemies[i].IsAlive()){
                     Debug.Log("Is Dead");
-                    enemyInstances[i].SetActive(false);
+                    enemyUIManager.SetActiveFalseOf(i);
+                    // enemyInstances[i].SetActive(false);
                 }
+                enemyUIManager.updateUI(enemies);
                 break;
             }
         }
     }
-    void updateViewAndModel()
-    {
-        battleModel = new BattleModel(player, enemies);
-        battleView = new BattleView(playerView, enemyViews);
-
-        battleView.UpdatePlayerView(player);
-        battleView.UpdateEnemyViews(enemies);
-    }
     void GameOver(){
+        if(battleModel == null){
+            Debug.LogError("BattleModel is NULL");
+            return;
+        }
+        if (battleModel.player == null || battleModel.enemies == null){
+            Debug.LogError("BattleModel's player or enemies are NULL");
+            return;
+        }
         if (battleModel.IsBattleOver())
         {
             Debug.Log("Wave Over");
@@ -132,7 +144,7 @@ public class BattleController : MonoBehaviour
     {
         enemies.Clear();
         enemyViews.Clear();
-        enemyInstances.Clear();
+        // enemyInstances.Clear();
     }
     void NewWave(){
         Debug.Log("NEW WAVE !!!");
@@ -140,37 +152,47 @@ public class BattleController : MonoBehaviour
         ClearLists();
         RenderEnemy();
     }
-    void RenderEnemy(){
-        Debug.Log("currentWave is : " + currentWave.ToString());
-        Debug.Log("Waves is " + waves.Count.ToString());
+    void RenderEnemy()
+    
+    {
         enemies = waves[currentWave];
-        for(int i =0;i<enemies.Count;i++){
-            GameObject newenemy = GetRandomPrefabOf(enemies[i].Name);
-            GameObject enemyins = Instantiate(newenemy,new Vector3(3+i*2,-2,10-i),Quaternion.identity);
-            CharacterView enemyView = enemyins.GetComponent<CharacterView>();
-            enemyView.MaxHealth = enemies[i].Health;
-            enemyInstances.Add(enemyins);
-            enemyViews.Add(enemyView);
+
+        List<Sprite> enemySprites = new List<Sprite>();
+
+        foreach (var enemy in enemies)
+        {
+            enemySprites.Add(GetRandomSpriteOf(enemy.Name));
         }
-        updateViewAndModel();
+        enemyUIManager.DisplayNewWave(currentWave, enemies, enemySprites);
+        
+        battleModel = new BattleModel(player, enemies);
+
+        if(battleModel == null){
+            Debug.LogError("BattleModel is NULL after init");
+            return;
+        }
+        if (battleModel.player == null || battleModel.enemies == null){
+            Debug.LogError("BattleModel's player or enemies are NULL");
+            return;
+        }
     }
 
-    GameObject GetRandomPrefabOf(String Name){
-        
-        switch (Name)
+    Sprite GetRandomSpriteOf(string enemyName)
+    {
+        switch (enemyName)
         {
             case "Fish":
-                return FishPrefab[UnityEngine.Random.Range(0,FishPrefab.Count)];
+                return FishSprites[UnityEngine.Random.Range(0, FishSprites.Count)];
             case "Knive":
-                return KnivePrefab[UnityEngine.Random.Range(0,KnivePrefab.Count)];
+                return KniveSprites[UnityEngine.Random.Range(0, KniveSprites.Count)];
             case "Folk":
-                return FolkPrefab[UnityEngine.Random.Range(0,FolkPrefab.Count)];
+                return FolkSprites[UnityEngine.Random.Range(0, FolkSprites.Count)];
             case "Spoon":
-                return SpoonPrefab[UnityEngine.Random.Range(0,SpoonPrefab.Count)];
+                return SpoonSprites[UnityEngine.Random.Range(0, SpoonSprites.Count)];
             case "Bee":
-                return BeePrefab[UnityEngine.Random.Range(0,BeePrefab.Count)];
+                return BeeSprites[UnityEngine.Random.Range(0, BeeSprites.Count)];
             default:
-                return FishPrefab[UnityEngine.Random.Range(0,FishPrefab.Count)];
+                return FishSprites[0]; // Default fallback sprite
         }
     }
     void ShowCurrentTurn(){
