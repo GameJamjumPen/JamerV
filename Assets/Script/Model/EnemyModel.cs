@@ -39,6 +39,7 @@ public abstract class EnemyModel : CharacterBase
 
         foreach (var enemy in enemyModels)
         {
+            Debug.Log("Alive");
             if (!enemy.IsAlive()) continue;
 
             int decision = rng.Next(0, 100);
@@ -81,7 +82,7 @@ public abstract class EnemyModel : CharacterBase
     {
         foreach (var enemy in enemies)
         {
-            if (enemy.Health < enemy.MaxHealth * 0.2f && enemy.IsAlive())
+            if (enemy.IsAlive())
             {
                 enemy.HealByPercentage(0.2f);
                 return true;

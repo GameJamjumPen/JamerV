@@ -50,11 +50,7 @@ public class BattleController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            if (isPlayerTurn){
-                ShowCurrentTurn();
-                PlayerTurn();
-            }
-            else{
+            if (!isPlayerTurn){
                 ShowCurrentTurn();
                 EnemyTurn();
             }
@@ -73,21 +69,39 @@ public class BattleController : MonoBehaviour
         GameOver();
         isPlayerTurn = false;
     }
+    public void PlayerClickAttack(){
+        if(isPlayerTurn){
+            BattleModel.ResetShield(player);
+            FindEnemyAddAttack();
+            playerUIManager.UpdatePlayerUI(player);
+            isPlayerTurn = false;
+        }
+        
+    }
+    public void PlayerShield(){
+        if(isPlayerTurn){
+            BattleModel.ResetShield(player);
+            player.setShield(30);
+            playerUIManager.UpdatePlayerUI(player);
+            isPlayerTurn = false;
+        }
+        
+    }
+    public void PlayerHealing(){
+        if(isPlayerTurn){
+            BattleModel.ResetShield(player);
+            player.HealByAmount(30);
+            playerUIManager.UpdatePlayerUI(player);
+            isPlayerTurn = false;
+            BattleModel.ResetShield(enemies);
+        }
+    }
     void EnemyTurn()
     {
-        Debug.Log("EnemyTurn");
-        Debug.Log(enemies.Count.ToString());
-        foreach (var enemy in enemies)
-        {
-            Debug.Log(enemy.IsAlive().ToString());
-            if (enemy.IsAlive())
-            {
-                Debug.Log("Attack player");
-                AttackCharacter(enemy, player);
-                playerUIManager.UpdatePlayerHealth(player.Health);
-            }
-            GameOver();
-        }
+        BattleModel.ResetShield(enemies);
+        EnemyModel.AttackPlayer(enemies,player);
+        enemyUIManager.updateUI(enemies);
+        GameOver();
         isPlayerTurn = true;
     }
 

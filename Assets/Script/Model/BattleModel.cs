@@ -26,7 +26,14 @@ public class BattleModel
             Debug.Log($"{attacker.Name} attacked {target.Name} for {attacker.AttackPower} damage!");
         }
     }
-
+    public static void ResetShield(PlayerModel player){
+        player.setShield(0);
+    }
+    public static void ResetShield(List<EnemyModel> enemies){
+        foreach(EnemyModel enemyModel in enemies){
+            enemyModel.setShield(0);
+        }
+    }
     // Check if the battle is over
     public bool IsBattleOver()
     {
