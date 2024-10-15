@@ -26,6 +26,9 @@ public class BattleController : MonoBehaviour
     public Image background;
     private int currentWave = -1;
 
+    [Header("Assignable")]
+    public int shieldprop = 30;
+    public int healprop = 10;
     void Awake()
     {
         enemyUIManager = FindObjectOfType<EnemyUIManager>();
@@ -99,7 +102,7 @@ public class BattleController : MonoBehaviour
     void EnemyTurn()
     {
         BattleModel.ResetShield(enemies);
-        EnemyModel.AttackPlayer(enemies,player);
+        EnemyModel.AttackPlayer(enemies,player,shieldprop,healprop);
         enemyUIManager.updateUI(enemies);
         GameOver();
         isPlayerTurn = true;
