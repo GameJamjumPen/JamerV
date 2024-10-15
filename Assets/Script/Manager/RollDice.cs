@@ -22,9 +22,6 @@ public class RollDice : MonoBehaviour ,IDataPersistence
         int rolledRoom = Roll();
         PlayerMovement playerMovement = FindObjectOfType<PlayerMovement>();
         playerMovement.PlayerMove(rolledRoom);
-        GameManager.singleton.RoomEnter(rolledRoom); //Playerควรรอให้เดินถึงก่อน
-        Debug.Log("Row");
-        //SceneChange.ChangeSceneFunc("TurnBaseCombat");
     }
 
     public int Roll()

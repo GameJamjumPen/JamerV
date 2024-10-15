@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.PackageManager.Requests;
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public CardSO[] cardSOs;
     public GameObject lockIn;
 
+
     public static GameManager singleton{get; private set;}
 
     private void Awake()
@@ -35,6 +37,15 @@ public class GameManager : MonoBehaviour, IDataPersistence
     }
     public void Debugger(string a){
         Debug.Log(a);
+    }
+
+    void OnEnable()
+    {
+        PlayerMovement.SceneEnter += RoomEnter;
+    }
+
+    void OnDisable() {
+        PlayerMovement.SceneEnter -= RoomEnter;    
     }
 
     public void LoadData(GameData data)
@@ -121,7 +132,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         for (int i = 0; i < arr.Count; i++)
         {
-            int rdIndex = Random.Range(i, arr.Count);
+            int rdIndex = UnityEngine.Random.Range(i, arr.Count);
             T temp = arr[i];
             arr[i] = arr[rdIndex];
             arr[rdIndex] = temp;
@@ -130,6 +141,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void RoomEnter(int room) //selectedRoomยังหาไม่ถูกห้อง ไม่รู้ทำไม
     {
+        room -=1;
+        Debug.Log("room"+room);
         selectedRoom = allrooms[room].GetComponent<Room>();
         if(inventory.CheckFull(inventory.actualSlots)){
             if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
