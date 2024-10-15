@@ -24,6 +24,7 @@ public class BattleController : MonoBehaviour
     private List<GameObject> enemyInstances = new List<GameObject>();
     private CharacterView playerView;
     public TextMeshProUGUI ShowTurn;
+    public Image background;
     private int currentWave = -1;
     void Awake()
     {
@@ -31,6 +32,7 @@ public class BattleController : MonoBehaviour
         waves = GenerateEnemyWave.Instance.GetEnemyWaves();
         initPlayer();
         NewWave();
+        background.sprite = Paper.Instance.sprite;
     }
 
     void Update()

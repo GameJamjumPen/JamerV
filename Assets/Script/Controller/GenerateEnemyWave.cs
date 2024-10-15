@@ -22,15 +22,13 @@ public class GenerateEnemyWave : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public GenerateEnemyWave(){
-        difficulty = EnemyDifficulty.Medium;
-    }
     public List<List<EnemyModel> > GetEnemyWaves(){
         return waves;
     }
     public void CreateEnemyWaves()
     {
         // RandomSetDifficulty();
+        difficulty = Paper.Instance.enemyDifficulty;
         waves.Clear();
         for (int i = 0; i < 3; i++)
         {
