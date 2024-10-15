@@ -152,10 +152,10 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     #region Dragging
     public void OnBeginDrag(PointerEventData eventData)
     {
-        inventorySlot = null;
-        if(!isSelected) return;
+        
+        if(!isSelected || inventory ==null) return;
         else{
-            
+            inventorySlot = null;
             parentAfterDrag = transform;
             draggableItem.SetParent(transform.root);
             draggableItem.SetAsLastSibling();
@@ -169,7 +169,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(!isSelected){
+        if(!isSelected || inventory == null){
             return;
         }else{
             ChangeAnimationState(HOVER);
@@ -202,6 +202,9 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        if(!isSelected){
+            return;
+        }
         if(isSelected && cardSO != null){
             if(inventorySlot != null && !inventorySlot.isFull){
                 inventorySlot.AddItem(cardSO);
