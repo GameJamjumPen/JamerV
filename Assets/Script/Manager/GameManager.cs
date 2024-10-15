@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
             }
         }
             selectedRoom.OnPlayerAttack();
-        }else{
+        }else{ //no item in inventory slot
             if(!inventory.pocketSystem.activeSelf){
                 inventory.pocketSystem.SetActive(true);
             }

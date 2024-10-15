@@ -98,6 +98,7 @@ public class BattleInventory : MonoBehaviour ,IInventorable
             cardSelected = null;
             useSlot.RemoveItem();
             useSlot = null;
+            battleController.isPlayerTurn = false;
         }
     }
 } 
