@@ -72,7 +72,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
             OnSelected();
         }
         if(eventData.button == PointerEventData.InputButton.Right){
-            OnDeselected();
+            OnUse();
         }
         if(eventData.button == PointerEventData.InputButton.Middle){
             if(isSelected){
@@ -129,6 +129,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         if(battleInventory != null){
             if(this.cardSO != null){
                 battleInventory.cardSelected = this.cardSO;
+                battleInventory.useSlot = this;
             }
         }
     }
