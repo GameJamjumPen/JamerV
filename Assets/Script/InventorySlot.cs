@@ -126,6 +126,11 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
                 inventory.DisplayDeselected();
             }
         }
+        if(battleInventory != null){
+            if(this.cardSO != null){
+                battleInventory.cardSelected = this.cardSO;
+            }
+        }
     }
     public void OnDeselected(){
         selectedShader.SetActive(false);
@@ -212,5 +217,12 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         currentstate = state;
         _animator.CrossFadeInFixedTime(state , 0.1f);
         Debug.Log("Change state to" + state);
+    }
+    public void OnUse(){
+        if(battleInventory != null){
+            if(!isSelected && battleInventory.cardSelected != this.cardSO){
+                battleInventory.Use();
+            }
+        }
     }
 }

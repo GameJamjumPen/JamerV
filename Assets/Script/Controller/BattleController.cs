@@ -29,6 +29,9 @@ public class BattleController : MonoBehaviour
     [Header("Assignable")]
     public int shieldprop = 30;
     public int healprop = 10;
+
+    [Header("For Checking")]
+    public List<EnemyHolder> enemyHolders;
     void Awake()
     {
         enemyUIManager = FindObjectOfType<EnemyUIManager>();
@@ -190,6 +193,7 @@ public class BattleController : MonoBehaviour
             enemySprites.Add(GetRandomSpriteOf(enemy.Name));
         }
         enemyUIManager.DisplayNewWave(currentWave, enemies, enemySprites);
+        AddEnemyToHolder(enemies);
         
         battleModel = new BattleModel(player, enemies);
 
@@ -200,6 +204,14 @@ public class BattleController : MonoBehaviour
         if (battleModel.player == null || battleModel.enemies == null){
             Debug.LogError("BattleModel's player or enemies are NULL");
             return;
+        }
+    }
+    public void AddEnemyToHolder(List<EnemyModel> enemies){
+        for(int i = 0;i<enemies.Count;i++){
+            if(!enemies[i].IsAlive()){
+                continue;
+            }
+            enemyHolders[i].enemyContain = enemies[i];
         }
     }
 
