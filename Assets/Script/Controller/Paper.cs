@@ -8,7 +8,7 @@ public class Paper : MonoBehaviour
     public static Paper Instance;
     public EnemyDifficulty enemyDifficulty;
     public bool isVictory;
-    public CardSO[] cardSOs;
+    public List<CardSO> cardSOs;
     public Sprite sprite;
     private void Awake()
     {
@@ -30,13 +30,11 @@ public class Paper : MonoBehaviour
     }
     public void SetCard(CardSO[] cardinput){
         for(int i = 0;i< cardinput.Length;i++){
-            cardSOs[i] = cardinput[i];
+            cardSOs.Add(cardinput[i]);
         }
     }
     public void ClearCard(){
-        for(int i = 0;i< cardSOs.Length;i++){
-            cardSOs[i] = null;
-        }
+        cardSOs.Clear();
     }
     public bool GetResult(){
         if(isVictory) return true;
