@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.PackageManager.Requests;
@@ -15,10 +16,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
     private List<GameObject> availableRooms;
     public List<GameObject> allrooms;
     [Header("Inventory Related")]
-    [HideInInspector]public Room selectedRoom;
+    public Room selectedRoom;
     public Inventory inventory;
     public CardSO[] cardSOs;
     public GameObject lockIn;
+
 
     public static GameManager singleton{get; private set;}
 
@@ -33,10 +35,17 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
         availableRooms = new List<GameObject>(roomPref);
     }
+    public void Debugger(string a){
+        Debug.Log(a);
+    }
 
-    private void Start()
+    void OnEnable()
     {
-        
+        PlayerMovement.SceneEnter += RoomEnter;
+    }
+
+    void OnDisable() {
+        PlayerMovement.SceneEnter -= RoomEnter;    
     }
 
     public void LoadData(GameData data)
@@ -123,20 +132,32 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         for (int i = 0; i < arr.Count; i++)
         {
-            int rdIndex = Random.Range(i, arr.Count);
+            int rdIndex = UnityEngine.Random.Range(i, arr.Count);
             T temp = arr[i];
             arr[i] = arr[rdIndex];
             arr[rdIndex] = temp;
         }
     }
 
-    public void RoomEnter(int room)
+    public void RoomEnter(int room) //selectedRoomยังหาไม่ถูกห้อง ไม่รู้ทำไม
     {
-        selectedRoom = allrooms[room].GetComponent<Room>();
+        room -=1;
+        Debug.Log("room"+room);
+        selectedRoom = allrooms[room].GetComponentInChildren<Room>();
         if(inventory.CheckFull(inventory.actualSlots)){
-            for(int i = 0;i<inventory.actualSlots.Length;i++){
-            cardSOs[i] = inventory.actualSlots[i].cardSO;
+            if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
+        {
+            cardSOs = new CardSO[inventory.actualSlots.Length];
+        }
+
+        // Assign cardSOs
+        for (int i = 0; i < inventory.actualSlots.Length; i++)
+        {
+            if (inventory.actualSlots[i] != null)
+            {
+                cardSOs[i] = inventory.actualSlots[i].cardSO;
             }
+        }
             selectedRoom.OnPlayerAttack();
         }else{
             if(!inventory.pocketSystem.activeSelf){
@@ -155,8 +176,18 @@ public class GameManager : MonoBehaviour, IDataPersistence
             Debug.Log("make all not null");
             return;
         }
-        for(int i = 0;i<inventory.actualSlots.Length;i++){
-            cardSOs[i] = inventory.actualSlots[i].cardSO;
+        if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
+        {
+            cardSOs = new CardSO[inventory.actualSlots.Length];
+        }
+
+        // Assign cardSOs
+        for (int i = 0; i < inventory.actualSlots.Length; i++)
+        {
+            if (inventory.actualSlots[i] != null)
+            {
+                cardSOs[i] = inventory.actualSlots[i].cardSO;
+            }
         }
         selectedRoom.OnPlayerAttack();
     }

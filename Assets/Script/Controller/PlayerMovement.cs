@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public int nextRoom;
     public Vector3 destination;
     [SerializeField] private float moveSpeed;
+    public static event Action<int> SceneEnter;
 
 
     private void Start()
@@ -25,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     {
         currentRoom = GameManager.singleton.currentRoom;
         StartCoroutine(Move(pos));
-        GameManager.singleton.currentRoom = pos;
     }
 
     IEnumerator Move(int roomtomove)
@@ -38,8 +39,11 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(nextRoom);
         yield return StartCoroutine(MoveToNextRoom(nextpos));
         currentRoom = nextRoom;
-
         }
+
+        Debug.Log("finished");
+        GameManager.singleton.currentRoom = roomtomove;
+        SceneEnter?.Invoke(roomtomove);
     }
 
     IEnumerator MoveToNextRoom(Vector3 targetPosition)

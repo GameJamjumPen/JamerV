@@ -21,6 +21,7 @@ public class Inventory : MonoBehaviour
     public InventorySlot[] allSlots;
 
     [Header("Display")]
+    public Image image;
     public TextMeshProUGUI cardName;
     public Image cardImage;
     public Image cardType;
@@ -35,11 +36,14 @@ public class Inventory : MonoBehaviour
     public void Update(){
         if(istoggleable){
             if(Input.GetKeyDown(openCloseKey)){
-                if(backPackSystem.activeSelf){
+                if(image.enabled){
+                    image.enabled = false;
                     backPackSystem.SetActive(false);
                     pocketSystem.SetActive(false);
-                }else{ backPackSystem.SetActive(true);
-                pocketSystem.SetActive(true);
+                }else{
+                    image.enabled = true;
+                    backPackSystem.SetActive(true);
+                    pocketSystem.SetActive(true);
                 }
             }
         }
