@@ -143,6 +143,9 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         if(inventory != null){
         inventory.DisplayDeselected();
         }
+        if(battleInventory != null){
+            battleInventory.cardSelected = null;
+        }
         ChangeAnimationState(NORMAL);
     }
     #endregion
