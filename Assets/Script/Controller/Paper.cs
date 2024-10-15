@@ -35,7 +35,6 @@ public class Paper : MonoBehaviour
 
     public void SetCard(CardSO[] cardinput)
     {
-
         for (int i = 0; i < cardinput.Length; i++)
         {
             cardSOs.Add(cardinput[i]);

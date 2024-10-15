@@ -151,6 +151,15 @@ public class BattleController : MonoBehaviour
             }
             else
             {
+                //check win or lose
+                if(battleModel.player.IsAlive())
+                {
+                    Paper.Instance.SetVictory(true);
+                }
+                else
+                {
+                    Paper.Instance.SetVictory(false);
+                }
                 SceneChange.ChangeSceneFunc("MainBoard");
             }
             return;
