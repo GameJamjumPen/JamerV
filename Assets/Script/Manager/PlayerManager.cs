@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
         {
             { "Strength", 0 },
             { "Defense", 0 },
-            { "Luck", 0 }
+            { "Heal", 0 }
         };
     }
 
@@ -29,7 +29,7 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
         StatPoints = data.statPoints;
         stats["Strength"] = data.strength;
         stats["Defense"] = data.defense;
-        stats["Luck"] = data.luck;
+        stats["Heal"] = data.heal;
 
     }
 
@@ -39,7 +39,7 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
         data.statPoints = StatPoints;
         data.strength = stats["Strength"];
         data.defense = stats["Defense"];
-        data.luck = stats["Luck"];
+        data.heal = stats["Heal"];
 
     }
 

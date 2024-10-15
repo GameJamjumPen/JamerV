@@ -14,7 +14,7 @@ public class GameData
     public int life;
     public int strength;
     public int defense;
-    public int luck;
+    public int heal;
     public int statPoints;
     public int currentRoom;
     public List<RoomPlacement> roomPlacement;
@@ -27,7 +27,7 @@ public class GameData
         life = 3;
         strength = 1;
         defense = 1;
-        luck = 1;
+        heal = 1;
         statPoints = 0;
         wentRoom = new List<int>();
         roomPlacement = new List<RoomPlacement>();
