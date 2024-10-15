@@ -27,7 +27,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     [Header("Reference")]
     private Inventory inventory;
     private BattleInventory battleInventory;
-    [Tooltip("index 0 is ATK , 1 is DEF")]
+    [Tooltip("index 0 is ATK , 1 is DEF, 2 is HEAL")]
     public Sprite[] types;
 
     [Header("Drag and Drop")]
@@ -92,6 +92,9 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
                 break;
                 case CardType.DEF:
                 slotType.sprite = types[1];
+                break;
+                case CardType.SUP:
+                slotType.sprite = types[2];
                 break;
             }
         }else{

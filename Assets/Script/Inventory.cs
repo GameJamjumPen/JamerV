@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour,IInventorable
     public Image cardImage;
     public Image cardType;
     public TextMeshProUGUI cardStat;
-    [Tooltip("Types[0] will be ATK Types[1] will be DEF card")]
+    [Tooltip("Types[0] will be ATK Types[1] will be DEF Types[2] will be SUP card")]
     public Sprite[] types;
 
     #endregion
@@ -86,8 +86,10 @@ public class Inventory : MonoBehaviour,IInventorable
         cardStat.text = cardSelected._value.ToString();
         if(cardSelected.cardType == CardType.ATK){
             cardType.sprite = types[0];
-        }else{
+        }else if(cardSelected.cardType == CardType.DEF){
             cardType.sprite = types[1];
+        }else{
+            cardType.sprite = types[2];
         }
     }
     public void DisplayDeselected(){
