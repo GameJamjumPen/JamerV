@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class HostileRoom : Room
 {
+    public int minscore;
+    public int maxscore;
     public RoomType roomType;
     public Sprite _background;
     [Scene]
@@ -14,6 +16,7 @@ public class HostileRoom : Room
     }
     public override void OnPlayerAttack()
     {
+        Paper.Instance.SetScore(Random.Range(minscore, maxscore));
         Paper.Instance.SetCard(GameManager.singleton.cardSOs);
         Paper.Instance.SetBackground(_background);
     }

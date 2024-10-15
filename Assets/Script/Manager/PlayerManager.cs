@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
     #region Stats
 
     public int Life { get; private set; }
-    public int StatPoints { get; private set; }
+    public int StatPoints;
     public Dictionary<string, int> stats {get; private set;}
 
     public static event Action ScoreAdded;
@@ -47,7 +47,7 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
 
     private void OnEnable()
     {
-        
+        StatPoints += Paper.Instance.score;
     }
 
     public void SetLife(int life)

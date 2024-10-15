@@ -6,6 +6,7 @@ using UnityEngine;
 public class Paper : MonoBehaviour
 {
     public static Paper Instance;
+    public int score;
     public EnemyDifficulty enemyDifficulty;
     public bool isVictory;
     public List<CardSO> cardSOs;
@@ -26,6 +27,11 @@ public class Paper : MonoBehaviour
     public void SetVictory(bool victory)
     {
         isVictory = victory;
+    }
+
+    public void SetScore(int score)
+    {
+        this.score=score;
     }
 
     public void SetEnemyDifficulty(EnemyDifficulty Diff)
