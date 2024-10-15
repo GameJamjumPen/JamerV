@@ -31,7 +31,9 @@ public abstract class EnemyModel : CharacterBase
     {
         target.TakeDamage(AttackPower);
     }
-
+    public static void Attack(int attackDamage,ICharacter target){
+        target.TakeDamage(attackDamage);
+    }
     public static void AttackPlayer(List<EnemyModel> enemyModels, PlayerModel player,int shieldProp,int healprop)
     {
         bool shieldUsed = false;

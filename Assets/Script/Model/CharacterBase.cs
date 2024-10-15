@@ -50,5 +50,8 @@ public abstract class CharacterBase : ICharacter
     public void setShield(int amount){
         Shield =amount;
     }
+    public static void Attack(int attackDamage,ICharacter target){
+        target.TakeDamage(attackDamage);
+    }
     
 }
