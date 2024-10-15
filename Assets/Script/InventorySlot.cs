@@ -228,7 +228,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     }
     public void OnUse(){
         if(battleInventory != null){
-            if(battleInventory.cardSelected != this.cardSO){
+            if(battleInventory.cardSelected == this.cardSO){
                 battleInventory.Use();
             }else{
                 Debug.Log("battleInventory.cardSelected != this.cardSO");

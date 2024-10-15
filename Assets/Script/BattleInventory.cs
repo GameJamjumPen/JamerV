@@ -34,9 +34,10 @@ public class BattleInventory : MonoBehaviour ,IInventorable
     public void Awake()
     {
         enemyHolders = FindObjectsOfType<EnemyHolder>();
-        this.enemyUIManager = battleController.enemyUIManager;
-        this.playerUIManager = battleController.playerUIManager;
-        getCard(Paper.Instance.cardSOs);
+        enemyUIManager = battleController.enemyUIManager;
+        playerUIManager = battleController.playerUIManager;
+        player = battleController.player;
+        //getCard(Paper.Instance.cardSOs);
         AddDeck(3);
     }
     public void DeselectedAllHolder(){
@@ -80,20 +81,15 @@ public class BattleInventory : MonoBehaviour ,IInventorable
 
     public void Use(){
         if(cardSelected != null && enemyHolder != null){
-            switch (cardSelected.cardType)
-            {
-                case CardType.ATK:
+            if(cardSelected.cardType ==CardType.ATK){
                 CharacterBase.Attack((int)cardSelected._value , enemyHolder.enemyContain);
                 this.enemyUIManager.updateUI(battleController.enemies);
-                break;
-                case CardType.DEF:
+            }else if(cardSelected.cardType==CardType.DEF){
                 player.setShield((int)cardSelected._value);
                 this.playerUIManager.UpdatePlayerUI(battleController.player);
-                break;
-                case CardType.SUP:
+            }else if(cardSelected.cardType==CardType.SUP){
                 player.HealByAmount((int)cardSelected._value);
                 this.playerUIManager.UpdatePlayerUI(battleController.player);
-                break;
             }
             cardSelected = null;
             useSlot.RemoveItem();

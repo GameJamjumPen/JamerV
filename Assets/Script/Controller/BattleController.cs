@@ -23,7 +23,7 @@ public class BattleController : MonoBehaviour
     public List<EnemyModel> enemies = new List<EnemyModel>(); //POLYMORPHISM NA KUB PIPI
     private List<CharacterView> enemyViews = new List<CharacterView>();
     public TextMeshProUGUI ShowTurn;
-    public Image background;
+    //public Image background;
     private int currentWave = -1;
 
     [Header("Assignable")]
@@ -49,18 +49,15 @@ public class BattleController : MonoBehaviour
         waves = GenerateEnemyWave.Instance.GetEnemyWaves();
         initPlayer();
         NewWave();
-        background.sprite = Paper.Instance.sprite;
+        //background.sprite = Paper.Instance.sprite;
         // background.sprite = Paper.Instance.sprite;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            if (!isPlayerTurn){
-                ShowCurrentTurn();
-                EnemyTurn();
-            }
+        if (!isPlayerTurn){
+            ShowCurrentTurn();
+            EnemyTurn();
         }
     }
     void initPlayer()
@@ -110,6 +107,7 @@ public class BattleController : MonoBehaviour
         enemyUIManager.updateUI(enemies);
         GameOver();
         isPlayerTurn = true;
+        ShowCurrentTurn();
     }
 
     void AttackCharacter(ICharacter attacker, ICharacter target)

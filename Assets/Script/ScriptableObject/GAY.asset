@@ -15,3 +15,4 @@ MonoBehaviour:
   _cardName: GayTempest
   _cardSprite: {fileID: 21300000, guid: e8d5fe952285149418d0e44d03ed4831, type: 3}
   cardType: 1
+  _value: 34
