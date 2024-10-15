@@ -9,7 +9,9 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
 
     public int Life { get; private set; }
     public int StatPoints { get; private set; }
-    private Dictionary<string, int> stats;
+    public Dictionary<string, int> stats {get; private set;}
+
+    public static event Action ScoreAdded;
 
     #endregion
     private void Awake()
@@ -58,6 +60,7 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
             string randomStat = statList[random.Next(statList.Count)];
             stats[randomStat] += 1;
             StatPoints -= 1;
+            ScoreAdded?.Invoke();
         }
     }
 
