@@ -26,6 +26,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     //[Header("Reference")]
     [Header("Reference")]
     private Inventory inventory;
+    private BattleInventory battleInventory;
     [Tooltip("index 0 is ATK , 1 is DEF")]
     public Sprite[] types;
 
@@ -46,6 +47,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     void Awake()
     {
         inventory = FindObjectOfType<Inventory>();
+        battleInventory = FindObjectOfType<BattleInventory>();
         currentstate = NORMAL;
     }
     #region Add/Remove Item
@@ -100,7 +102,12 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     }
     #region Selected/Deselected Slot
     public void OnSelected(){
-        inventory.DeselectedAllSlot();
+        if(inventory != null){
+            inventory.DeselectedAllSlot();
+        }
+        if(battleInventory != null){
+            battleInventory.DeselectedAllSlot();
+        }
         selectedShader.SetActive(true);
         isSelected = true;
         if(isBar){
@@ -108,17 +115,21 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         }else{
             ChangeAnimationState(SELECTED);
         }
-        if(this.cardSO != null){
-            inventory.cardSelected = this.cardSO;
-            inventory.DisplaySelected();
-        }else{
-            inventory.DisplayDeselected();
+        if(inventory != null){
+            if(this.cardSO != null){
+                inventory.cardSelected = this.cardSO;
+                inventory.DisplaySelected();
+            }else{
+                inventory.DisplayDeselected();
+            }
         }
     }
     public void OnDeselected(){
         selectedShader.SetActive(false);
         isSelected = false;
+        if(inventory != null){
         inventory.DisplayDeselected();
+        }
         ChangeAnimationState(NORMAL);
     }
     #endregion

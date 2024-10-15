@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleModel : MonoBehaviour
+public class BattleModel
 {
     public PlayerModel player;  // Player object
     public List<EnemyModel> enemies;  // List of enemies

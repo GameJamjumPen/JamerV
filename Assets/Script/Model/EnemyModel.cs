@@ -57,7 +57,6 @@ public class Knive : EnemyModel
 public class Folk : EnemyModel
 {
     public Folk() : base("Folk", 50, 15, EnemyDifficulty.Medium) { }
-
     public override void Attack(ICharacter target)
     {
         base.Attack(target);
