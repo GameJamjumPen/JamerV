@@ -26,7 +26,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     //[Header("Reference")]
     [Header("Reference")]
     private Inventory inventory;
-    private BattleInventory battleInventory;
+    public BattleInventory battleInventory;
     [Tooltip("index 0 is ATK , 1 is DEF, 2 is HEAL")]
     public Sprite[] types;
 
@@ -72,7 +72,9 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
             OnSelected();
         }
         if(eventData.button == PointerEventData.InputButton.Right){
+            if(isSelected){
             OnUse();
+            }
         }
         if(eventData.button == PointerEventData.InputButton.Middle){
             if(isSelected){
@@ -130,6 +132,8 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
             if(this.cardSO != null){
                 battleInventory.cardSelected = this.cardSO;
                 battleInventory.useSlot = this;
+            }else{
+                Debug.Log("this.cardSO = null");
             }
         }
     }
@@ -138,6 +142,9 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         isSelected = false;
         if(inventory != null){
         inventory.DisplayDeselected();
+        }
+        if(battleInventory != null){
+            battleInventory.cardSelected = null;
         }
         ChangeAnimationState(NORMAL);
     }
@@ -221,9 +228,13 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     }
     public void OnUse(){
         if(battleInventory != null){
-            if(!isSelected && battleInventory.cardSelected != this.cardSO){
+            if(battleInventory.cardSelected != this.cardSO){
                 battleInventory.Use();
+            }else{
+                Debug.Log("battleInventory.cardSelected != this.cardSO");
             }
+        }else{
+            Debug.Log("battleInventory = null");
         }
     }
 }
