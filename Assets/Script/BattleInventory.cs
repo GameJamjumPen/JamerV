@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class BattleInventory : MonoBehaviour ,IInventorable
 {
+    public PlayerModel player;
     public List<CardSO> cardSOPools;
     public InventorySlot[] slotDisplay;
     public GameObject shuffleUI;
+    public CardSO cardSelected;
+    public BattleController battleController;
+    public EnemyHolder enemyHolder;
     public void getCard(List<CardSO> cardSOList){
         foreach(CardSO cardSO in cardSOList){
             cardSOPools.Add(cardSO);
@@ -61,4 +65,17 @@ public class BattleInventory : MonoBehaviour ,IInventorable
             inventorySlot.OnDeselected();
         }
     }
-}
+
+    public void Use(){
+        switch (cardSelected.cardType)
+        {
+            case CardType.ATK:
+            player.AttackPower = (int)cardSelected._value;
+            break;
+            case CardType.DEF:
+            break;
+            case CardType.SUP:
+            break;
+        }
+    }
+} 

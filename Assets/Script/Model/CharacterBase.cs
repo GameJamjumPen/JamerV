@@ -4,7 +4,7 @@ public abstract class CharacterBase : ICharacter
 {
     public string Name { get; protected set; }
     public int Health { get; set; }
-    public int AttackPower { get; protected set; }
+    public int AttackPower {get; set;}
     public int MaxHealth { get; protected set; }
 
     public int Shield { get; protected set; }
@@ -49,6 +49,9 @@ public abstract class CharacterBase : ICharacter
     }
     public void setShield(int amount){
         Shield =amount;
+    }
+    public static void Attack(int attackDamage,ICharacter target){
+        target.TakeDamage(attackDamage);
     }
     
 }
