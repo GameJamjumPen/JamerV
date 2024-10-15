@@ -43,8 +43,8 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.Log("finished");
         GameManager.singleton.currentRoom = roomtomove;
-        SceneEnter?.Invoke(roomtomove);
-    }
+        GameManager.singleton.RoomEnter(roomtomove);
+        }
 
     IEnumerator MoveToNextRoom(Vector3 targetPosition)
     {

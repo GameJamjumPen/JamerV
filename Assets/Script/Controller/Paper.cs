@@ -22,25 +22,37 @@ public class Paper : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void SetVictory(bool victory){
+
+    public void SetVictory(bool victory)
+    {
         isVictory = victory;
     }
-    public void SetEnemyDifficulty(EnemyDifficulty Diff){
+
+    public void SetEnemyDifficulty(EnemyDifficulty Diff)
+    {
         enemyDifficulty = Diff;
     }
-    public void SetCard(CardSO[] cardinput){
-        for(int i = 0;i< cardinput.Length;i++){
+
+    public void SetCard(CardSO[] cardinput)
+    {
+
+        for (int i = 0; i < cardinput.Length; i++)
+        {
             cardSOs.Add(cardinput[i]);
         }
     }
-    public void ClearCard(){
+
+    public void ClearCard()
+    {
         cardSOs.Clear();
     }
-    public bool GetResult(){
-        if(isVictory) return true;
+    public bool GetResult()
+    {
+        if (isVictory) return true;
         else return false;
     }
-    public void SetBackground(Sprite background){
+    public void SetBackground(Sprite background)
+    {
         sprite = background;
     }
 

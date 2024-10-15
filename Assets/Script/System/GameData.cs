@@ -8,8 +8,8 @@ using UnityEngine;
 public class GameData
 {
     public string Name;
-
     public List<int> wentRoom;
+
     public List<CardSO> inventoryData;
     public int life;
     public int strength;
@@ -29,7 +29,7 @@ public class GameData
         defense = 1;
         heal = 1;
         statPoints = 0;
-        wentRoom = new List<int>();
+        wentRoom = new List<int>(){};
         roomPlacement = new List<RoomPlacement>();
         currentRoom = 0;
     }

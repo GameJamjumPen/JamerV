@@ -45,6 +45,11 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
 
     }
 
+    private void OnEnable()
+    {
+        
+    }
+
     public void SetLife(int life)
     {
         this.Life = life;

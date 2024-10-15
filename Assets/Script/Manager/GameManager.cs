@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 {
     public List<GameObject> roomPref;
     public List<string> scenes;
-    private List<int> wentRoom;
+    public List<int> wentRoom{get; private set;}
     public int currentRoom;
     public GameObject went;
 
@@ -39,18 +39,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
         Debug.Log(a);
     }
 
-    void OnEnable()
-    {
-        PlayerMovement.SceneEnter += RoomEnter;
-    }
-
-    void OnDisable() {
-        PlayerMovement.SceneEnter -= RoomEnter;    
-    }
 
     public void LoadData(GameData data)
     {
         this.currentRoom = data.currentRoom;
+        this.wentRoom = new List<int>(data.wentRoom);
         if (data.roomPlacement == null || data.roomPlacement.Count == 0)
         {
             availableRooms = new List<GameObject>(roomPref);
@@ -58,9 +51,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
         else
         {
-            wentRoom = new List<int>(data.wentRoom);
             PlaceRooms(data.roomPlacement);
         }
+        
         // transform.position = allrooms[currentRoom].transform.position;
     }
 
@@ -75,8 +68,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
             data.roomPlacement.Add(placementData);
         }
     }
-
         data.currentRoom = this.currentRoom;
+        data.wentRoom = new List<int>(this.wentRoom);
     }
 
 
@@ -113,6 +106,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
     }
 
+    public void GetRoom(int room)
+    {
+        wentRoom.Add(room);
+    }
 
     public void GenerateRandomLayout()
     {
