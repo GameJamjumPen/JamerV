@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
         singleton = this;
 
-        availableRooms = new List<GameObject>(roomPref);
+        
     }
     public void Debugger(string a){
         Debug.Log(a);
@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         this.currentRoom = data.currentRoom;
         if (data.roomPlacement == null || data.roomPlacement.Count == 0)
         {
+            availableRooms = new List<GameObject>(roomPref);
             GenerateRandomLayout();
         }
         else
@@ -60,21 +61,20 @@ public class GameManager : MonoBehaviour, IDataPersistence
             wentRoom = new List<int>(data.wentRoom);
             PlaceRooms(data.roomPlacement);
         }
-        transform.position = allrooms[currentRoom].transform.position;
+        // transform.position = allrooms[currentRoom].transform.position;
     }
 
     public void SaveData(ref GameData data)
     {
-        data.roomPlacement.Clear();
+        if(data.roomPlacement == null || data.roomPlacement.Count==0)
+    {
 
-        RoomPlacement startRoomPlacement = new RoomPlacement(0, 0);
-        data.roomPlacement.Add(startRoomPlacement);
-
-        for (int i = 1; i < availableRooms.Count; i++)
+        for (int i = 0; i < availableRooms.Count; i++)
         {
             RoomPlacement placementData = new RoomPlacement(i, roomPref.IndexOf(availableRooms[i]));
             data.roomPlacement.Add(placementData);
         }
+    }
 
         data.currentRoom = this.currentRoom;
     }
@@ -86,11 +86,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             for (int i = 0; i < layout.Count; i++)
             {   
-                int gridSlotIndex = layout[i].gridInd;
-                int roomPrefabIndex = layout[i].roomInd;
+                int gridIndex = layout[i].gridInd;
+                int roomIndex = layout[i].roomInd;
                 
-                Transform roomSlot = allrooms[gridSlotIndex].transform;
-                GameObject roomPrefab = roomPref[roomPrefabIndex];
+                Transform roomSlot = allrooms[gridIndex+1].transform;
+                GameObject roomPrefab = roomPref[roomIndex];
 
                 if (wentRoom.Contains(i))
                 {
@@ -116,14 +116,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void GenerateRandomLayout()
     {
-        GameObject startRoom = availableRooms[0];
-        Transform firstSlot = allrooms[0].transform;
-        Instantiate(startRoom, firstSlot);
-
-        availableRooms.RemoveAt(0);
-
         Shuffle(availableRooms);
-
         PlaceRooms();
     }
 
