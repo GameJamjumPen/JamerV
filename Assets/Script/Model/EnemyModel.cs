@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 // Define difficulty levels
 public enum EnemyDifficulty
@@ -13,26 +14,82 @@ public enum EnemyDifficulty
 public abstract class EnemyModel : CharacterBase
 {
     public EnemyDifficulty Difficulty { get; private set; }
-
+    private static System.Random rng = new System.Random();
     public EnemyModel(string name, int health, int baseAttackPower, EnemyDifficulty difficulty) 
-        : base(name, health, RandomizeAttackPower(baseAttackPower))
+        : base(name, RandomizeStat(health), RandomizeStat(baseAttackPower))
     {
         Difficulty = difficulty;
     }
 
     // Randomize the attack power by ±20%
-    private static int RandomizeAttackPower(int baseAttackPower)
+    private static int RandomizeStat(int baseValue, float minMultiplier = 1.0f, float maxMultiplier = 1.2f)
     {
-        float minMultiplier = 1.0f;
-        float maxMultiplier = 1.2f;
         float randomMultiplier = Random.Range(minMultiplier, maxMultiplier);
-
-        return Mathf.RoundToInt(baseAttackPower * randomMultiplier);
+        return Mathf.RoundToInt(baseValue * randomMultiplier);
     }
-
     public override void Attack(ICharacter target)
     {
         target.TakeDamage(AttackPower);
+    }
+
+    public static void AttackPlayer(List<EnemyModel> enemyModels, PlayerModel player)
+    {
+        bool shieldUsed = false;
+        bool healUsed = false;
+
+        foreach (var enemy in enemyModels)
+        {
+            if (!enemy.IsAlive()) continue;
+
+            int decision = rng.Next(0, 100);
+
+            if (decision < 30 && !shieldUsed)
+            {
+                bool shielded = SetShieldToLowestHealthEnemy(enemyModels);
+                if (shielded) shieldUsed = true;
+                else enemy.Attack(player);
+            }
+            else if (decision < 60 && !healUsed)
+            {
+                bool healed = HealLowHealthEnemy(enemyModels);
+                if (healed) healUsed = true;
+                else enemy.Attack(player);
+            }
+            else
+            {
+                enemy.Attack(player);
+            }
+        }
+    }
+    private static bool SetShieldToLowestHealthEnemy(List<EnemyModel> enemies)
+    {
+        var lowestHealthEnemy = enemies
+            .Where(e => e.IsAlive())
+            .OrderBy(e => e.Health)
+            .FirstOrDefault();
+
+        if (lowestHealthEnemy != null)
+        {
+            lowestHealthEnemy.setShield(30);
+            return true;
+        }
+
+        Debug.Log("No valid enemy found to shield.");
+        return false;
+    }
+    private static bool HealLowHealthEnemy(List<EnemyModel> enemies)
+    {
+        foreach (var enemy in enemies)
+        {
+            if (enemy.Health < enemy.MaxHealth * 0.2f && enemy.IsAlive())
+            {
+                enemy.HealByPercentage(0.2f);
+                return true;
+            }
+        }
+
+        Debug.Log("No enemies with health below 20% found to heal.");
+        return false;
     }
 }
 
