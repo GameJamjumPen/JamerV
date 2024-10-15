@@ -19,8 +19,8 @@ public class BattleController : MonoBehaviour
     public GameObject playerPrefab;
     private BattleModel battleModel;
     public bool isPlayerTurn = true;
-    private PlayerModel player;
-    private List<EnemyModel> enemies = new List<EnemyModel>(); //POLYMORPHISM NA KUB PIPI
+    public PlayerModel player;
+    public List<EnemyModel> enemies = new List<EnemyModel>(); //POLYMORPHISM NA KUB PIPI
     private List<CharacterView> enemyViews = new List<CharacterView>();
     public TextMeshProUGUI ShowTurn;
     public Image background;
@@ -49,6 +49,7 @@ public class BattleController : MonoBehaviour
         waves = GenerateEnemyWave.Instance.GetEnemyWaves();
         initPlayer();
         NewWave();
+        background.sprite = Paper.Instance.sprite;
         // background.sprite = Paper.Instance.sprite;
     }
 

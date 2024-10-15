@@ -5,10 +5,18 @@ using UnityEngine;
 public class EnemyHolder : MonoBehaviour
 {
     public EnemyModel enemyContain;
-    public void AddEnemy(EnemyModel enemy){
-        enemyContain = enemy;
+    public bool isSelected;
+    public BattleInventory battleInventory;
+
+    public void Awake(){
+        battleInventory = FindObjectOfType<BattleInventory>();
     }
-    public void ClearEnemy(){
-        enemyContain = null;
+    public void Deselected(){
+        isSelected = false;
+    }
+    public void Selected(){
+        battleInventory.DeselectedAllHolder();
+        isSelected = true;
+        battleInventory.enemyHolder = this;
     }
 }

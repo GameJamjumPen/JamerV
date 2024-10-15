@@ -7,10 +7,14 @@ public class BattleInventory : MonoBehaviour ,IInventorable
     public PlayerModel player;
     public List<CardSO> cardSOPools;
     public InventorySlot[] slotDisplay;
+    public InventorySlot useSlot;
     public GameObject shuffleUI;
     public CardSO cardSelected;
     public BattleController battleController;
+    private EnemyHolder[] enemyHolders;
     public EnemyHolder enemyHolder;
+    private EnemyUIManager enemyUIManager;
+    private PlayerUIManager playerUIManager;
     public void getCard(List<CardSO> cardSOList){
         foreach(CardSO cardSO in cardSOList){
             cardSOPools.Add(cardSO);
@@ -29,8 +33,16 @@ public class BattleInventory : MonoBehaviour ,IInventorable
 
     public void Awake()
     {
+        enemyHolders = FindObjectsOfType<EnemyHolder>();
+        this.enemyUIManager = battleController.enemyUIManager;
+        this.playerUIManager = battleController.playerUIManager;
         getCard(Paper.Instance.cardSOs);
         AddDeck(3);
+    }
+    public void DeselectedAllHolder(){
+        for(int i = 0;i< enemyHolders.Length;i++){
+            enemyHolders[i].Deselected();
+        }
     }
 
     public void Update(){
@@ -67,15 +79,25 @@ public class BattleInventory : MonoBehaviour ,IInventorable
     }
 
     public void Use(){
-        switch (cardSelected.cardType)
-        {
-            case CardType.ATK:
-            player.AttackPower = (int)cardSelected._value;
-            break;
-            case CardType.DEF:
-            break;
-            case CardType.SUP:
-            break;
+        if(cardSelected != null && enemyHolder != null){
+            switch (cardSelected.cardType)
+            {
+                case CardType.ATK:
+                CharacterBase.Attack((int)cardSelected._value , enemyHolder.enemyContain);
+                this.enemyUIManager.updateUI(battleController.enemies);
+                break;
+                case CardType.DEF:
+                player.setShield((int)cardSelected._value);
+                this.playerUIManager.UpdatePlayerUI(battleController.player);
+                break;
+                case CardType.SUP:
+                player.HealByAmount((int)cardSelected._value);
+                this.playerUIManager.UpdatePlayerUI(battleController.player);
+                break;
+            }
+            cardSelected = null;
+            useSlot.RemoveItem();
+            useSlot = null;
         }
     }
 } 
