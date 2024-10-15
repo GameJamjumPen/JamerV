@@ -4654,6 +4654,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1303952817}
     - target: {fileID: 5280553264471666974, guid: 62f5653871f9e2c4ebaaa9c38d3ed804, type: 3}
+      propertyPath: selectedRoom
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280553264471666974, guid: 62f5653871f9e2c4ebaaa9c38d3ed804, type: 3}
       propertyPath: allrooms.Array.data[0]
       value: 
       objectReference: {fileID: 1394969449}
