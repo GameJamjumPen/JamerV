@@ -32,24 +32,25 @@ public abstract class EnemyModel : CharacterBase
         target.TakeDamage(AttackPower);
     }
 
-    public static void AttackPlayer(List<EnemyModel> enemyModels, PlayerModel player)
+    public static void AttackPlayer(List<EnemyModel> enemyModels, PlayerModel player,int shieldProp,int healprop)
     {
         bool shieldUsed = false;
         bool healUsed = false;
 
         foreach (var enemy in enemyModels)
         {
+            Debug.Log("Alive");
             if (!enemy.IsAlive()) continue;
 
             int decision = rng.Next(0, 100);
 
-            if (decision < 30 && !shieldUsed)
+            if (decision < shieldProp && !shieldUsed)
             {
                 bool shielded = SetShieldToLowestHealthEnemy(enemyModels);
                 if (shielded) shieldUsed = true;
                 else enemy.Attack(player);
             }
-            else if (decision < 60 && !healUsed)
+            else if (decision < shieldProp+healprop && !healUsed)
             {
                 bool healed = HealLowHealthEnemy(enemyModels);
                 if (healed) healUsed = true;
@@ -81,7 +82,7 @@ public abstract class EnemyModel : CharacterBase
     {
         foreach (var enemy in enemies)
         {
-            if (enemy.Health < enemy.MaxHealth * 0.2f && enemy.IsAlive())
+            if (enemy.IsAlive())
             {
                 enemy.HealByPercentage(0.2f);
                 return true;

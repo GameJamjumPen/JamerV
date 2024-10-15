@@ -26,14 +26,18 @@ public class EnemyUIManager : MonoBehaviour
 
             // Set the name and health
             TextMeshProUGUI nameText = slot.GetComponentInChildren<TextMeshProUGUI>();
-            Slider healthSlider = slot.GetComponentInChildren<Slider>();
+            Slider healthSlider = slot.Find("HealthSlider").GetComponent<Slider>();
+            Slider shieldSlider = slot.Find("ShieldSlider").GetComponent<Slider>();
+            TextMeshProUGUI healthText = healthSlider.GetComponentInChildren<TextMeshProUGUI>();
             Image enemyImage = slot.Find("EnemyImage").GetComponent<Image>();
 
             nameText.text = enemies[i].Name;
             healthSlider.maxValue = enemies[i].Health;
             healthSlider.value = enemies[i].Health;
             enemyImage.sprite = sprites[i];
-
+            shieldSlider.maxValue = 100;
+            shieldSlider.value = 0;
+            healthText.text = enemies[i].Health.ToString();
             // Ensure the slot is active
             slot.gameObject.SetActive(true);
         }
@@ -47,8 +51,12 @@ public class EnemyUIManager : MonoBehaviour
     public void updateUI(List<EnemyModel> enemies){
         for (int i = 0; i < enemies.Count; i++)
         {
-            Slider healthSlider = enemySlots[i].GetComponentInChildren<Slider>();
+            Slider healthSlider = enemySlots[i].Find("HealthSlider").GetComponent<Slider>();
+            Slider shieldSlider = enemySlots[i].Find("ShieldSlider").GetComponent<Slider>();
+            TextMeshProUGUI healthText = healthSlider.GetComponentInChildren<TextMeshProUGUI>();
             healthSlider.value = enemies[i].Health;
+            shieldSlider.value = enemies[i].Shield;
+            healthText.text = enemies[i].Health.ToString();
         }
     }
 
