@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour,IInventorable
     public bool istoggleable;
     public GameObject backPackSystem;
     public GameObject pocketSystem;
+    public GameObject stats;
 
     [Header("Slots")]
     public CardSO cardSelected;
@@ -40,10 +41,12 @@ public class Inventory : MonoBehaviour,IInventorable
                     image.enabled = false;
                     backPackSystem.SetActive(false);
                     pocketSystem.SetActive(false);
+                    stats.SetActive(false);
                 }else{
                     image.enabled = true;
                     backPackSystem.SetActive(true);
                     pocketSystem.SetActive(true);
+                    stats.SetActive(true);
                 }
             }
         }
