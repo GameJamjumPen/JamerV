@@ -10,7 +10,7 @@ public class PlayerUIManager : MonoBehaviour
     public Slider playerHealthSlider;       // Reference to the player's health slider
     public Slider playerShieldSlider;
     public Image playerImage;               // Reference to the player's image (sprite)
-
+    public Animator animator;
     
     // Method to update the player's UI
     public void UpdatePlayerUI(PlayerModel player, Sprite playerSprite)
@@ -84,5 +84,10 @@ public class PlayerUIManager : MonoBehaviour
 
         // Reset the playerImage to its original color
         playerImage.color = originalColor;
+    }
+
+    public void AttackAnimate()
+    {
+        animator.SetTrigger("attack");
     }
 }

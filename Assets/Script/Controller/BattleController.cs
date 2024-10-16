@@ -124,7 +124,7 @@ public class BattleController : MonoBehaviour
     }
     private IEnumerator WaitforAnim(float second, Animator animator, string state)
     {
-        animator.Play(state);
+        playerUIManager.AttackAnimate();
         yield return new WaitForSeconds(second);
 
     }

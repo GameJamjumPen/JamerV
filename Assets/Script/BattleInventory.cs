@@ -117,12 +117,14 @@ public class BattleInventory : MonoBehaviour, IInventorable
                 return; // Exit the function if no enemy is selected
             }
 
+            
             CharacterBase.Attack((int)cardSelected._value, enemyHolder.enemyContain);
             battleController.ShowDamage((int)cardSelected._value , enemyHolder.gameObject , battleController.TextPopup);
             this.enemyUIManager.updateUI(battleController.enemies);
             enemyHolder.Deselected();
         }
-
+        
+        playerUIManager.AttackAnimate();
         // Reset cardSelected and useSlot after use
         useSlot.OnDeselected(); //unselected
         useSlot.RemoveItem(); //remove card from itself
