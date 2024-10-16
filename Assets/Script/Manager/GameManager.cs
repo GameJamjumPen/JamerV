@@ -85,9 +85,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 Transform roomSlot = allrooms[gridIndex+1].transform;
                 GameObject roomPrefab = roomPref[roomIndex];
 
-                if (wentRoom.Contains(i))
+                if (wentRoom.Contains(i+1))
                 {
-                    Instantiate(went, roomSlot);
+                    GameObject r = Instantiate(roomPrefab, roomSlot);
+                    SpriteRenderer roomSprite = r.GetComponent<SpriteRenderer>();
+                    roomSprite.color = new Color(.5f, .5f, .5f);
                 }
                 else {
                     Instantiate(roomPrefab, roomSlot);

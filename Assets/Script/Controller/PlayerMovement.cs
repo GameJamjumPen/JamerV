@@ -38,9 +38,9 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator Move(int roomtomove)
     {
+        Debug.Log("Moving to "+roomtomove);
         while (currentRoom != roomtomove)
         {
-
             int nextRoom = currentRoom + 1;
             if (nextRoom == 20) { nextRoom = 0; }
             Vector3 nextpos = rooms[nextRoom].transform.position;
@@ -65,7 +65,6 @@ public class PlayerMovement : MonoBehaviour
     {
         while (transform.position != targetPosition)
         {   
-            
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
@@ -92,9 +91,9 @@ public class PlayerMovement : MonoBehaviour
             animator.SetInteger("MoveX",-1);
             Debug.Log("left");
         }
-        else{
-            animator.SetInteger("MoveX",1);
-            animator.SetInteger("MoveY",0);
+        else if(15<room&&room<20){
+            animator.SetInteger("MoveX",0);
+            animator.SetInteger("MoveY",1);
             Debug.Log("up");
         }
     }

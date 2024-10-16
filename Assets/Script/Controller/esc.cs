@@ -24,13 +24,11 @@ public class esc : MonoBehaviour
 
     public void OpenEsc()
     {
-        Time.timeScale=0;
         escPrefab.SetActive(true);
     }
 
     public void CloseEsc()
     {
-        Time.timeScale = 1;
         escPrefab.SetActive(false);
     }
 
