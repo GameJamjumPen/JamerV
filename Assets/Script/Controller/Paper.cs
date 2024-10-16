@@ -31,7 +31,7 @@ public class Paper : MonoBehaviour, IDataPersistence
     {
         this.sceneName = sceneName;
         if(sceneName == "treasure"){
-            wentRoom.Add(roomNum+1);
+            wentRoom.Add(roomNum);
         }
     }
 
@@ -40,7 +40,7 @@ public class Paper : MonoBehaviour, IDataPersistence
         isplayed = true;
         isVictory = victory;
         if(victory){
-            wentRoom.Add(roomNum+1);
+            wentRoom.Add(roomNum);
         }
     }
 
