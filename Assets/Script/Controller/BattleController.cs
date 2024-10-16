@@ -78,6 +78,7 @@ public class BattleController : MonoBehaviour
                 return;
             case Turn.PlayerAnim:
                 //StartCoroutine(WaitforAnim(2f , _playerAnimator , ATTACK));
+                Debug.Log("Player Animation");
                 WaitforDebug(5f);
                 OnTurnChange(Turn.EnemyThink);
                 break;
@@ -162,7 +163,7 @@ public class BattleController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(turn);
+        // Debug.Log(turn);
         // if (!isPlayerTurn)
         // {
         //     ShowCurrentTurn();
