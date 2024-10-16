@@ -15,7 +15,7 @@ public class DataPersistenceMNG : MonoBehaviour
     [SerializeField] private string fileName;
 
     private FileDataHandler fileDataHandler;
-    private GameData gameData;
+    public GameData gameData;
 
     public static DataPersistenceMNG Instance { get; private set; }
 
@@ -89,8 +89,7 @@ public class DataPersistenceMNG : MonoBehaviour
     {
         if (this.gameData == null)
         {
-            Debug.LogWarning("no data");
-            return;
+            this.gameData = new GameData();
         }
 
         foreach (IDataPersistence dataPersistenceobj in dataPersistenceObject)
