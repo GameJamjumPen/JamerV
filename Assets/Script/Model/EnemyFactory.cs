@@ -24,7 +24,13 @@ public class EnemyFactory
         {
             EnemyDifficulty.Hard, new List<Func<EnemyModel>>
             {
-                () => new Bee()
+                () => new Bee(),
+            }
+        },
+        {
+            EnemyDifficulty.Boss, new List<Func<EnemyModel>>
+            {
+                () => new Prince(),
             }
         }
     };

@@ -197,7 +197,7 @@ public class Bee : EnemyModel
 }
 public class Prince : EnemyModel
 {
-    public Prince() : base("Prince" , 100, 50, EnemyDifficulty.Boss){}
+    public Prince() : base("Prince" , 200, 50, EnemyDifficulty.Boss){}
 
     public override void Attack(ICharacter target)
     {

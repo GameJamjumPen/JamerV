@@ -28,6 +28,7 @@ public class BattleController : MonoBehaviour
     public List<Sprite> FolkSprites = new List<Sprite>();
     public List<Sprite> SpoonSprites = new List<Sprite>();
     public List<Sprite> BeeSprites = new List<Sprite>();
+    public List<Sprite> Prince = new List<Sprite>();
     public List<List<EnemyModel>> waves = new List<List<EnemyModel>>();
     public GameObject playerPrefab;
     private BattleModel battleModel;
@@ -375,6 +376,8 @@ public class BattleController : MonoBehaviour
             case "Spoon":
                 return SpoonSprites[UnityEngine.Random.Range(0, SpoonSprites.Count)];
             case "Bee":
+                return BeeSprites[UnityEngine.Random.Range(0, BeeSprites.Count)];
+            case "Prince":
                 return BeeSprites[UnityEngine.Random.Range(0, BeeSprites.Count)];
             default:
                 return FishSprites[0]; // Default fallback sprite
