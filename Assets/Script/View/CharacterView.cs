@@ -17,10 +17,10 @@ public class CharacterView : MonoBehaviour
     public void SetHealth(int health){
         healthBar.value = health/MaxHealth;
     }
-    public void ShowDamage(int damage,Vector3 position)
+    public void ShowDamage(int damage,GameObject gameObjectPos,TextMeshProUGUI damageTextPrefab)
     {
-        // Instantiate a damage text object at the specified position
-        TextMeshProUGUI damageText = Instantiate(damageTextPrefab,position , Quaternion.identity, transform);
+        // Instantiate a damage text object at the specified gameObjectPos
+        TextMeshProUGUI damageText = Instantiate(damageTextPrefab,gameObjectPos.transform.position , Quaternion.identity, transform);
 
         // Set the damage amount and color
         damageText.text = $"-{damage}";
@@ -33,7 +33,7 @@ public class CharacterView : MonoBehaviour
     // Coroutine to fade out the damage text and destroy it
     private IEnumerator FadeAndDestroy(TextMeshProUGUI damageText)
     {
-        float duration = 1.0f;  // Duration of the fade-out
+        float duration = 3.0f;  // Duration of the fade-out
         float elapsedTime = 0f;
 
         Color initialColor = damageText.color;

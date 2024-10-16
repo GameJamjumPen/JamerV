@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class PlayerUIManager : MonoBehaviour
 {
@@ -33,5 +34,50 @@ public class PlayerUIManager : MonoBehaviour
         playerHealthSlider.value = player.Health;
         playerShieldSlider.value = player.Shield;
         healthText.text = player.Health.ToString();
+    }
+    public void ShakeAndFlashRed(float shakeDuration = 1f, float shakeAmount = 1f)
+    {
+        StartCoroutine(ShakeImage(shakeDuration, shakeAmount));
+        StartCoroutine(FlashRed(0.5f)); // Flash red for 0.5 seconds
+    }
+
+    private IEnumerator ShakeImage(float duration, float amount)
+    {
+        Vector3 originalPosition = playerImage.rectTransform.localPosition;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            // Create a small random offset for shaking effect
+            float offsetX = Random.Range(-amount, amount);
+            float offsetY = Random.Range(-amount, amount);
+
+            // Apply the offset to the playerImage's position
+            playerImage.rectTransform.localPosition = new Vector3(
+                originalPosition.x + offsetX,
+                originalPosition.y + offsetY,
+                originalPosition.z
+            );
+
+            elapsedTime += Time.deltaTime;
+            yield return null; // Wait for the next frame
+        }
+
+        // Reset to the original position after shaking
+        playerImage.rectTransform.localPosition = originalPosition;
+    }
+
+    private IEnumerator FlashRed(float duration)
+    {
+        Color originalColor = playerImage.color;
+
+        // Set the playerImage to red
+        playerImage.color = Color.red;
+
+        // Wait for the specified duration
+        yield return new WaitForSeconds(duration);
+
+        // Reset the playerImage to its original color
+        playerImage.color = originalColor;
     }
 }

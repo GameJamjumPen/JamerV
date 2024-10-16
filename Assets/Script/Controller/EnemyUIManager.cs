@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class EnemyUIManager : MonoBehaviour
 {
@@ -77,5 +78,53 @@ public class EnemyUIManager : MonoBehaviour
     }
     public void SetActiveFalseOf(int i){
         enemySlots[i].gameObject.SetActive(false);
+    }
+    public void ShakeAndFlashRed(GameObject enemyGameobject,float shakeDuration = 1f, float shakeAmount = 1f)
+    {
+        StartCoroutine(ShakeImage(shakeDuration, shakeAmount,enemyGameobject));
+        StartCoroutine(FlashRed(0.5f,enemyGameobject)); // Flash red for 0.5 seconds
+    }
+
+    private static IEnumerator ShakeImage(float duration, float amount,GameObject enemyGameobject)
+    
+    {
+        Image enemyImage = enemyGameobject.GetComponentInChildren<Image>();
+        Vector3 originalPosition = enemyImage.rectTransform.localPosition;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            // Create a small random offset for shaking effect
+            float offsetX = Random.Range(-amount, amount);
+            float offsetY = Random.Range(-amount, amount);
+
+            // Apply the offset to the enemyImage's position
+            enemyImage.rectTransform.localPosition = new Vector3(
+                originalPosition.x + offsetX,
+                originalPosition.y + offsetY,
+                originalPosition.z
+            );
+
+            elapsedTime += Time.deltaTime;
+            yield return null; // Wait for the next frame
+        }
+
+        // Reset to the original position after shaking
+        enemyImage.rectTransform.localPosition = originalPosition;
+    }
+
+    private static IEnumerator FlashRed(float duration,GameObject enemyGameobject)
+    {
+        Image enemyImage = enemyGameobject.GetComponentInChildren<Image>();
+        Color originalColor = enemyImage.color;
+
+        // Set the enemyImage to red
+        enemyImage.color = Color.red;
+
+        // Wait for the specified duration
+        yield return new WaitForSeconds(duration);
+
+        // Reset the enemyImage to its original color
+        enemyImage.color = originalColor;
     }
 }
