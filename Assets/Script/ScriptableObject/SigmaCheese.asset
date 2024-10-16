@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: SigmaCheese
   m_EditorClassIdentifier: 
   _cardName: Cheese
-  _cardSprite: {fileID: 21300000, guid: 665ec8847c8ff16428022fa6c393f032, type: 3}
   cardType: 1
-  _value: 60
+  _value: 400

@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: JellyFish
   m_EditorClassIdentifier: 
   _cardName: JellyFish
-  _cardSprite: {fileID: 21300000, guid: 86adc72bbc0f22145810eea0bb3444d3, type: 3}
   cardType: 1
-  _value: 60
+  _value: 200

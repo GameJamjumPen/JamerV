@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardName: Juice
   cardType: 2
-  _value: 70
+  _value: 150

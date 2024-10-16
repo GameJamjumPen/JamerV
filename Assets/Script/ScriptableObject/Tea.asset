@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Tea
   m_EditorClassIdentifier: 
   _cardName: Tea
-  _cardSprite: {fileID: 21300000, guid: fb0ca2d6a9e6703448ac8d7550cd8fcf, type: 3}
   cardType: 2
-  _value: 40
+  _value: 90

@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Rose
   m_EditorClassIdentifier: 
   _cardName: Rose
-  _cardSprite: {fileID: 21300000, guid: 27c39df0e2757d44f9693c5ab9b9f010, type: 3}
   cardType: 4
-  _value: 90
+  _value: 150
