@@ -1,17 +1,20 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class BossRoom : MonoBehaviour
+public class BossRoom : HostileRoom
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    //Paper.Instance.SetSceneName("Boss");
+    public void Awake(){
+    roomType = RoomType.Boss;
+    minscore = 0;
+    maxscore = 0;
+    
 }
+    public override void OnPlayerAttack()
+    {
+        base.OnPlayerAttack();
+        Paper.Instance.SetSceneName("Boss");
+        Paper.Instance.SetEnemyDifficulty(EnemyDifficulty.Hard);
+        SceneManager.LoadSceneAsync(combatScene);
+    }
+}
+

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7580349240746877679}
-  - component: {fileID: 5439500134855633699}
+  - component: {fileID: 8275013391602936065}
   - component: {fileID: 9174889028280828794}
   m_Layer: 0
   m_Name: boss
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 2734300673186358503}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5439500134855633699
+--- !u!114 &8275013391602936065
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,16 +43,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1844645664434611220}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f69a112b2a74eb4d8ff9cae57bff1ee, type: 3}
+  m_Script: {fileID: 11500000, guid: a5daf86cd9f301546a1cecd527091585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isOwned: 0
-  buildPos: {fileID: 2734300673186358503}
+  buildPos: {fileID: 0}
   OwnedRoom: {fileID: 0}
   Treasure: 0
   minscore: 0
   maxscore: 0
-  roomType: 2
+  roomType: 3
   _background: {fileID: 21300000, guid: d3a02e4dd4a52c94880b4fb717c4d73a, type: 3}
   combatScene: TurnBaseCombat
 --- !u!212 &9174889028280828794

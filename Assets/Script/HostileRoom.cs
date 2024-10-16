@@ -20,4 +20,4 @@ public class HostileRoom : Room
     }
 }
 
-public enum RoomType{Easy, Medium , Hard}
+public enum RoomType{Easy, Medium , Hard, Boss}
