@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: DwaynJohnson
   m_EditorClassIdentifier: 
   _cardName: Therock
-  _cardSprite: {fileID: 21300000, guid: 3f3a5ea5ace79004eba15d892dcc01a3, type: 3}
+  _cardSprite: {fileID: 21300000, guid: 665ec8847c8ff16428022fa6c393f032, type: 3}
   cardType: 0
   _value: 44

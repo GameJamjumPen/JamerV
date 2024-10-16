@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: fuwu
   m_EditorClassIdentifier: 
   _cardName: fuwu
-  _cardSprite: {fileID: 21300000, guid: a61b3edb3e1e0fe43a1f5f545b9f73c6, type: 3}
+  _cardSprite: {fileID: 21300000, guid: 51ed2a1876c0172448c4b8ec6d5008b5, type: 3}
   cardType: 2
   _value: 53

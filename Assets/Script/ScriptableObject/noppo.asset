@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: noppo
   m_EditorClassIdentifier: 
   _cardName: noppo
-  _cardSprite: {fileID: 21300000, guid: fb33ea479accf524eb6bd08696b71145, type: 3}
-  cardType: 2
+  _cardSprite: {fileID: 21300000, guid: 86adc72bbc0f22145810eea0bb3444d3, type: 3}
+  cardType: 4
   _value: 80
