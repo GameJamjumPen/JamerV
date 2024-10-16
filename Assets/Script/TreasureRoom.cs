@@ -14,6 +14,7 @@ public class TreasureRoom : Room
     {
         Inventory inventory = FindObjectOfType<Inventory>();
         SoundManager.Instance.PlaySFX("GetCard");
+        Paper.Instance.SetSceneName("treasure");
         inventory.AddItem(_cardReward,cardLoader.Instance.sprites[_cardReward._cardName]);
         Debug.Log("GO to Treasure");
         inventory.istoggleable = true;

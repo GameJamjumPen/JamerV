@@ -30,14 +30,17 @@ public class Paper : MonoBehaviour, IDataPersistence
     public void SetSceneName(string sceneName)
     {
         this.sceneName = sceneName;
+        if(sceneName == "treasure"){
+            wentRoom.Add(roomNum);
+        }
     }
 
     public void SetVictory(bool victory)
     {
         isplayed = true;
         isVictory = victory;
-        if(!victory){
-            wentRoom.Remove(roomNum);
+        if(victory){
+            wentRoom.Add(roomNum);
         }
     }
 

@@ -13,7 +13,7 @@ public class BossRoom : HostileRoom
     {
         base.OnPlayerAttack();
         Paper.Instance.SetSceneName("Boss");
-        Paper.Instance.SetEnemyDifficulty(EnemyDifficulty.Hard);
+        Paper.Instance.SetEnemyDifficulty(EnemyDifficulty.Boss);
         SceneManager.LoadSceneAsync(combatScene);
     }
 }

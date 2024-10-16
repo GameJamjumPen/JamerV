@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
     [Tooltip("Card to give to paper instance")]
     public CardSO[] cardSOs;
     public GameObject lockIn;
-    public GameObject  bar;
+    public GameObject bar;
+
+    private int roomget;
 
     public int stat;
 
@@ -29,7 +31,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
         singleton = this;
     }
-    
+
     public void Debugger(string a)
     {
         Debug.Log(a);
@@ -38,25 +40,26 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         this.currentRoom = data.currentRoom;
-        this.wentRoom = new List<int>(data.wentRoom);
+        this.wentRoom = Paper.Instance.wentRoom;
 
         PlaceRooms(data.wentRoom);
-        
+
     }
 
     public void SaveData(ref GameData data)
     {
         List<CardSO> slotToSave = new List<CardSO>();
-        foreach(CardSO card in cardSOs)
+        foreach (CardSO card in cardSOs)
         {
-            if(card!=null){
-            slotToSave.Add(card);}
+            if (card != null)
+            {
+                slotToSave.Add(card);
+            }
         }
 
         data.loadoutData = DataPersistenceMNG.Instance.ConvertScriptableObjectsToData(slotToSave);
 
         data.currentRoom = this.currentRoom;
-        data.wentRoom = new List<int>(this.wentRoom);
     }
 
     public void Place()
@@ -74,7 +77,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 if (wentRoom.Contains(i))
                 {
                     GameObject r = allrooms[i].transform.GetChild(0).gameObject;
-        
+
                     SpriteRenderer roomSprite = r.GetComponent<SpriteRenderer>();
                     roomSprite.color = new Color(.5f, .5f, .5f);
                 }
@@ -82,20 +85,15 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void GetRoom(int room)
-    {
-        wentRoom.Add(room);
-    }
-
-
 
     public void RoomEnter(int room) //selectedRoomยังหาไม่ถูกห้อง ไม่รู้ทำไม
     {
+        roomget = room;
         if (room == 0) { return; }
         room -= 1;
         Debug.Log("room" + room);
         selectedRoom = allrooms[room].GetComponentInChildren<Room>();
-        if (inventory.CheckFull(inventory.actualSlots) && inventory.CheckType(inventory.actualSlots,true,true,false))
+        if (inventory.CheckFull(inventory.actualSlots) && inventory.CheckType(inventory.actualSlots, true, true, false))
         {
             if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
             {
@@ -110,14 +108,16 @@ public class GameManager : MonoBehaviour, IDataPersistence
                     cardSOs[i] = inventory.actualSlots[i].cardSO;
                 }
             }
-            selectedRoom.OnPlayerAttack();
             Paper.Instance.roomNum = room;
+
+            selectedRoom.OnPlayerAttack();
         }
 
-        else if(selectedRoom.Treasure)
+        else if (selectedRoom.Treasure)
         {
-            selectedRoom.OnPlayerAttack();
             Paper.Instance.roomNum = room;
+            selectedRoom.OnPlayerAttack();
+
         }
         else
         { //no item in inventory slot
@@ -132,8 +132,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
             // {
             //     inventory.inv.SetActive(true);
             // }
-            
-            
+
+
         }
     }
 
@@ -144,7 +144,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
             Debug.Log("make all not null");
             return;
         }
-        if(!inventory.CheckType(inventory.actualSlots,true,true,false)){
+        if (!inventory.CheckType(inventory.actualSlots, true, true, false))
+        {
             Debug.Log("make all various Type");
         }
         if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
@@ -160,6 +161,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 cardSOs[i] = inventory.actualSlots[i].cardSO;
             }
         }
+        Paper.Instance.roomNum = roomget;
         selectedRoom.OnPlayerAttack();
     }
 

@@ -47,7 +47,6 @@ public class RollDice : MonoBehaviour
         Dice dice = new Dice();
         thiswentRoom = GameManager.singleton.wentRoom;
         int rolledRooom = dice.MainRoll(thiswentRoom);
-        GameManager.singleton.GetRoom(rolledRooom); //add to went room in gmng
 
         return rolledRooom;
     }
