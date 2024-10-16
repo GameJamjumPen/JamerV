@@ -11847,6 +11847,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 370427368}
     - target: {fileID: 1129693709579419506, guid: 62f5653871f9e2c4ebaaa9c38d3ed804, type: 3}
+      propertyPath: StarterPack.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: e2d71adb67ca2e04490224e09d62fa82, type: 2}
+    - target: {fileID: 1129693709579419506, guid: 62f5653871f9e2c4ebaaa9c38d3ed804, type: 3}
       propertyPath: actualSlots.Array.data[0]
       value: 
       objectReference: {fileID: 1999255112}
