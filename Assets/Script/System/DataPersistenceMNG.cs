@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using UnityEditor;
+using System;
 
 public class DataPersistenceMNG : MonoBehaviour
 {
@@ -104,6 +106,48 @@ public class DataPersistenceMNG : MonoBehaviour
     {
         SaveGame();
     }
+
+    public List<CardData> ConvertScriptableObjectsToData(List<CardSO> cardSOs)
+    {
+        List<CardData> cardDataList = new List<CardData>();
+        foreach (var card in cardSOs)
+        {
+            CardData cardData = new CardData(card);
+            cardDataList.Add(cardData);
+        }
+        return cardDataList;
+    }
+
+    public List<CardSO> ConvertDataToScriptableObjects(List<CardData> cardDataList)
+{
+    List<CardSO> cardSOList = new List<CardSO>();
+
+    foreach (var cardData in cardDataList)
+    {
+        // Create a new CardSO instance
+        CardSO newCard = ScriptableObject.CreateInstance<CardSO>();
+
+        newCard._cardName = cardData.cardName;
+        newCard._value = cardData.cardValue;
+
+        if (!string.IsNullOrEmpty(cardData.sprite))
+        {
+            Sprite loadedSprite = AssetDatabase.LoadAssetAtPath<Sprite>(cardData.sprite);
+            newCard._cardSprite = loadedSprite;
+        }
+
+        if (Enum.TryParse(cardData.cardType, out CardType parsedCardType))
+        {
+            newCard.cardType = parsedCardType;
+        }
+
+        cardSOList.Add(newCard);
+    }
+
+    return cardSOList;
+}
+
+
 
     private List<IDataPersistence> FindDataPersistenceObjects()
     {

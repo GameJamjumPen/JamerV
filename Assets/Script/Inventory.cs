@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour,IInventorable
+public class Inventory : MonoBehaviour,IInventorable,IDataPersistence
 {
     #region Declare Variable
     public KeyCode openCloseKey = KeyCode.Tab;
@@ -14,6 +14,8 @@ public class Inventory : MonoBehaviour,IInventorable
     public GameObject backPackSystem;
     public GameObject pocketSystem;
     public GameObject stats;
+    public Collider2D dice;
+    public GameObject inv;
 
     [Header("Slots")]
     public CardSO cardSelected;
@@ -34,19 +36,39 @@ public class Inventory : MonoBehaviour,IInventorable
     public void Awake(){
         istoggleable = true;
     }
+
+    public void LoadData(GameData data)
+    {
+        List<CardSO> slotToLoad = new List<CardSO>(DataPersistenceMNG.Instance.ConvertDataToScriptableObjects(data.inventoryData));
+        foreach(CardSO card in slotToLoad)
+        {
+            AddItem(card);
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        List<CardSO> slotToSave = new List<CardSO>();
+        foreach(InventorySlot card in itemSlots)
+        {
+            if(card.cardSO!=null){
+            slotToSave.Add(card.cardSO);}
+        }
+
+        data.inventoryData = DataPersistenceMNG.Instance.ConvertScriptableObjectsToData(slotToSave);
+    }
+
     public void Update(){
         if(istoggleable){
             if(Input.GetKeyDown(openCloseKey)){
                 if(image.enabled){
                     image.enabled = false;
-                    backPackSystem.SetActive(false);
-                    pocketSystem.SetActive(false);
-                    stats.SetActive(false);
+                    inv.SetActive(false);
+                    dice.enabled = true;
                 }else{
                     image.enabled = true;
-                    backPackSystem.SetActive(true);
-                    pocketSystem.SetActive(true);
-                    stats.SetActive(true);
+                    inv.SetActive(true);
+                    dice.enabled = false;
                 }
             }
         }
@@ -72,27 +94,37 @@ public class Inventory : MonoBehaviour,IInventorable
         return true;
     }
 
-    public bool CheckType(InventorySlot[] slots){
-        bool ATKalr= false;
-        bool DEFalr = false;
-        bool SUPalr = false;
-        for(int i = 0;i< slots.Length;i++){
-            if(slots[i].cardSO.cardType == CardType.ATK){
-                ATKalr = true;
-            }
-            if(slots[i].cardSO.cardType == CardType.DEF){
-                DEFalr = true;
-            }
-            if(slots[i].cardSO.cardType == CardType.SUP){
-                SUPalr = true;
-            }
-        }
-        if(ATKalr && DEFalr && SUPalr){
-            return true;
-        }
-        return false;
+    public bool CheckType(InventorySlot[] slots, bool isAttack, bool isDefence, bool isSupport)
+{
+    bool ATKalr = false;
+    bool DEFalr = false;
+    bool SUPalr = false;
 
+    // Check the slots to set the flags for each card type
+    for (int i = 0; i < slots.Length; i++)
+    {
+        if (slots[i].cardSO.cardType == CardType.ATK)
+        {
+            ATKalr = true;
+        }
+        if (slots[i].cardSO.cardType == CardType.DEF)
+        {
+            DEFalr = true;
+        }
+        if (slots[i].cardSO.cardType == CardType.SUP)
+        {
+            SUPalr = true;
+        }
     }
+
+    // Only check the required card types based on the parameters
+    bool attackCheck = !isAttack || ATKalr;
+    bool defenceCheck = !isDefence || DEFalr;
+    bool supportCheck = !isSupport || SUPalr;
+
+    // If all required conditions are met, return true
+    return attackCheck && defenceCheck && supportCheck;
+}
     #region SlotSelected
     public void DeselectedAllSlot(){
         foreach (InventorySlot slot in allSlots)
@@ -123,6 +155,8 @@ public class Inventory : MonoBehaviour,IInventorable
         cardType.gameObject.SetActive(false);
         cardStat.gameObject.SetActive(false);
     }
+
+
     #endregion
 
 
