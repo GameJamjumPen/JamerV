@@ -42,7 +42,7 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
 
     public void Awake()
     {
-        // enemyHolders = FindObjectsOfType<EnemyHolder>();
+        enemyHolders = FindObjectsOfType<EnemyHolder>();
         enemyUIManager = battleController.enemyUIManager;
         playerUIManager = battleController.playerUIManager;
         player = battleController.player;
@@ -131,6 +131,7 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
                         enemyHolders[i].enemyContain.TakeDamage((int)cardSelected._value);
                         Debug.Log(strength);
                         Debug.Log((enemyHolder==null).ToString());
+                        enemyHolder = enemyHolders[i];
                         battleController.popUpUI.ShowDamage((int)(cardSelected._value+(strength*0.2)) , enemyHolder.transform , battleController.attack);
                         this.enemyUIManager.updateUI(battleController.enemies);
                         enemyHolder.Deselected();
