@@ -48,16 +48,19 @@ public abstract class EnemyModel : CharacterBase
                 bool shielded = SetShieldToLowestHealthEnemy(enemyModels);
                 if (shielded) shieldUsed = true;
                 else enemy.Attack(player);
+                Debug.Log("Using Shield");
             }
             else if (decision < shieldProp+healprop && !healUsed)
             {
                 bool healed = HealLowHealthEnemy(enemyModels);
                 if (healed) healUsed = true;
                 else enemy.Attack(player);
+                Debug.Log("Healing");
             }
             else
             {
                 enemy.Attack(player);
+                Debug.Log("Attack player");
             }
         }
     }
