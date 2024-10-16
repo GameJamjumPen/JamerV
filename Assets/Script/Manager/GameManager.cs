@@ -28,9 +28,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
             return;
         }
         singleton = this;
-
-
     }
+    
     public void Debugger(string a)
     {
         Debug.Log(a);
@@ -112,11 +111,13 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 }
             }
             selectedRoom.OnPlayerAttack();
+            Paper.Instance.roomNum = room;
         }
 
         else if(selectedRoom.Treasure)
         {
             selectedRoom.OnPlayerAttack();
+            Paper.Instance.roomNum = room;
         }
         else
         { //no item in inventory slot

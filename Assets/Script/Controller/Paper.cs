@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Paper : MonoBehaviour
+public class Paper : MonoBehaviour, IDataPersistence
 {
     public static Paper Instance;
+    public List<int> wentRoom;
+    public int roomNum;
     public int score;
     public string sceneName;
     public EnemyDifficulty enemyDifficulty;
@@ -34,6 +36,9 @@ public class Paper : MonoBehaviour
     {
         isplayed = true;
         isVictory = victory;
+        if(!victory){
+            wentRoom.Remove(roomNum);
+        }
     }
 
     public void SetScore(int score)
@@ -68,4 +73,13 @@ public class Paper : MonoBehaviour
         sprite = background;
     }
 
+    public void LoadData(GameData data)
+    {
+        wentRoom = data.wentRoom;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.wentRoom = wentRoom;
+    }
 }
