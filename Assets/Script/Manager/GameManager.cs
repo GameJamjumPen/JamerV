@@ -131,6 +131,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void RoomEnter(int room) //selectedRoomยังหาไม่ถูกห้อง ไม่รู้ทำไม
     {
+        if(room==0){return;}
         room -=1;
         Debug.Log("room"+room);
         selectedRoom = allrooms[room].GetComponentInChildren<Room>();

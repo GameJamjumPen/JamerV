@@ -44,34 +44,59 @@ public class PlayerMovement : MonoBehaviour
             int nextRoom = currentRoom + 1;
             if (nextRoom == 20) { nextRoom = 0; }
             Vector3 nextpos = rooms[nextRoom].transform.position;
-            Debug.Log(nextRoom);
-            moveDirection = nextpos - transform.position;
-            moveDirection.Normalize();
 
-            UpdateAnimator(moveDirection);
+            UpdateAnimator(nextRoom);
+            Debug.Log(nextRoom);
 
             yield return StartCoroutine(MoveToNextRoom(nextpos));
+            
             currentRoom = nextRoom;
         }
 
         Debug.Log("finished");
+        animator.SetInteger("MoveY",0);
+        animator.SetInteger("MoveX",0);
         GameManager.singleton.currentRoom = roomtomove;
         GameManager.singleton.RoomEnter(roomtomove);
+
     }
 
     IEnumerator MoveToNextRoom(Vector3 targetPosition)
     {
         while (transform.position != targetPosition)
-        {
+        {   
+            
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
             yield return null;
         }
     }
 
-    private void UpdateAnimator(Vector2 direction)
+    private void UpdateAnimator(int room)
     {
-        animator.SetFloat("MoveX", direction.x);
-        animator.SetFloat("MoveY", direction.y);
+        if(0<room && room<=5)
+        {
+            animator.SetInteger("MoveY",0);
+            animator.SetInteger("MoveX",1);
+            Debug.Log("right");
+        }
+        else if (5<room && room<=10)
+        {
+            animator.SetInteger("MoveY",-1);
+            animator.SetInteger("MoveX",0);
+            Debug.Log("down");
+        }
+
+        else if (10<room && room<=15)
+        {
+            animator.SetInteger("MoveY",0);
+            animator.SetInteger("MoveX",-1);
+            Debug.Log("left");
+        }
+        else{
+            animator.SetInteger("MoveX",1);
+            animator.SetInteger("MoveY",0);
+            Debug.Log("up");
+        }
     }
 
 }
