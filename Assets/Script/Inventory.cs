@@ -68,6 +68,28 @@ public class Inventory : MonoBehaviour,IInventorable
         }
         return true;
     }
+
+    public bool CheckType(InventorySlot[] slots){
+        bool ATKalr= false;
+        bool DEFalr = false;
+        bool SUPalr = false;
+        for(int i = 0;i< slots.Length;i++){
+            if(slots[i].cardSO.cardType == CardType.ATK){
+                ATKalr = true;
+            }
+            if(slots[i].cardSO.cardType == CardType.DEF){
+                DEFalr = true;
+            }
+            if(slots[i].cardSO.cardType == CardType.SUP){
+                SUPalr = true;
+            }
+        }
+        if(ATKalr && DEFalr && SUPalr){
+            return true;
+        }
+        return false;
+
+    }
     #region SlotSelected
     public void DeselectedAllSlot(){
         foreach (InventorySlot slot in allSlots)

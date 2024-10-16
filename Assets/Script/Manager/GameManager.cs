@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 {
     public List<GameObject> roomPref;
     public List<string> scenes;
-    public List<int> wentRoom{get; private set;}
+    public List<int> wentRoom { get; private set; }
     public int currentRoom;
     public GameObject went;
 
@@ -18,24 +18,26 @@ public class GameManager : MonoBehaviour, IDataPersistence
     [Header("Inventory Related")]
     public Room selectedRoom;
     public Inventory inventory;
+    [Tooltip("Card to give to paper instance")]
     public CardSO[] cardSOs;
     public GameObject lockIn;
 
 
-    public static GameManager singleton{get; private set;}
+    public static GameManager singleton { get; private set; }
 
     private void Awake()
     {
-        if(singleton != null)
+        if (singleton != null)
         {
             Destroy(gameObject);
             return;
         }
         singleton = this;
 
-        
+
     }
-    public void Debugger(string a){
+    public void Debugger(string a)
+    {
         Debug.Log(a);
     }
 
@@ -53,21 +55,21 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             PlaceRooms(data.roomPlacement);
         }
-        
+
         // transform.position = allrooms[currentRoom].transform.position;
     }
 
     public void SaveData(ref GameData data)
     {
-        if(data.roomPlacement == null || data.roomPlacement.Count==0)
-    {
-
-        for (int i = 0; i < availableRooms.Count; i++)
+        if (data.roomPlacement == null || data.roomPlacement.Count == 0)
         {
-            RoomPlacement placementData = new RoomPlacement(i, roomPref.IndexOf(availableRooms[i]));
-            data.roomPlacement.Add(placementData);
+
+            for (int i = 0; i < availableRooms.Count; i++)
+            {
+                RoomPlacement placementData = new RoomPlacement(i, roomPref.IndexOf(availableRooms[i]));
+                data.roomPlacement.Add(placementData);
+            }
         }
-    }
         data.currentRoom = this.currentRoom;
         data.wentRoom = new List<int>(this.wentRoom);
     }
@@ -78,31 +80,32 @@ public class GameManager : MonoBehaviour, IDataPersistence
         if (layout != null)
         {
             for (int i = 0; i < layout.Count; i++)
-            {   
+            {
                 int gridIndex = layout[i].gridInd;
                 int roomIndex = layout[i].roomInd;
-                
-                Transform roomSlot = allrooms[gridIndex+1].transform;
+
+                Transform roomSlot = allrooms[gridIndex + 1].transform;
                 GameObject roomPrefab = roomPref[roomIndex];
 
-                if (wentRoom.Contains(i+1))
+                if (wentRoom.Contains(i + 1))
                 {
                     GameObject r = Instantiate(roomPrefab, roomSlot);
                     SpriteRenderer roomSprite = r.GetComponent<SpriteRenderer>();
                     roomSprite.color = new Color(.5f, .5f, .5f);
                 }
-                else {
+                else
+                {
                     Instantiate(roomPrefab, roomSlot);
 
                 }
             }
-            
+
         }
         else
         {
             for (int i = 0; i < availableRooms.Count; i++)
             {
-                Transform slotTransform = allrooms[i+1].transform;
+                Transform slotTransform = allrooms[i + 1].transform;
                 Instantiate(availableRooms[i], slotTransform);
             }
         }
@@ -133,30 +136,35 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void RoomEnter(int room) //selectedRoomยังหาไม่ถูกห้อง ไม่รู้ทำไม
     {
-        if(room==0){return;}
-        room -=1;
-        Debug.Log("room"+room);
+        if (room == 0) { return; }
+        room -= 1;
+        Debug.Log("room" + room);
         selectedRoom = allrooms[room].GetComponentInChildren<Room>();
-        if(inventory.CheckFull(inventory.actualSlots)){
+        if (inventory.CheckFull(inventory.actualSlots) && inventory.CheckType(inventory.actualSlots))
+        {
             if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
-        {
-            cardSOs = new CardSO[inventory.actualSlots.Length];
-        }
-
-        // Assign cardSOs
-        for (int i = 0; i < inventory.actualSlots.Length; i++)
-        {
-            if (inventory.actualSlots[i] != null)
             {
-                cardSOs[i] = inventory.actualSlots[i].cardSO;
+                cardSOs = new CardSO[inventory.actualSlots.Length];
             }
-        }
+
+            // Assign cardSOs
+            for (int i = 0; i < inventory.actualSlots.Length; i++)
+            {
+                if (inventory.actualSlots[i] != null)
+                {
+                    cardSOs[i] = inventory.actualSlots[i].cardSO;
+                }
+            }
             selectedRoom.OnPlayerAttack();
-        }else{ //no item in inventory slot
-            if(!inventory.pocketSystem.activeSelf){
+        }
+        else
+        { //no item in inventory slot
+            if (!inventory.pocketSystem.activeSelf)
+            {
                 inventory.pocketSystem.SetActive(true);
             }
-            if(!inventory.backPackSystem.activeSelf){
+            if (!inventory.backPackSystem.activeSelf)
+            {
                 inventory.backPackSystem.SetActive(true);
             }
             inventory.istoggleable = false;
@@ -164,10 +172,15 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void Lock(){
-        if(!inventory.CheckFull(inventory.actualSlots)){
+    public void Lock()
+    {
+        if (!inventory.CheckFull(inventory.actualSlots))
+        {
             Debug.Log("make all not null");
             return;
+        }
+        if(!inventory.CheckType(inventory.actualSlots)){
+            Debug.Log("make all various Type");
         }
         if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
         {
