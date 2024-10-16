@@ -11604,6 +11604,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8882212891114201999, guid: a7e2b3c8a0e0f7b4089edaea4447b49e, type: 3}
+      propertyPath: musicSounds.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882212891114201999, guid: a7e2b3c8a0e0f7b4089edaea4447b49e, type: 3}
+      propertyPath: musicSounds.Array.data[5].name
+      value: Start
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882212891114201999, guid: a7e2b3c8a0e0f7b4089edaea4447b49e, type: 3}
+      propertyPath: musicSounds.Array.data[5].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2c18553e9a59cf7439ee2e2e351d5c88, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
