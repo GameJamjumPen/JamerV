@@ -3347,10 +3347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e0fff8e5ec58240aa6b0b5974bcee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSOPools:
-  - {fileID: 11400000, guid: 2919d37e997d754438311a6e24512933, type: 2}
-  - {fileID: 11400000, guid: 497ba9b2203f1064ea72bd2db7a15b7f, type: 2}
-  - {fileID: 11400000, guid: 1a8a47280d7f32844a06bcbf26a8d827, type: 2}
+  cardSOPools: []
   slotDisplay:
   - {fileID: 1452839073}
   - {fileID: 422068579}
