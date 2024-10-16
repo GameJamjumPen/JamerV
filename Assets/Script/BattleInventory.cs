@@ -42,7 +42,7 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
 
     public void Awake()
     {
-        enemyHolders = FindObjectsOfType<EnemyHolder>();
+        // enemyHolders = FindObjectsOfType<EnemyHolder>();
         enemyUIManager = battleController.enemyUIManager;
         playerUIManager = battleController.playerUIManager;
         player = battleController.player;
