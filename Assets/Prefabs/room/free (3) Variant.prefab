@@ -48,7 +48,7 @@ MonoBehaviour:
   isOwned: 0
   buildPos: {fileID: 0}
   OwnedRoom: {fileID: 0}
-  _cardReward: {fileID: 0}
+  _cardReward: {fileID: 11400000, guid: 497ba9b2203f1064ea72bd2db7a15b7f, type: 2}
 --- !u!212 &239997549274827327
 SpriteRenderer:
   m_ObjectHideFlags: 0

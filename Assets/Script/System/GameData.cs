@@ -9,8 +9,8 @@ public class GameData
 {
     public string Name;
     public List<int> wentRoom;
-
-    public List<CardSO> inventoryData;
+    public List<CardData> inventoryData;
+    public List<CardData> loadoutData;
     public int life;
     public int strength;
     public int defense;
@@ -23,7 +23,8 @@ public class GameData
     public GameData()
     {
         Name = "Player";
-//        inventoryData = new List<CardSO>();
+        inventoryData = new List<CardData>(){};
+        loadoutData = new List<CardData>(){};
         life = 3;
         strength = 1;
         defense = 1;
@@ -46,4 +47,26 @@ public class GameData
             this.gridInd = gridInd;
             this.roomInd = roomInd;
         }
+    }
+
+    [System.Serializable]
+    public class CardData
+    {
+        public string cardName;
+        public string cardType;
+        public float cardValue;
+        public string sprite;
+
+        public CardData(CardSO card)
+    {
+        if (card == null)
+        {
+            return;
+        }
+
+        cardName = card._cardName;
+        cardValue = card._value;
+        sprite = UnityEditor.AssetDatabase.GetAssetPath(card._cardSprite);
+        cardType = card.cardType.ToString();
+    }
     }
