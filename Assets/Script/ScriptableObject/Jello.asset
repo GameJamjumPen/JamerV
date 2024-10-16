@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfc778e0a12bf814abf17767d1d395b2, type: 3}
-  m_Name: DwaynJohnson
+  m_Name: Jello
   m_EditorClassIdentifier: 
-  _cardName: Therock
-  _cardSprite: {fileID: 21300000, guid: 665ec8847c8ff16428022fa6c393f032, type: 3}
-  cardType: 0
-  _value: 44
+  _cardName: Jello
+  _cardSprite: {fileID: 21300000, guid: 66000df255f1d25409e7c775ee4f0336, type: 3}
+  cardType: 1
+  _value: 50
