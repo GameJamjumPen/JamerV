@@ -111,6 +111,20 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         }
         selectedShader.SetActive(true);
         isSelected = true;
+            string sound =" ";
+            int rand = Random.Range(0,3);
+            switch (rand){
+            case 0: 
+            sound = "PickCard1";
+            break;
+            case 1:
+            sound = "PickCard2";
+            break;
+            case 2:
+            sound = "PickCard3";
+            break;
+            }
+            SoundManager.Instance.PlaySFX(sound);
         if(isBar){
             ChangeAnimationState(BARSELECTED);
         }else{

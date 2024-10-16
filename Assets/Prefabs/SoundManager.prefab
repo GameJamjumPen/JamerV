@@ -324,5 +324,11 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 6fa6f8ac3ff70754d8ef3446fbec0b9e, type: 3}
   - name: tap
     audioClip: {fileID: 8300000, guid: d368d0dbeb1db994bb88e2eac8c23cb8, type: 3}
+  - name: PickCard1
+    audioClip: {fileID: 8300000, guid: d368d0dbeb1db994bb88e2eac8c23cb8, type: 3}
+  - name: PickCard2
+    audioClip: {fileID: 8300000, guid: d368d0dbeb1db994bb88e2eac8c23cb8, type: 3}
+  - name: PickCard3
+    audioClip: {fileID: 8300000, guid: d368d0dbeb1db994bb88e2eac8c23cb8, type: 3}
   musicSource: {fileID: 6289841908745599012}
   sfxSource: {fileID: 2480629681830024316}
