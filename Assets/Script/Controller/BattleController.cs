@@ -87,7 +87,7 @@ public class BattleController : MonoBehaviour
             return;
         case Turn.PlayerAnim:
             Debug.Log("Player's Animation Turn");
-            StartCoroutine(WaitforAnim(2f, _playerAnimator, ATTACK));
+            StartCoroutine(WaitforAnim(2f));
             break;
         case Turn.EnemyThink:
             Debug.Log("Enemy's Thinking Turn");
@@ -122,9 +122,9 @@ public class BattleController : MonoBehaviour
         Debug.Log("Thinking");
         yield return new WaitForSeconds(Second);
     }
-    private IEnumerator WaitforAnim(float second, Animator animator, string state)
+    private IEnumerator WaitforAnim(float second)
     {
-        playerUIManager.AttackAnimate();
+        Debug.Log("Waiting For Animation");
         yield return new WaitForSeconds(second);
 
     }
