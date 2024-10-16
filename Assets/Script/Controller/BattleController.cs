@@ -93,21 +93,31 @@ public class BattleController : MonoBehaviour
                 for (int i = 0; i < enemies.Count; i++)
                 {   
                     if(enemies[i].IsAlive()){
-                    if (enemyAttackInfos[i].TargetenemyModel == null)
-                    {
-                        ShowDamage(enemyAttackInfos[i].valueStat, playerObject, TextPopup);
-                    }
-                    else if (enemyAttackInfos[i].TargetenemyModel != null)
-                    {
-                        if (TextPopup != null && enemyAttackInfos[i].isDef)
+                        Debug.Log("ISalive "+ i.ToString());
+                        Debug.Log("WAZAaaaaaaaa " + (enemyAttackInfos[i]==null).ToString());
+                        if (enemyAttackInfos[i] != null && enemyAttackInfos[i].isAtk)
                         {
-                            ShowDamage(enemyAttackInfos[i].valueStat, enemysObject[i], TextPopup);
-                        }else if(TextPopup != null && enemyAttackInfos[i].isHeal){
-                            ShowDamage(enemyAttackInfos[i].valueStat, enemysObject[i], TextPopup);
+                            Debug.Log("_---------------------------------------------");
+                            Debug.Log(enemyAttackInfos[i].valueStat.ToString());
+                            Debug.Log(playerObject.ToString().ToString());
+                            Debug.Log((TextPopup==null).ToString());
+                            Debug.Log("_---------------------------------------------");
+                            ShowDamage(enemyAttackInfos[i].valueStat, playerObject, TextPopup);
+                        }
+                        else if (enemyAttackInfos[i] != null && enemyAttackInfos[i].TargetenemyModel != null)
+                        {
+                            if (TextPopup != null && enemyAttackInfos[i].isDef)
+                            {
+                                ShowDamage(enemyAttackInfos[i].valueStat, enemysObject[i], TextPopup);
+                            }else if(TextPopup != null && enemyAttackInfos[i].isHeal){
+                                ShowDamage(enemyAttackInfos[i].valueStat, enemysObject[i], TextPopup);
+                            }
                         }
                     }
+                    else{
+                        continue;
                     }
-                    }
+                }
                 OnTurnChange(Turn.PlayerAttack);
                 break;
                 

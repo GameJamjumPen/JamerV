@@ -73,8 +73,10 @@ public abstract class EnemyModel : CharacterBase
         foreach (EnemyModel enemy in enemyModels)
         {
             Debug.Log("Alive");
-            if (!enemy.IsAlive()) continue;
-
+            if (!enemy.IsAlive()){
+                enemyAttackInfo.Add(null);
+                continue;
+            }
             int decision = rng.Next(0, 100);
 
             if (decision < shieldProp && !shieldUsed)
