@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Jello
   m_EditorClassIdentifier: 
   _cardName: Jello
-  _cardSprite: {fileID: 21300000, guid: 66000df255f1d25409e7c775ee4f0336, type: 3}
   cardType: 1
   _value: 50
