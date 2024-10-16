@@ -122,7 +122,6 @@ public class DataPersistenceMNG : MonoBehaviour
 
     foreach (var cardData in cardDataList)
     {
-        // Create a new CardSO instance
         CardSO newCard = ScriptableObject.CreateInstance<CardSO>();
 
         newCard._cardName = cardData.cardName;
@@ -131,7 +130,9 @@ public class DataPersistenceMNG : MonoBehaviour
         #if UNITY_EDITOR
         if (!string.IsNullOrEmpty(cardData.sprite))
         {
-            Sprite loadedSprite = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>(cardData.sprite);
+            AssetBundle myLoadedAssetBundle = AssetBundle.LoadFromFile("path_to_your_bundle");
+
+            Sprite loadedSprite = myLoadedAssetBundle.LoadAsset<Sprite>(cardData.sprite);
             newCard._cardSprite = loadedSprite;
         }
         #else

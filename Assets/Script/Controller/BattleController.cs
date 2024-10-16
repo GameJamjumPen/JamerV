@@ -88,24 +88,29 @@ public class BattleController : MonoBehaviour
         {
             case Turn.PlayerAttack:
                 Debug.Log("Player's Attack Turn");
+                ShowTurn.text = "Player Turn !";
                 battleInventory.attackable = true;
                 break;
             case Turn.PlayerAnim:
                 Debug.Log("Player's Animation Turn");
-                yield return StartCoroutine(WaitforAnim(2f));
+                ShowTurn.text = "Enemy Turn !";
+                yield return StartCoroutine(WaitforAnim(1f));
                 StartCoroutine(ChangeTurn(Turn.EnemyThink));
                 break;
             case Turn.EnemyThink:
                 Debug.Log("Enemy's Thinking Turn");
-                yield return StartCoroutine(WaitforDebug(2f)); // Coroutine waiting
+                ShowTurn.text = "Enemy Turn !";
+                yield return StartCoroutine(WaitforDebug(1f)); // Coroutine waiting
                 StartCoroutine(ChangeTurn(Turn.Enemyattack));
                 break;
             case Turn.Enemyattack:
                 Debug.Log("Enemy's Attack Turn");
+                ShowTurn.text = "Enemy Turn !";
                 yield return StartCoroutine(EnemyTurn());
                 break;
             case Turn.EnemyAnim:
                 Debug.Log("Enemy's Animation Turn");
+                ShowTurn.text = "Enemy Turn !";
                 yield return StartCoroutine(HandleEnemyAnimations());
                 StartCoroutine(ChangeTurn(Turn.PlayerAttack));
                 break;
@@ -196,7 +201,7 @@ public class BattleController : MonoBehaviour
         //     ShowCurrentTurn();
         //     EnemyTurn();
         // }
-        ShowCurrentTurn();
+        // ShowCurrentTurn();
     }
     void initPlayer()
     {
@@ -212,7 +217,7 @@ public class BattleController : MonoBehaviour
         enemyUIManager.updateUI(enemies);
         GameOver();
         isPlayerTurn = true;
-        ShowCurrentTurn();
+        // ShowCurrentTurn();
         yield return new WaitForSeconds(1f); // Add delay before continuing
         StartCoroutine(ChangeTurn(Turn.EnemyAnim));
     }
@@ -334,15 +339,15 @@ public class BattleController : MonoBehaviour
                 return FishSprites[0]; // Default fallback sprite
         }
     }
-    void ShowCurrentTurn()
-    {
-        if (isPlayerTurn)
-        {
-            ShowTurn.text = "Player Turn !";
-            return;
-        }
-        ShowTurn.text = "Enemy Turn !";
-    }
+    // void ShowCurrentTurn()
+    // {
+    //     if (isPlayerTurn)
+    //     {
+    //         ShowTurn.text = "Player Turn !";
+    //         return;
+    //     }
+    //     ShowTurn.text = "Enemy Turn !";
+    // }
 }
 
 public enum Turn
