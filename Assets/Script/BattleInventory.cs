@@ -171,6 +171,5 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
 
     public void SaveData(ref GameData data)
     {
-        throw new System.NotImplementedException();
     }
 }
