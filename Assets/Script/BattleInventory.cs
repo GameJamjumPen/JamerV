@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BattleInventory : MonoBehaviour ,IInventorable
@@ -34,9 +35,10 @@ public class BattleInventory : MonoBehaviour ,IInventorable
     public void Awake()
     {
         enemyHolders = FindObjectsOfType<EnemyHolder>();
-        this.enemyUIManager = battleController.enemyUIManager;
-        this.playerUIManager = battleController.playerUIManager;
-        getCard(Paper.Instance.cardSOs);
+        enemyUIManager = battleController.enemyUIManager;
+        playerUIManager = battleController.playerUIManager;
+        player = battleController.player;
+        //getCard(Paper.Instance.cardSOs);
         AddDeck(3);
     }
     public void DeselectedAllHolder(){
@@ -78,27 +80,36 @@ public class BattleInventory : MonoBehaviour ,IInventorable
         }
     }
 
-    public void Use(){
-        if(cardSelected != null && enemyHolder != null){
-            switch (cardSelected.cardType)
-            {
-                case CardType.ATK:
-                CharacterBase.Attack((int)cardSelected._value , enemyHolder.enemyContain);
-                this.enemyUIManager.updateUI(battleController.enemies);
-                break;
-                case CardType.DEF:
-                player.setShield((int)cardSelected._value);
-                this.playerUIManager.UpdatePlayerUI(battleController.player);
-                break;
-                case CardType.SUP:
-                player.HealByAmount((int)cardSelected._value);
-                this.playerUIManager.UpdatePlayerUI(battleController.player);
-                break;
-            }
-            cardSelected = null;
-            useSlot.RemoveItem();
-            useSlot = null;
-            battleController.isPlayerTurn = false;
+    public void Use()
+    {
+        if (cardSelected.cardType == CardType.DEF)
+        {
+            player.setShield((int)cardSelected._value);
+            this.playerUIManager.UpdatePlayerUI(battleController.player);
         }
+        if (cardSelected.cardType == CardType.SUP)
+        {
+            player.HealByAmount((int)cardSelected._value);
+            this.playerUIManager.UpdatePlayerUI(battleController.player);
+        }
+        if (cardSelected.cardType == CardType.ATK)
+        {
+            // Check if enemyHolder is null for ATK cards
+            if (enemyHolder == null)
+            {
+                Debug.Log("Selected Enemy");
+                return; // Exit the function if no enemy is selected
+            }
+
+            CharacterBase.Attack((int)cardSelected._value, enemyHolder.enemyContain);
+            this.enemyUIManager.updateUI(battleController.enemies);
+            enemyHolder.Deselected();
+        }
+        
+        // Reset cardSelected and useSlot after use
+        useSlot.OnDeselected(); //unselected
+        useSlot.RemoveItem(); //remove card from itself
+        useSlot = null; //destroy itself
+        battleController.isPlayerTurn = false;
     }
 } 

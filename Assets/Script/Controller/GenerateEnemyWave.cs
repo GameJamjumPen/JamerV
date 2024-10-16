@@ -15,8 +15,8 @@ public class GenerateEnemyWave : Singleton<GenerateEnemyWave>
     }
     public void CreateEnemyWaves()
     {
-        // RandomSetDifficulty();
-        difficulty = Paper.Instance.enemyDifficulty;
+        RandomSetDifficulty();
+        //difficulty = Paper.Instance.enemyDifficulty;
         waves.Clear();
         for (int i = 0; i < 3; i++)
         {

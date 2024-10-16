@@ -36,11 +36,13 @@ public abstract class CharacterBase : ICharacter
         if (damage > 0)
         {
             Health -= damage;
+            Debug.Log($"Heal by{damage}");
         }
     }
     public void HealByAmount(int amount)
     {
         Health = Mathf.Min(MaxHealth, Health + amount);
+        Debug.Log($"Heal by{amount}");
     }
     public void HealByPercentage(float percentage)
     {
@@ -49,6 +51,7 @@ public abstract class CharacterBase : ICharacter
     }
     public void setShield(int amount){
         Shield =amount;
+        Debug.Log($"Heal by{amount}");
     }
     public static void Attack(int attackDamage,ICharacter target){
         target.TakeDamage(attackDamage);
