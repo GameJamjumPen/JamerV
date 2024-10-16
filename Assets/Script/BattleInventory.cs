@@ -17,6 +17,10 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
     private EnemyUIManager enemyUIManager;
     private PlayerUIManager playerUIManager;
     public bool attackable = true;
+
+    public float strength;
+    public float defence;
+    public float heals;
     public void getCard(List<CardSO> cardSOList)
     {
         foreach (CardSO cardSO in cardSOList)
