@@ -88,6 +88,12 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
                 case CardType.ATK:
                 slotType.sprite = types[0];
                 break;
+                case CardType.ATKV2:
+                slotType.sprite = types[0];
+                break;
+                case CardType.ATKV3:
+                slotType.sprite = types[0];
+                break;
                 case CardType.DEF:
                 slotType.sprite = types[1];
                 break;
