@@ -11,6 +11,7 @@ public class EnemyUIManager : MonoBehaviour
     public TextMeshProUGUI waveText;
     public List<GameObject> enemyObjects;    // Displays the current wave number
 
+    public List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
     // Initialize the UI elements for a new wave
     public void DisplayNewWave(int waveNumber, List<EnemyModel> enemies, List<Sprite> sprites)
     {
@@ -31,12 +32,12 @@ public class EnemyUIManager : MonoBehaviour
             Slider healthSlider = slot.Find("HealthSlider").GetComponent<Slider>();
             Slider shieldSlider = slot.Find("ShieldSlider").GetComponent<Slider>();
             TextMeshProUGUI healthText = healthSlider.GetComponentInChildren<TextMeshProUGUI>();
-            Sprite enemyImage = enemyObjects[i].GetComponent<Sprite>();
-
+            // Sprite enemyImage = enemyObjects[i].GetComponent<Sprite>();ss
+            spriteRenderers[i].sprite = sprites[i];
             //nameText.text = enemies[i].Name;
             healthSlider.maxValue = enemies[i].Health;
             healthSlider.value = enemies[i].Health;
-            enemyImage = sprites[i];
+            // enemyImage = sprites[i];
             shieldSlider.maxValue = 100;
             shieldSlider.value = 0;
             healthText.text = enemies[i].Health.ToString();

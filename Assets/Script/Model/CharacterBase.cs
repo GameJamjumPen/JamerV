@@ -39,6 +39,13 @@ public abstract class CharacterBase : ICharacter
             Debug.Log($"Heal by{damage}");
         }
     }
+    public void TakeDamageHealth(int damage){
+        if (damage > 0)
+        {
+            Health -= damage;
+            Debug.Log($"Heal by{damage}");
+        }
+    }
     public void HealByAmount(int amount)
     {
         Health = Mathf.Min(MaxHealth, Health + amount);
