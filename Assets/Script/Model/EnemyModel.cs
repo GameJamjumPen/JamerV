@@ -160,7 +160,7 @@ public class Fish : EnemyModel
 }
 public class Knive : EnemyModel
 {
-    public Knive() : base("Knive", 450, 125, EnemyDifficulty.Medium) { }
+    public Knive() : base("Knive", 300, 125, EnemyDifficulty.Medium) { }
 
     public override void Attack(ICharacter target)
     {
@@ -177,7 +177,7 @@ public class Folk : EnemyModel
 }
 public class Spoon : EnemyModel
 {
-    public Spoon() : base("Spoon", 500, 150, EnemyDifficulty.Medium) { }
+    public Spoon() : base("Spoon", 300, 150, EnemyDifficulty.Medium) { }
 
     public override void Attack(ICharacter target)
     {
@@ -187,7 +187,7 @@ public class Spoon : EnemyModel
 
 public class Bee : EnemyModel
 {
-    public Bee() : base("Bee", 1000, 500, EnemyDifficulty.Hard) { }
+    public Bee() : base("Bee", 500, 300, EnemyDifficulty.Hard) { }
 
     public override void Attack(ICharacter target)
     {
