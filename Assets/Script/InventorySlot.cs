@@ -148,8 +148,8 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     #region Dragging
     public void OnBeginDrag(PointerEventData eventData)
     {
-        
-        if(!isSelected || inventory ==null) return;
+        if(inventory!= null){
+        if(!isSelected) return;
         else{
             inventorySlot = null;
             parentAfterDrag = transform;
@@ -161,11 +161,14 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         
         //ChangeAnimationState(HOVER  , slotImage.GetComponent<Animator>());
         Debug.Log("Begin Drag");
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
-    {
-        if(!isSelected || inventory == null){
+    {   
+        if(inventory != null){
+
+        if(!isSelected){
             return;
         }else{
             ChangeAnimationState(HOVER);
@@ -195,9 +198,12 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
             Debug.Log("No InventorySlot found under mouse.");
         }
         //Debug.Log("Dragging");
+        }
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        if(inventory != null){
+
         if(!isSelected){
             return;
         }
@@ -214,6 +220,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
         draggableItem.SetParent(parentAfterDrag);
         draggableItem.transform.position = beforeDragPos.transform.position;
         slotImage.transform.position = draggableItem.transform.position;
+        }
     }
     #endregion
 
