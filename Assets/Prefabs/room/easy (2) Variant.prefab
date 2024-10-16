@@ -49,10 +49,11 @@ MonoBehaviour:
   isOwned: 0
   buildPos: {fileID: 1920263328247307582}
   OwnedRoom: {fileID: 0}
+  Treasure: 0
   minscore: 0
   maxscore: 0
   roomType: 0
-  _background: {fileID: 21300000, guid: 686f53e6490409b419e2a87e0dd8b98c, type: 3}
+  _background: {fileID: 21300000, guid: 367bbf87604737d46a9eeb4240b717dd, type: 3}
   combatScene: TurnBaseCombat
 --- !u!212 &4327402408621764527
 SpriteRenderer:
