@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class EnemyUIManager : MonoBehaviour
 {
@@ -77,5 +78,60 @@ public class EnemyUIManager : MonoBehaviour
     }
     public void SetActiveFalseOf(int i){
         enemySlots[i].gameObject.SetActive(false);
+    }
+    
+    /// <summary>
+    /// Shakes the enemy image and flashes it red to simulate damage feedback.
+    /// </summary>
+    /// <param name="enemyGameObject">The enemy GameObject containing the image to shake and flash.</param>
+    /// <param name="shakeDuration">The duration of the shake effect, in seconds.</param>
+    /// <param name="shakeAmount">The amount of shake (intensity).</param>
+    public void ShakeAndFlashRed(GameObject enemyGameobject,float shakeDuration = 1f, float shakeAmount = 1f)
+    {
+        StartCoroutine(ShakeImage(shakeDuration, shakeAmount,enemyGameobject));
+        StartCoroutine(FlashRed(0.5f,enemyGameobject)); // Flash red for 0.5 seconds
+    }
+
+    private IEnumerator ShakeImage(float duration, float amount,GameObject enemyGameobject)
+    
+    {
+        Image enemyImage = enemyGameobject.GetComponentInChildren<Image>();
+        Vector3 originalPosition = enemyImage.rectTransform.localPosition;
+
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            // Create a small random offset for shaking effect
+            float offsetX = Random.Range(-amount, amount);
+            float offsetY = Random.Range(-amount, amount);
+
+            // Apply the offset to the enemyImage's position
+            enemyImage.rectTransform.localPosition = new Vector3(
+                originalPosition.x + offsetX,
+                originalPosition.y + offsetY,
+                originalPosition.z
+            );
+
+            elapsedTime += Time.deltaTime;
+            yield return null; // Wait for the next frame
+        }
+
+        // Reset to the original position after shaking
+        enemyImage.rectTransform.localPosition = originalPosition;
+    }
+
+    private IEnumerator FlashRed(float duration,GameObject enemyGameobject)
+    {
+        Image enemyImage = enemyGameobject.GetComponentInChildren<Image>();
+        Color originalColor = enemyImage.color;
+
+        // Set the enemyImage to red
+        enemyImage.color = Color.red;
+
+        // Wait for the specified duration
+        yield return new WaitForSeconds(duration);
+
+        // Reset the enemyImage to its original color
+        enemyImage.color = originalColor;
     }
 }
