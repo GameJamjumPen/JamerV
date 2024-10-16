@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Jello
   m_EditorClassIdentifier: 
   _cardName: Jello
-  cardType: 1
-  _value: 150
+  cardType: 0
+  _value: 250
