@@ -8,7 +8,8 @@ public enum EnemyDifficulty
 {
     Easy,
     Medium,
-    Hard
+    Hard,
+    Boss
 }
 public class EnemyAttackInfo
     {
@@ -194,3 +195,13 @@ public class Bee : EnemyModel
         base.Attack(target);
     }
 }
+public class Prince : EnemyModel
+{
+    public Prince() : base("Prince" , 100, 50, EnemyDifficulty.Boss){}
+
+    public override void Attack(ICharacter target)
+    {
+        base.Attack(target);
+    }
+}
+
