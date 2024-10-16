@@ -17,12 +17,8 @@ public class BattleController : MonoBehaviour
     [Header("Turns")]
     public Turn turn;
     [Header("Animation")]
-    public TextMeshProUGUI TextPopup;
     public Transform playerObject;
     public Transform[] enemysPos;
-    [SerializeField] private Animator _playerAnimator;
-    [SerializeField] private Animator[] _enemyAnim;
-    private static string ATTACK = "attack";
     public PopUpUI popUpUI;
     public Color attack;
     public Color heal;
