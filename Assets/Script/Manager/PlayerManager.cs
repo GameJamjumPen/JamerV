@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -61,7 +62,7 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
 
     public void AddScoreFromPaper()
     {
-        if (Paper.Instance != null)
+        if (Paper.Instance != null && Paper.Instance.GetResult())
         {
             StatPoints += Paper.Instance.score;
             Debug.Log("Added score from Paper. New StatPoints: " + StatPoints);
