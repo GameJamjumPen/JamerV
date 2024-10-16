@@ -8,6 +8,8 @@ public class EasyRoom : HostileRoom
     public void Awake()
     {
         roomType = RoomType.Easy;
+        minscore = 1;
+        maxscore = 2;
     }
     public override void OnPlayerAttack()
     {

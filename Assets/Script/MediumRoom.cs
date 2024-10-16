@@ -8,6 +8,8 @@ public class MediumRoom : HostileRoom
     public void Awake()
     {
         roomType = RoomType.Medium;
+        minscore = 2;
+        maxscore =4;
     }
     public override void OnPlayerAttack()
     {
