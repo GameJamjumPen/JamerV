@@ -15,6 +15,7 @@ public class cardLoader : MonoBehaviour
             return;
         }
         Instance = this;
+        sprites.Clear();
         SetDict();
     }
 
