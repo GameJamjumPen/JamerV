@@ -313,6 +313,8 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: f03b76071dcd75b4e9bb665a3076c4c3, type: 3}
   - name: Medium
     audioClip: {fileID: 8300000, guid: 932b879fa88bd1642b841d69deea64c6, type: 3}
+  - name: Start
+    audioClip: {fileID: 8300000, guid: 2c18553e9a59cf7439ee2e2e351d5c88, type: 3}
   sfxSounds:
   - name: Dice
     audioClip: {fileID: 8300000, guid: bec28ef7a44fe054a90f0676eab2c3be, type: 3}

@@ -66,6 +66,7 @@ public class BattleController : MonoBehaviour
         NewWave();
         isPlayerTurn = true;
         OnTurnChange(Turn.PlayerAttack);
+        SoundManager.Instance.PlayMusic(Paper.Instance.sceneName);
         score = Paper.Instance.score;
         background.sprite = Paper.Instance.sprite;
         // background.sprite = Paper.Instance.sprite;
