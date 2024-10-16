@@ -101,6 +101,10 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
     public void Die()
     {
         Life-=1;
+        if(Life<=0)
+        {
+            SceneManager.LoadSceneAsync("GameOver");
+        }
     }
 
 }
