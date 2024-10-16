@@ -69,60 +69,54 @@ public class BattleController : MonoBehaviour
         // background.sprite = Paper.Instance.sprite;
     }
     public void OnTurnChange(Turn newTurn)
+{
+    Debug.Log($"Attempting to change turn from {turn} to {newTurn}");
+    
+    if (newTurn == turn) 
     {
-        if (newTurn == turn) return;
-        turn = newTurn;
-        switch (turn)
-        {
-            case Turn.PlayerAttack:
-                return;
-            case Turn.PlayerAnim:
-                //StartCoroutine(WaitforAnim(2f , _playerAnimator , ATTACK));
-                Debug.Log("Player Animation");
-                WaitforDebug(5f);
-                OnTurnChange(Turn.EnemyThink);
-                break;
-            case Turn.EnemyThink:
-                WaitforDebug(5f);
-                OnTurnChange(Turn.Enemyattack);
-                break;
-            case Turn.Enemyattack:
-                EnemyTurn();
-                break;
-            case Turn.EnemyAnim:
-                for (int i = 0; i < enemies.Count; i++)
-                {   
-                    if(enemies[i].IsAlive()){
-                        Debug.Log("ISalive "+ i.ToString());
-                        Debug.Log("WAZAaaaaaaaa " + (enemyAttackInfos[i]==null).ToString());
-                        if (enemyAttackInfos[i] != null && enemyAttackInfos[i].isAtk)
-                        {
-                            Debug.Log("_---------------------------------------------");
-                            Debug.Log(enemyAttackInfos[i].valueStat.ToString());
-                            Debug.Log(playerObject.ToString().ToString());
-                            Debug.Log((TextPopup==null).ToString());
-                            Debug.Log("_---------------------------------------------");
-                            ShowDamage(enemyAttackInfos[i].valueStat, playerObject, TextPopup);
-                        }
-                        else if (enemyAttackInfos[i] != null && enemyAttackInfos[i].TargetenemyModel != null)
-                        {
-                            if (TextPopup != null && enemyAttackInfos[i].isDef)
-                            {
-                                ShowDamage(enemyAttackInfos[i].valueStat, enemysObject[i], TextPopup);
-                            }else if(TextPopup != null && enemyAttackInfos[i].isHeal){
-                                ShowDamage(enemyAttackInfos[i].valueStat, enemysObject[i], TextPopup);
-                            }
-                        }
+        Debug.Log("Turn already set, skipping.");
+        return;
+    }
+
+    turn = newTurn; // Change the turn here
+
+    switch (turn)
+    {
+        case Turn.PlayerAttack:
+            Debug.Log("Player's Attack Turn");
+            return;
+        case Turn.PlayerAnim:
+            Debug.Log("Player's Animation Turn");
+            StartCoroutine(WaitforAnim(2f, _playerAnimator, ATTACK));
+            break;
+        case Turn.EnemyThink:
+            Debug.Log("Enemy's Thinking Turn");
+            StartCoroutine(WaitforDebug(5f)); // Coroutine waiting
+            break;
+        case Turn.Enemyattack:
+            Debug.Log("Enemy's Attack Turn");
+            EnemyTurn();
+            break;
+        case Turn.EnemyAnim:
+            Debug.Log("Enemy's Animation Turn");
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                if (enemies[i].IsAlive())
+                {
+                    if (enemyAttackInfos[i] != null && enemyAttackInfos[i].isAtk)
+                    {
+                        ShowDamage(enemyAttackInfos[i].valueStat, playerObject, TextPopup);
                     }
-                    else{
-                        continue;
+                    else if (enemyAttackInfos[i] != null)
+                    {
+                        ShowDamage(enemyAttackInfos[i].valueStat, enemysObject[i], TextPopup); //heal and def show the same so we merge it together
                     }
                 }
-                OnTurnChange(Turn.PlayerAttack);
-                break;
-                
-        }
+            }
+            OnTurnChange(Turn.PlayerAttack);
+            break;
     }
+}
     private IEnumerator WaitforDebug(float Second)
     {
         Debug.Log("Thinking");
