@@ -3256,11 +3256,11 @@ MonoBehaviour:
   FishSprites:
   - {fileID: 21300000, guid: 7047e3a738f504866b1abe1ea0761109, type: 3}
   KniveSprites:
-  - {fileID: 21300000, guid: e8d5fe952285149418d0e44d03ed4831, type: 3}
+  - {fileID: 21300000, guid: 301afb8c233e90a4da663a59bbd9e8d0, type: 3}
   FolkSprites:
-  - {fileID: 21300000, guid: e7eb3df245223401ba9d49f968527c15, type: 3}
+  - {fileID: 21300000, guid: acad80eea01babc44889f89e23f2bd53, type: 3}
   SpoonSprites:
-  - {fileID: 21300000, guid: bf148a17997304d999798397a7f8157a, type: 3}
+  - {fileID: 21300000, guid: 75dc3d87b90eadf498a7200b60f75501, type: 3}
   BeeSprites:
   - {fileID: 21300000, guid: de6d2b66cfff04eb6a31d12340be3be7, type: 3}
   playerPrefab: {fileID: 6728637366969356498, guid: 06f780fd626334d458e0a7e12b4e733f, type: 3}
@@ -3303,6 +3303,10 @@ MonoBehaviour:
   - {fileID: 429836494}
   - {fileID: 958029103}
   - {fileID: 1071307301}
+  spriteRenderers:
+  - {fileID: 429836495}
+  - {fileID: 958029104}
+  - {fileID: 1071307302}
 --- !u!114 &910361561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4358,8 +4362,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 644292077
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: acad80eea01babc44889f89e23f2bd53, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
