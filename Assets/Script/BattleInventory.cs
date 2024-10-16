@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BattleInventory : MonoBehaviour, IInventorable
+public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
 {
     public PlayerModel player;
     public List<CardSO> cardSOPools;
@@ -151,5 +151,15 @@ public class BattleInventory : MonoBehaviour, IInventorable
         }else{
             Debug.Log("UnAttackable");
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        throw new System.NotImplementedException();
     }
 }
