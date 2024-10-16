@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class BattleInventory : MonoBehaviour, IInventorable
+public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
 {
     public PlayerModel player;
     public List<CardSO> cardSOPools;
@@ -17,6 +15,10 @@ public class BattleInventory : MonoBehaviour, IInventorable
     private EnemyUIManager enemyUIManager;
     private PlayerUIManager playerUIManager;
     public bool attackable = true;
+
+    public float strength;
+    public float defence;
+    public float heals;
     public void getCard(List<CardSO> cardSOList)
     {
         foreach (CardSO cardSO in cardSOList)
@@ -151,5 +153,15 @@ public class BattleInventory : MonoBehaviour, IInventorable
         }else{
             Debug.Log("UnAttackable");
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -1,8 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using Unity.VisualScripting;
-using UnityEngine;
 
 [System.Serializable]
 public class GameData
@@ -53,7 +49,14 @@ public class GameData
 
         cardName = card._cardName;
         cardValue = card._value;
-        sprite = UnityEditor.AssetDatabase.GetAssetPath(card._cardSprite);
         cardType = card.cardType.ToString();
+
+        // This is an editor-only feature, so we wrap it with a preprocessor directive
+        #if UNITY_EDITOR
+        sprite = UnityEditor.AssetDatabase.GetAssetPath(card._cardSprite);
+        #else
+        sprite = ""; // Or handle this differently for runtime, such as using Resources.Load if needed.
+        #endif
+        
     }
-    }
+}
