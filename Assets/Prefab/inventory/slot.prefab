@@ -241,8 +241,8 @@ RectTransform:
   m_Children:
   - {fileID: 3924812108834148568}
   - {fileID: 5615794058005771463}
-  - {fileID: 4528823459030669932}
   - {fileID: 3424941520075928110}
+  - {fileID: 4528823459030669932}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -308,6 +308,7 @@ MonoBehaviour:
   selectedShader: {fileID: 2189799309907442360}
   isSelected: 0
   _transform: {fileID: 0}
+  battleInventory: {fileID: 0}
   types:
   - {fileID: 21300000, guid: d06748303a2b13d4d9d5f3ff71022583, type: 3}
   - {fileID: 21300000, guid: 66000df255f1d25409e7c775ee4f0336, type: 3}
