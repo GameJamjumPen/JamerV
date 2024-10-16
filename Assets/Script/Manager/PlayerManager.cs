@@ -107,6 +107,7 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
         Life-=1;
         if(Life<=0)
         {
+            DataPersistenceMNG.Instance.NewGame();
             SceneManager.LoadSceneAsync("GameOver");
         }
     }
