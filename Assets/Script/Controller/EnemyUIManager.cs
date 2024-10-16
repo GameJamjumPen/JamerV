@@ -52,6 +52,9 @@ public class EnemyUIManager : MonoBehaviour
     public void updateUI(List<EnemyModel> enemies){
         for (int i = 0; i < enemies.Count; i++)
         {
+            if(!enemies[i].IsAlive()){
+                enemySlots[i].gameObject.SetActive(false);
+            }
             Slider healthSlider = enemySlots[i].Find("HealthSlider").GetComponent<Slider>();
             Slider shieldSlider = enemySlots[i].Find("ShieldSlider").GetComponent<Slider>();
             TextMeshProUGUI healthText = healthSlider.GetComponentInChildren<TextMeshProUGUI>();
