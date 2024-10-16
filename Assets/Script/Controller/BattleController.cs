@@ -105,7 +105,7 @@ public class BattleController : MonoBehaviour
                 Debug.Log("Enemy's Animation Turn");
                 for (int i = 0; i < enemies.Count; i++)
                 {
-                    if (enemies[i].IsAlive())
+                    if (enemies[i].IsAlive() && enemyAttackInfos!=null)
                     {
                         if (enemyAttackInfos[i] != null && enemyAttackInfos[i].isAtk)
                         {

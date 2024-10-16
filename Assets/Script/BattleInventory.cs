@@ -44,8 +44,8 @@ public class BattleInventory : MonoBehaviour, IInventorable
         enemyUIManager = battleController.enemyUIManager;
         playerUIManager = battleController.playerUIManager;
         player = battleController.player;
-        //getCard(Paper.Instance.cardSOs);
-        AddDeck(3);
+        getCard(Paper.Instance.cardSOs);
+        // AddDeck(3);
     }
     public void DeselectedAllHolder()
     {
