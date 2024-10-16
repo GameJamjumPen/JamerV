@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using UnityEngine.Rendering;
 
 // Define difficulty levels
 public enum EnemyDifficulty
@@ -35,8 +37,9 @@ public abstract class EnemyModel : CharacterBase
     {
         bool shieldUsed = false;
         bool healUsed = false;
+        int i = 0;
 
-        foreach (var enemy in enemyModels)
+        foreach (EnemyModel enemy in enemyModels)
         {
             Debug.Log("Alive");
             if (!enemy.IsAlive()) continue;
@@ -48,6 +51,7 @@ public abstract class EnemyModel : CharacterBase
                 bool shielded = SetShieldToLowestHealthEnemy(enemyModels);
                 if (shielded) shieldUsed = true;
                 else enemy.Attack(player);
+                //enemyModelList[i][1] = enemy;
                 Debug.Log("Using Shield");
             }
             else if (decision < shieldProp+healprop && !healUsed)
@@ -55,14 +59,19 @@ public abstract class EnemyModel : CharacterBase
                 bool healed = HealLowHealthEnemy(enemyModels);
                 if (healed) healUsed = true;
                 else enemy.Attack(player);
+                //enemyModelList[i][2] = enemy;
                 Debug.Log("Healing");
             }
             else
             {
                 enemy.Attack(player);
+                //enemyModelList[i][0] = enemy;
                 Debug.Log("Attack player");
             }
+            i++;
+            
         }
+        //return enemyModelList;
     }
     private static bool SetShieldToLowestHealthEnemy(List<EnemyModel> enemies)
     {

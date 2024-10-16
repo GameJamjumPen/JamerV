@@ -5,8 +5,22 @@ using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 public class BattleController : MonoBehaviour
 {   
+    [Header("Assignable")]
+    public int shieldprop = 30;
+    public int healprop = 10;
+
+    [Header("For Checking")]
+    public List<EnemyHolder> enemyHolders;
+    [Header("Turns")]
+    public Turn turn = new Turn();
+    [Header("Animation")]
+    [SerializeField] private Animator _playerAnimator;
+    [SerializeField] private Animator[] _enemyAnim;
+    private static string ATTACK = "attack";
+    [Header("Etc...")]
     public EnemyUIManager enemyUIManager;
     public PlayerUIManager playerUIManager;
     public Sprite playerSprite; 
@@ -26,12 +40,7 @@ public class BattleController : MonoBehaviour
     //public Image background;
     private int currentWave = -1;
 
-    [Header("Assignable")]
-    public int shieldprop = 30;
-    public int healprop = 10;
-
-    [Header("For Checking")]
-    public List<EnemyHolder> enemyHolders;
+    
     void Awake()
     {
         enemyUIManager = FindObjectOfType<EnemyUIManager>();
@@ -51,6 +60,37 @@ public class BattleController : MonoBehaviour
         NewWave();
         //background.sprite = Paper.Instance.sprite;
         // background.sprite = Paper.Instance.sprite;
+    }
+    public void OnTurnChange(Turn newTurn){
+        if(newTurn == turn) return;
+        turn = newTurn;
+        switch(turn){
+            case Turn.PlayerAttack:
+            return;
+            case Turn.PlayerAnim:
+            break;
+            case Turn.EnemyThink:
+            WaitforDebug(5f);
+            OnTurnChange(Turn.Enemyattack);
+            break;
+            case Turn.Enemyattack:
+            
+            break;
+            case Turn.EnemyAnim:
+            for(int i = 0;i< enemyHolders.Count;i++){
+                
+            }
+            break;
+        }
+    }
+    private IEnumerator WaitforDebug(float Second){
+        Debug.Log("Thinking");
+        yield return new WaitForSeconds(Second);
+    }
+    private IEnumerator WaitforAnim(float second,Animator animator , string state){
+        animator.Play(state);
+        yield return new WaitForSeconds(second);
+
     }
 
     void Update()
@@ -72,6 +112,7 @@ public class BattleController : MonoBehaviour
         Debug.Log("PlayerTurn");
         GameOver();
         isPlayerTurn = false;
+        OnTurnChange(Turn.EnemyThink);
     }
     public void PlayerClickAttack(){
         if(isPlayerTurn){
@@ -239,4 +280,12 @@ public class BattleController : MonoBehaviour
         }
         ShowTurn.text = "Enemy Turn !";
     }
+}
+
+public enum Turn{
+    PlayerAnim,
+    EnemyThink,
+    Enemyattack,
+    EnemyAnim,
+    PlayerAttack,
 }
