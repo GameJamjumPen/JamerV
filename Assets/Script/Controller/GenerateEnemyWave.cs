@@ -55,6 +55,8 @@ public class GenerateEnemyWave : Singleton<GenerateEnemyWave>
                 return UnityEngine.Random.Range(2, 4);
             case EnemyDifficulty.Hard:
                 return UnityEngine.Random.Range(1, 3);
+            case EnemyDifficulty.Boss:
+                return 1;
             default:
                 return 3;
         }

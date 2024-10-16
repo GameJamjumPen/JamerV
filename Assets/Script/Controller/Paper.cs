@@ -9,6 +9,7 @@ public class Paper : MonoBehaviour
     public string sceneName;
     public EnemyDifficulty enemyDifficulty;
     public bool isVictory;
+    public bool isplayed = false;
     public List<CardSO> cardSOs;
     public Sprite sprite;
     private void Awake()
@@ -31,6 +32,7 @@ public class Paper : MonoBehaviour
 
     public void SetVictory(bool victory)
     {
+        isplayed = true;
         isVictory = victory;
     }
 
