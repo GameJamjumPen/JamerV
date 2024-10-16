@@ -8,7 +8,8 @@ using System.Collections;
 public class EnemyUIManager : MonoBehaviour
 {
     public List<Transform> enemySlots;  // UI Slots for displaying enemies
-    public TextMeshProUGUI waveText;    // Displays the current wave number
+    public TextMeshProUGUI waveText;
+    public List<GameObject> enemyObjects;    // Displays the current wave number
 
     // Initialize the UI elements for a new wave
     public void DisplayNewWave(int waveNumber, List<EnemyModel> enemies, List<Sprite> sprites)
@@ -26,16 +27,16 @@ public class EnemyUIManager : MonoBehaviour
             Transform slot = enemySlots[i];
 
             // Set the name and health
-            TextMeshProUGUI nameText = slot.GetComponentInChildren<TextMeshProUGUI>();
+            //TextMeshProUGUI nameText = slot.GetComponentInChildren<TextMeshProUGUI>();
             Slider healthSlider = slot.Find("HealthSlider").GetComponent<Slider>();
             Slider shieldSlider = slot.Find("ShieldSlider").GetComponent<Slider>();
             TextMeshProUGUI healthText = healthSlider.GetComponentInChildren<TextMeshProUGUI>();
-            Image enemyImage = slot.Find("EnemyImage").GetComponent<Image>();
+            Sprite enemyImage = enemyObjects[i].GetComponent<Sprite>();
 
-            nameText.text = enemies[i].Name;
+            //nameText.text = enemies[i].Name;
             healthSlider.maxValue = enemies[i].Health;
             healthSlider.value = enemies[i].Health;
-            enemyImage.sprite = sprites[i];
+            enemyImage = sprites[i];
             shieldSlider.maxValue = 100;
             shieldSlider.value = 0;
             healthText.text = enemies[i].Health.ToString();

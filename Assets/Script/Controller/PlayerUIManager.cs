@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerUIManager : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class PlayerUIManager : MonoBehaviour
     public TextMeshProUGUI healthText;
     public Slider playerHealthSlider;       // Reference to the player's health slider
     public Slider playerShieldSlider;
-    public Image playerImage;               // Reference to the player's image (sprite)
+    public SpriteRenderer playerSpriteRenderer;  // Reference to the SpriteRenderer component
     public Animator animator;
     
     // Method to update the player's UI
@@ -19,13 +19,14 @@ public class PlayerUIManager : MonoBehaviour
         playerNameText.text = player.Name;
 
         // Update the player's health slider
-        playerHealthSlider.maxValue = player.Health;
+        playerHealthSlider.maxValue = player.MaxHealth; // Assuming there's a MaxHealth property in PlayerModel
         playerHealthSlider.value = player.Health;
         playerShieldSlider.maxValue = 100;
-        playerShieldSlider.value   = 0;
+        playerShieldSlider.value = 0; // Set shield value accordingly
         healthText.text = player.Health.ToString();
-        // Update the player's image
-        playerImage.sprite = playerSprite;
+
+        // Update the player's sprite
+        playerSpriteRenderer.sprite = playerSprite;
     }
 
     // Method to update the player's health slider during gameplay
@@ -35,20 +36,21 @@ public class PlayerUIManager : MonoBehaviour
         playerShieldSlider.value = player.Shield;
         healthText.text = player.Health.ToString();
     }
+
     /// <summary>
-    /// Shakes the enemy image and flashes it red to simulate damage feedback.
+    /// Shakes the player sprite and flashes it red to simulate damage feedback.
     /// </summary>
     /// <param name="shakeDuration">The duration of the shake effect, in seconds.</param>
     /// <param name="shakeAmount">The amount of shake (intensity).</param>
     public void ShakeAndFlashRed(float shakeDuration = 1f, float shakeAmount = 1f)
     {
-        StartCoroutine(ShakeImage(shakeDuration, shakeAmount));
+        StartCoroutine(ShakeSprite(shakeDuration, shakeAmount));
         StartCoroutine(FlashRed(0.5f)); // Flash red for 0.5 seconds
     }
 
-    private IEnumerator ShakeImage(float duration, float amount)
+    private IEnumerator ShakeSprite(float duration, float amount)
     {
-        Vector3 originalPosition = playerImage.rectTransform.localPosition;
+        Vector3 originalPosition = playerSpriteRenderer.transform.localPosition;
 
         float elapsedTime = 0f;
         while (elapsedTime < duration)
@@ -57,8 +59,8 @@ public class PlayerUIManager : MonoBehaviour
             float offsetX = Random.Range(-amount, amount);
             float offsetY = Random.Range(-amount, amount);
 
-            // Apply the offset to the playerImage's position
-            playerImage.rectTransform.localPosition = new Vector3(
+            // Apply the offset to the playerSprite's position
+            playerSpriteRenderer.transform.localPosition = new Vector3(
                 originalPosition.x + offsetX,
                 originalPosition.y + offsetY,
                 originalPosition.z
@@ -69,21 +71,21 @@ public class PlayerUIManager : MonoBehaviour
         }
 
         // Reset to the original position after shaking
-        playerImage.rectTransform.localPosition = originalPosition;
+        playerSpriteRenderer.transform.localPosition = originalPosition;
     }
 
     private IEnumerator FlashRed(float duration)
     {
-        Color originalColor = playerImage.color;
+        Color originalColor = playerSpriteRenderer.color;
 
-        // Set the playerImage to red
-        playerImage.color = Color.red;
+        // Set the playerSprite to red
+        playerSpriteRenderer.color = Color.red;
 
         // Wait for the specified duration
         yield return new WaitForSeconds(duration);
 
-        // Reset the playerImage to its original color
-        playerImage.color = originalColor;
+        // Reset the playerSprite to its original color
+        playerSpriteRenderer.color = originalColor;
     }
 
     public void AttackAnimate()

@@ -16,6 +16,7 @@ public class BattleInventory : MonoBehaviour, IInventorable
     public EnemyHolder enemyHolder;
     private EnemyUIManager enemyUIManager;
     private PlayerUIManager playerUIManager;
+    public bool attackable = true;
     public void getCard(List<CardSO> cardSOList)
     {
         foreach (CardSO cardSO in cardSOList)
@@ -59,6 +60,8 @@ public class BattleInventory : MonoBehaviour, IInventorable
         if (CheckEmpty(slotDisplay))
         {
             shuffleUI.SetActive(true);
+        }else{
+            shuffleUI.SetActive(false);
         }
     }
 
@@ -96,41 +99,46 @@ public class BattleInventory : MonoBehaviour, IInventorable
 
     public void Use()
     {
-        if (cardSelected.cardType == CardType.DEF)
-        {
-            player.setShield((int)cardSelected._value);
-            battleController.ShowDamage((int)cardSelected._value, battleController.playerObject, battleController.TextPopup);
-            this.playerUIManager.UpdatePlayerUI(battleController.player);
-        }
-        if (cardSelected.cardType == CardType.SUP)
-        {
-            player.HealByAmount((int)cardSelected._value);
-            battleController.ShowDamage((int)cardSelected._value, battleController.playerObject, battleController.TextPopup);
-            this.playerUIManager.UpdatePlayerUI(battleController.player);
-        }
-        if (cardSelected.cardType == CardType.ATK)
-        {
-            // Check if enemyHolder is null for ATK cards
-            if (enemyHolder == null)
+        if(attackable){
+            if (cardSelected.cardType == CardType.DEF)
             {
-                //Debug.Log("Selected Enemy");
-                return; // Exit the function if no enemy is selected
+                player.setShield((int)cardSelected._value);
+                battleController.ShowDamage((int)cardSelected._value, battleController.playerObject, battleController.TextPopup);
+                this.playerUIManager.UpdatePlayerUI(battleController.player);
             }
+            if (cardSelected.cardType == CardType.SUP)
+            {
+                player.HealByAmount((int)cardSelected._value);
+                battleController.ShowDamage((int)cardSelected._value, battleController.playerObject, battleController.TextPopup);
+                this.playerUIManager.UpdatePlayerUI(battleController.player);
+            }
+            if (cardSelected.cardType == CardType.ATK)
+            {
+                // Check if enemyHolder is null for ATK cards
+                if (enemyHolder == null)
+                {
+                    //Debug.Log("Selected Enemy");
+                    return; // Exit the function if no enemy is selected
+                }
 
+                
+                CharacterBase.Attack((int)cardSelected._value, enemyHolder.enemyContain);
+                battleController.ShowDamage((int)cardSelected._value , enemyHolder.gameObject , battleController.TextPopup);
+                this.enemyUIManager.updateUI(battleController.enemies);
+                enemyHolder.Deselected();
+            }
             
-            CharacterBase.Attack((int)cardSelected._value, enemyHolder.enemyContain);
-            battleController.ShowDamage((int)cardSelected._value , enemyHolder.gameObject , battleController.TextPopup);
-            this.enemyUIManager.updateUI(battleController.enemies);
-            enemyHolder.Deselected();
+            playerUIManager.AttackAnimate();
+            // Reset cardSelected and useSlot after use
+            useSlot.OnDeselected(); //unselected
+            useSlot.RemoveItem(); //remove card from itself
+            useSlot = null; //destroy itself
+            battleController.isPlayerTurn = false;
+            battleController.OnTurnChange(Turn.PlayerAnim);
+            attackable = true;
+            Debug.Log("Change Turn");
+        }else{
+            Debug.Log("UnAttackable");
         }
-        
-        playerUIManager.AttackAnimate();
-        // Reset cardSelected and useSlot after use
-        useSlot.OnDeselected(); //unselected
-        useSlot.RemoveItem(); //remove card from itself
-        useSlot = null; //destroy itself
-        battleController.isPlayerTurn = false;
-        battleController.OnTurnChange(Turn.PlayerAnim);
-        Debug.Log("Change Turn");
     }
 }
