@@ -61,6 +61,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
         data.wentRoom = new List<int>(this.wentRoom);
     }
 
+    public void Place()
+    {
+        PlaceRooms(wentRoom);
+    }
+
 
     private void PlaceRooms(List<int> wentRoom = null)
     {
