@@ -15,11 +15,10 @@ public class TreasureRoom : Room
     public override void OnPlayerAttack()
     {
         Inventory inventory = FindObjectOfType<Inventory>();
+        SoundManager.Instance.PlaySFX("GetCard");
         inventory.AddItem(_cardReward,_cardReward._cardSprite);
         Debug.Log("GO to Treasure");
         inventory.istoggleable = true;
-        RollDice dice = FindObjectOfType<RollDice>();
-        dice.canRoll = true;
     }
 
     //UI display

@@ -305,16 +305,22 @@ MonoBehaviour:
   musicSounds:
   - name: MainBoard
     audioClip: {fileID: 8300000, guid: 040cdf97be3dab943895cdea8507a29e, type: 3}
-  - name: Boss
-    audioClip: {fileID: 8300000, guid: f03b76071dcd75b4e9bb665a3076c4c3, type: 3}
   - name: Easy
     audioClip: {fileID: 8300000, guid: 35eb8498face61042abf1ed05d975bdb, type: 3}
-  - name: Medium
-    audioClip: {fileID: 8300000, guid: 932b879fa88bd1642b841d69deea64c6, type: 3}
   - name: Hard
     audioClip: {fileID: 8300000, guid: df1039b7bc61f7b4c9f5e75ceee1e590, type: 3}
+  - name: Boss
+    audioClip: {fileID: 8300000, guid: f03b76071dcd75b4e9bb665a3076c4c3, type: 3}
+  - name: Medium
+    audioClip: {fileID: 8300000, guid: 932b879fa88bd1642b841d69deea64c6, type: 3}
   sfxSounds:
-  - name: 
-    audioClip: {fileID: 0}
+  - name: Dice
+    audioClip: {fileID: 8300000, guid: bec28ef7a44fe054a90f0676eab2c3be, type: 3}
+  - name: AddStat
+    audioClip: {fileID: 8300000, guid: bc55893a3b71c52489efb81944140f95, type: 3}
+  - name: GetCard
+    audioClip: {fileID: 8300000, guid: 6fa6f8ac3ff70754d8ef3446fbec0b9e, type: 3}
+  - name: tap
+    audioClip: {fileID: 8300000, guid: d368d0dbeb1db994bb88e2eac8c23cb8, type: 3}
   musicSource: {fileID: 6289841908745599012}
   sfxSource: {fileID: 2480629681830024316}

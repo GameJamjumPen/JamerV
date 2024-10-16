@@ -17,7 +17,7 @@ public class GameData
     public int heal;
     public int statPoints;
     public int currentRoom;
-    public List<RoomPlacement> roomPlacement;
+
 
 
     public GameData()
@@ -31,23 +31,10 @@ public class GameData
         heal = 1;
         statPoints = 0;
         wentRoom = new List<int>(){};
-        roomPlacement = new List<RoomPlacement>();
         currentRoom = 0;
     }
 }
 
-    [System.Serializable]
-    public class RoomPlacement
-    {
-        public int gridInd;
-        public int roomInd;
-
-        public RoomPlacement(int gridInd, int roomInd)
-        {
-            this.gridInd = gridInd;
-            this.roomInd = roomInd;
-        }
-    }
 
     [System.Serializable]
     public class CardData

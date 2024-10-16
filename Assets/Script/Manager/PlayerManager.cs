@@ -60,6 +60,7 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
     {
         if (StatPoints > 0)
         {
+            SoundManager.Instance.PlaySFX("AddStat");
             System.Random random = new System.Random();
             List<string> statList = stats.Keys.ToList();
             string randomStat = statList[random.Next(statList.Count)];

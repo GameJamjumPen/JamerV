@@ -8,13 +8,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour, IDataPersistence
 {
-    public List<GameObject> roomPref;
     public List<string> scenes;
     public List<int> wentRoom { get; private set; }
     public int currentRoom;
-    public GameObject went;
-
-    private List<GameObject> availableRooms;
     public List<GameObject> allrooms;
     [Header("Inventory Related")]
     public Room selectedRoom;
@@ -48,28 +44,13 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         this.currentRoom = data.currentRoom;
         this.wentRoom = new List<int>(data.wentRoom);
-        if (data.roomPlacement == null || data.roomPlacement.Count == 0)
-        {
-            availableRooms = new List<GameObject>(roomPref);
-            GenerateRandomLayout();
-        }
-        else
-        {
-            PlaceRooms(data.roomPlacement);
-        }
+
+        PlaceRooms(data.wentRoom);
+        
     }
 
     public void SaveData(ref GameData data)
     {
-        if (data.roomPlacement == null || data.roomPlacement.Count == 0)
-        {
-            for (int i = 0; i < availableRooms.Count; i++)
-            {
-                RoomPlacement placementData = new RoomPlacement(i, roomPref.IndexOf(availableRooms[i]));
-                data.roomPlacement.Add(placementData);
-            }
-        }
-
         List<CardSO> slotToSave = new List<CardSO>();
         foreach(CardSO card in cardSOs)
         {
@@ -84,38 +65,19 @@ public class GameManager : MonoBehaviour, IDataPersistence
     }
 
 
-    private void PlaceRooms(List<RoomPlacement> layout = null)
+    private void PlaceRooms(List<int> wentRoom = null)
     {
-        if (layout != null)
+        if (wentRoom != null)
         {
-            for (int i = 0; i < layout.Count; i++)
+            for (int i = 0; i < allrooms.Count; i++)
             {
-                int gridIndex = layout[i].gridInd;
-                int roomIndex = layout[i].roomInd;
-
-                Transform roomSlot = allrooms[gridIndex + 1].transform;
-                GameObject roomPrefab = roomPref[roomIndex];
-
-                if (wentRoom.Contains(i + 1))
+                if (wentRoom.Contains(i))
                 {
-                    GameObject r = Instantiate(roomPrefab, roomSlot);
+                    GameObject r = allrooms[i].transform.GetChild(0).gameObject;
+        
                     SpriteRenderer roomSprite = r.GetComponent<SpriteRenderer>();
                     roomSprite.color = new Color(.5f, .5f, .5f);
                 }
-                else
-                {
-                    Instantiate(roomPrefab, roomSlot);
-
-                }
-            }
-
-        }
-        else
-        {
-            for (int i = 0; i < availableRooms.Count; i++)
-            {
-                Transform slotTransform = allrooms[i + 1].transform;
-                Instantiate(availableRooms[i], slotTransform);
             }
         }
     }
@@ -125,23 +87,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         wentRoom.Add(room);
     }
 
-    public void GenerateRandomLayout()
-    {
-        Shuffle(availableRooms);
-        PlaceRooms();
-    }
 
-
-    void Shuffle<T>(List<T> arr)
-    {
-        for (int i = 0; i < arr.Count; i++)
-        {
-            int rdIndex = UnityEngine.Random.Range(i, arr.Count);
-            T temp = arr[i];
-            arr[i] = arr[rdIndex];
-            arr[rdIndex] = temp;
-        }
-    }
 
     public void RoomEnter(int room) //selectedRoomยังหาไม่ถูกห้อง ไม่รู้ทำไม
     {

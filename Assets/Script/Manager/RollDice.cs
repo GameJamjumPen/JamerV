@@ -8,7 +8,7 @@ public class RollDice : MonoBehaviour
     public List<int> thiswentRoom;
     public Animator animator;
     public TMP_Text rolledTextUI;
-    public bool canRoll;
+    private bool canRoll;
     private int rolledRoom;
     private void Start()
     {
@@ -23,6 +23,11 @@ public class RollDice : MonoBehaviour
     {
         rolledRoom = Roll();
         rolledTextUI.text = rolledRoom.ToString();
+    }
+
+    public void SetRoll()
+    {
+        canRoll = true;
     }
 
     private void Move()
