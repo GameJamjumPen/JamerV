@@ -3389,7 +3389,7 @@ MonoBehaviour:
   playerUIManager: {fileID: 910361561}
   playerSprite: {fileID: 21300000, guid: ee6c4c2502b0e3b418a94ff1546b82e4, type: 3}
   FishSprites:
-  - {fileID: 21300000, guid: 627e7900f509c8349b872889d9f5192a, type: 3}
+  - {fileID: 21300000, guid: 1a3b000c1cad7e04ea317abca92f0212, type: 3}
   KniveSprites:
   - {fileID: 21300000, guid: 301afb8c233e90a4da663a59bbd9e8d0, type: 3}
   FolkSprites:
