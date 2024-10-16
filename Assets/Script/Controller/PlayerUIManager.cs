@@ -35,6 +35,11 @@ public class PlayerUIManager : MonoBehaviour
         playerShieldSlider.value = player.Shield;
         healthText.text = player.Health.ToString();
     }
+    /// <summary>
+    /// Shakes the enemy image and flashes it red to simulate damage feedback.
+    /// </summary>
+    /// <param name="shakeDuration">The duration of the shake effect, in seconds.</param>
+    /// <param name="shakeAmount">The amount of shake (intensity).</param>
     public void ShakeAndFlashRed(float shakeDuration = 1f, float shakeAmount = 1f)
     {
         StartCoroutine(ShakeImage(shakeDuration, shakeAmount));

@@ -79,13 +79,20 @@ public class EnemyUIManager : MonoBehaviour
     public void SetActiveFalseOf(int i){
         enemySlots[i].gameObject.SetActive(false);
     }
+    
+    /// <summary>
+    /// Shakes the enemy image and flashes it red to simulate damage feedback.
+    /// </summary>
+    /// <param name="enemyGameObject">The enemy GameObject containing the image to shake and flash.</param>
+    /// <param name="shakeDuration">The duration of the shake effect, in seconds.</param>
+    /// <param name="shakeAmount">The amount of shake (intensity).</param>
     public void ShakeAndFlashRed(GameObject enemyGameobject,float shakeDuration = 1f, float shakeAmount = 1f)
     {
         StartCoroutine(ShakeImage(shakeDuration, shakeAmount,enemyGameobject));
         StartCoroutine(FlashRed(0.5f,enemyGameobject)); // Flash red for 0.5 seconds
     }
 
-    private static IEnumerator ShakeImage(float duration, float amount,GameObject enemyGameobject)
+    private IEnumerator ShakeImage(float duration, float amount,GameObject enemyGameobject)
     
     {
         Image enemyImage = enemyGameobject.GetComponentInChildren<Image>();
@@ -113,7 +120,7 @@ public class EnemyUIManager : MonoBehaviour
         enemyImage.rectTransform.localPosition = originalPosition;
     }
 
-    private static IEnumerator FlashRed(float duration,GameObject enemyGameobject)
+    private IEnumerator FlashRed(float duration,GameObject enemyGameobject)
     {
         Image enemyImage = enemyGameobject.GetComponentInChildren<Image>();
         Color originalColor = enemyImage.color;
