@@ -138,6 +138,9 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
                     }
                 break;
                 case CardType.ATKV3:
+                    if(enemyHolder = null){
+                        return;
+                    }
                     enemyHolder.enemyContain.TakeDamageHealth((int)cardSelected._value);
                     Debug.Log(strength);
                     Debug.Log((enemyHolder==null).ToString());
