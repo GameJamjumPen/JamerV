@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetInteger("MoveX",0);
         GameManager.singleton.currentRoom = roomtomove;
         GameManager.singleton.RoomEnter(roomtomove);
-
+        
     }
 
     IEnumerator MoveToNextRoom(Vector3 targetPosition)
