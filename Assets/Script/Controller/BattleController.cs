@@ -63,11 +63,10 @@ public class BattleController : MonoBehaviour
         waves = GenerateEnemyWave.Instance.GetEnemyWaves();
         initPlayer();
         NewWave();
+        isPlayerTurn = true;
+        OnTurnChange(Turn.PlayerAttack);
         //background.sprite = Paper.Instance.sprite;
         // background.sprite = Paper.Instance.sprite;
-    }
-    void Start(){
-        OnTurnChange(Turn.PlayerAttack);
     }
     public void OnTurnChange(Turn newTurn)
     {
@@ -98,23 +97,6 @@ public class BattleController : MonoBehaviour
                     }
                     else if (enemyAttackInfos[i].TargetenemyModel != null)
                     {
-                        //TextMeshProUGUI[] textMeshProUGUIs = null; // Declare and initialize the array
-
-                        // Assign the correct array based on the enemy index
-                        // switch (i)
-                        // {
-                        //     case 0:
-                        //         textMeshProUGUIs = enemy1TextPos; // Assign the correct TextMeshProUGUI array
-                        //         break;
-                        //     case 1:
-                        //         textMeshProUGUIs = enemy2TextPos;
-                        //         break;
-                        //     case 2:
-                        //         textMeshProUGUIs = enemy3TextPos;
-                        //         break;
-                        // }
-
-                        // Show damage based on which enemy was attacked
                         if (TextPopup != null && enemyAttackInfos[i].isDef)
                         {
                             ShowDamage(enemyAttackInfos[i].valueStat, enemysObject[i], TextPopup);
@@ -207,6 +189,7 @@ public class BattleController : MonoBehaviour
             FindEnemyAddAttack();
             playerUIManager.UpdatePlayerUI(player);
             isPlayerTurn = false;
+            OnTurnChange(Turn.EnemyThink);
         }
 
     }
@@ -218,6 +201,7 @@ public class BattleController : MonoBehaviour
             player.setShield(30);
             playerUIManager.UpdatePlayerUI(player);
             isPlayerTurn = false;
+            OnTurnChange(Turn.EnemyThink);
         }
 
     }
@@ -230,6 +214,7 @@ public class BattleController : MonoBehaviour
             playerUIManager.UpdatePlayerUI(player);
             isPlayerTurn = false;
             BattleModel.ResetShield(enemies);
+            OnTurnChange(Turn.EnemyThink);
         }
     }
     void EnemyTurn()
