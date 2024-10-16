@@ -41,6 +41,7 @@ public class EnemyUIManager : MonoBehaviour
             shieldSlider.value = 0;
             healthText.text = enemies[i].Health.ToString();
             // Ensure the slot is active
+            spriteRenderers[i].gameObject.SetActive(true);
             slot.gameObject.SetActive(true);
         }
 
