@@ -19,10 +19,11 @@ public class EnemyAttackInfo
         public int valueStat;
         public EnemyModel TargetenemyModel;
 
-        public EnemyAttackInfo(bool isAtk,bool isDef,bool isHeal,EnemyModel enemyModel){
+        public EnemyAttackInfo(bool isAtk,bool isDef,bool isHeal,int valueStat,EnemyModel enemyModel){
             this.isAtk = isAtk;
             this.isDef = isDef;
             this.isHeal = isHeal;
+            this.valueStat = valueStat;
             this.TargetenemyModel = enemyModel;
         }
     }
@@ -30,9 +31,12 @@ public class EnemyAttackInfo
         public bool isSuccess;
         public EnemyModel enemyModel;
 
-        public EnemyTargetBool(bool isSuccess,EnemyModel enemyModel){
+        public int value;
+
+        public EnemyTargetBool(bool isSuccess,EnemyModel enemyModel,int value){
             this.isSuccess = isSuccess;
             this.enemyModel = enemyModel;
+            this.value = value;
         }
         public bool Issuccess(){
             return isSuccess;
@@ -62,7 +66,7 @@ public abstract class EnemyModel : CharacterBase
     {
         target.TakeDamage(AttackPower);
     }
-    public static List<EnemyAttackInfo> AttackPlayer(List<EnemyModel> enemyModels, PlayerModel player,int shieldProp,int healProp)
+    public static List<EnemyAttackInfo> AttackPlayer(List<EnemyModel> enemyModels, PlayerModel player,int shieldProp,int healProp,BattleController battleController)
     {
         bool shieldUsed = false;
         bool healUsed = false;
@@ -83,12 +87,12 @@ public abstract class EnemyModel : CharacterBase
                 if (shielded.Issuccess())
                 {
                     shieldUsed = true;
-                    enemyAttackInfo.Add(new EnemyAttackInfo(false, true, false, shielded.TargetHelp()));
+                    enemyAttackInfo.Add(new EnemyAttackInfo(false, true, false,shielded.value, shielded.TargetHelp()));
                 }
                 else
                 {
                     enemy.Attack(player);
-                    enemyAttackInfo.Add(new EnemyAttackInfo(true, false, false, null)); // Log attack
+                    enemyAttackInfo.Add(new EnemyAttackInfo(true, false, false,enemy.AttackPower, null)); // Log attack
                 }
             }
             else if (decision < shieldProp + healProp && !healUsed)
@@ -97,18 +101,18 @@ public abstract class EnemyModel : CharacterBase
                 if (healed.Issuccess())
                 {
                     healUsed = true;
-                    enemyAttackInfo.Add(new EnemyAttackInfo(false, false, true, healed.TargetHelp())); // Log heal
+                    enemyAttackInfo.Add(new EnemyAttackInfo(false, false, true, healed.value, healed.TargetHelp())); // Log heal
                 }
                 else
                 {
                     enemy.Attack(player);
-                    enemyAttackInfo.Add(new EnemyAttackInfo(true, false, false, null)); // Log attack
+                    enemyAttackInfo.Add(new EnemyAttackInfo(true, false, false,enemy.AttackPower, null)); // Log attack
                 }
             }
             else
             {
                 enemy.Attack(player);
-                enemyAttackInfo.Add(new EnemyAttackInfo(true, false, false, null)); // Log attack
+                enemyAttackInfo.Add(new EnemyAttackInfo(true, false, false,enemy.AttackPower, null)); // Log attack
                 Debug.Log("Attack player");
             }
             i++;
@@ -127,11 +131,11 @@ public abstract class EnemyModel : CharacterBase
         if (lowestHealthEnemy != null)
         {
             lowestHealthEnemy.setShield(30);
-            return new EnemyTargetBool(true,lowestHealthEnemy);
+            return new EnemyTargetBool(true,lowestHealthEnemy,30);
         }
 
         Debug.Log("No valid enemy found to shield.");
-        return new EnemyTargetBool(false,enemies[0]);
+        return new EnemyTargetBool(false,enemies[0],0);
     }
     private static EnemyTargetBool HealLowHealthEnemy(List<EnemyModel> enemies)
     {
@@ -140,12 +144,12 @@ public abstract class EnemyModel : CharacterBase
             if (enemy.IsAlive())
             {
                 enemy.HealByPercentage(0.2f);
-                return new EnemyTargetBool(true,enemy);
+                return new EnemyTargetBool(true, enemy, (int)(enemy.MaxHealth * 0.2f));
             }
         }
 
         Debug.Log("No enemies with health below 20% found to heal.");
-        return new EnemyTargetBool(false,enemies[0]);
+        return new EnemyTargetBool(false,enemies[0],0);
     }
 }
 
