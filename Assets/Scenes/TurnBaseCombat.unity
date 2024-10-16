@@ -2631,6 +2631,7 @@ GameObject:
   - component: {fileID: 711699158}
   - component: {fileID: 711699160}
   - component: {fileID: 711699159}
+  - component: {fileID: 711699161}
   m_Layer: 5
   m_Name: PlayerImage
   m_TagString: Untagged
@@ -2695,6 +2696,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711699157}
   m_CullTransparentMesh: 1
+--- !u!95 &711699161
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711699157}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1970509086475d246ba6f4bfb61aa719, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &717525830
 GameObject:
   m_ObjectHideFlags: 0
@@ -3388,6 +3410,7 @@ MonoBehaviour:
   playerHealthSlider: {fileID: 1388895335}
   playerShieldSlider: {fileID: 1384634504}
   playerImage: {fileID: 711699159}
+  animator: {fileID: 711699161}
 --- !u!114 &910361562
 MonoBehaviour:
   m_ObjectHideFlags: 0
