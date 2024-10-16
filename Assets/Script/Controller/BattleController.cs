@@ -44,6 +44,7 @@ public class BattleController : MonoBehaviour
     private int currentWave = -1;
     private List<EnemyAttackInfo> enemyAttackInfos = new List<EnemyAttackInfo>();
     public BattleInventory battleInventory;
+    public int score;
 
 
     void Awake()
@@ -68,6 +69,7 @@ public class BattleController : MonoBehaviour
         NewWave();
         isPlayerTurn = true;
         OnTurnChange(Turn.PlayerAttack);
+        score = Paper.Instance.score;
         background.sprite = Paper.Instance.sprite;
         // background.sprite = Paper.Instance.sprite;
     }

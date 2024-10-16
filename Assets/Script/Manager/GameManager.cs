@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public GameObject lockIn;
     public GameObject  bar;
 
+    public int stat;
+
 
     public static GameManager singleton { get; private set; }
 

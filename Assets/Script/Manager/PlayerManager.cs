@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour, IDataPersistence
 {
@@ -24,6 +25,21 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
         };
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        AddScoreFromPaper();
+    }
+
 
     public void LoadData(GameData data)
     {
@@ -32,7 +48,6 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
         stats["Strength"] = data.strength;
         stats["Defense"] = data.defense;
         stats["Heal"] = data.heal;
-
     }
 
     public void SaveData(ref GameData data)
@@ -42,13 +57,18 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
         data.strength = stats["Strength"];
         data.defense = stats["Defense"];
         data.heal = stats["Heal"];
-
     }
 
-    private void OnEnable()
+    public void AddScoreFromPaper()
     {
-        StatPoints += Paper.Instance.score;
+        if (Paper.Instance != null)
+        {
+            StatPoints += Paper.Instance.score;
+            Debug.Log("Added score from Paper. New StatPoints: " + StatPoints);
+            ScoreAdded?.Invoke();
+        }
     }
+
 
     public void SetLife(int life)
     {
