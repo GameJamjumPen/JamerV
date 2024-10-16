@@ -9,7 +9,8 @@ public class ToRestart : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadSceneAsync("ToStart");
+            DataPersistenceMNG.Instance.gameData = null;
+            SceneManager.LoadSceneAsync("StartScene");
         }
     }
 }
