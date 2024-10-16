@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     [Tooltip("Card to give to paper instance")]
     public CardSO[] cardSOs;
     public GameObject lockIn;
+    public GameObject  bar;
 
 
     public static GameManager singleton { get; private set; }
@@ -68,6 +69,15 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 data.roomPlacement.Add(placementData);
             }
         }
+
+        List<CardSO> slotToSave = new List<CardSO>();
+        foreach(CardSO card in cardSOs)
+        {
+            if(card!=null){
+            slotToSave.Add(card);}
+        }
+
+        data.loadoutData = DataPersistenceMNG.Instance.ConvertScriptableObjectsToData(slotToSave);
 
         data.currentRoom = this.currentRoom;
         data.wentRoom = new List<int>(this.wentRoom);
@@ -156,18 +166,26 @@ public class GameManager : MonoBehaviour, IDataPersistence
             }
             selectedRoom.OnPlayerAttack();
         }
+
+        else if(selectedRoom.Treasure)
+        {
+            selectedRoom.OnPlayerAttack();
+        }
         else
         { //no item in inventory slot
-            if (!inventory.pocketSystem.activeSelf)
+            if (!inventory.inv.activeSelf && !selectedRoom.Treasure)
             {
-                inventory.pocketSystem.SetActive(true);
+                inventory.inv.SetActive(true);
+                bar.SetActive(true);
+                lockIn.SetActive(true);
+                inventory.istoggleable = false;
             }
-            if (!inventory.backPackSystem.activeSelf)
-            {
-                inventory.backPackSystem.SetActive(true);
-            }
-            inventory.istoggleable = false;
-            lockIn.SetActive(true);
+            // if (!inventory.inv.activeSelf)
+            // {
+            //     inventory.inv.SetActive(true);
+            // }
+            
+            
         }
     }
 

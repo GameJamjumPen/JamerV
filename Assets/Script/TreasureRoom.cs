@@ -7,11 +7,22 @@ public class TreasureRoom : Room
     //reward
     public CardSO _cardReward;
 
+    void Awake()
+    {
+        Treasure = true;
+    }
+
     public override void OnPlayerAttack()
     {
         Inventory inventory = FindObjectOfType<Inventory>();
-        inventory.AddItem(_cardReward);
+        inventory.AddItem(_cardReward,_cardReward._cardSprite);
         Debug.Log("GO to Treasure");
         inventory.istoggleable = true;
+    }
+
+    //UI display
+    public void UIDisplay()
+    {
+
     }
 }

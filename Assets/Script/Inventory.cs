@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -16,12 +17,15 @@ public class Inventory : MonoBehaviour,IInventorable,IDataPersistence
     public GameObject stats;
     public Collider2D dice;
     public GameObject inv;
+    public Image cardAddedTreasure;
+    public GameObject newCardPopup;
 
     [Header("Slots")]
     public CardSO cardSelected;
     public InventorySlot[] itemSlots;
     public InventorySlot[] actualSlots;
     public InventorySlot[] allSlots;
+    public List<CardSO> StarterPack;
 
     [Header("Display")]
     public Image image;
@@ -35,6 +39,7 @@ public class Inventory : MonoBehaviour,IInventorable,IDataPersistence
     #endregion
     public void Awake(){
         istoggleable = true;
+        inv.SetActive(false);
     }
 
     public void LoadData(GameData data)
@@ -43,6 +48,20 @@ public class Inventory : MonoBehaviour,IInventorable,IDataPersistence
         foreach(CardSO card in slotToLoad)
         {
             AddItem(card);
+        }
+
+        List<CardSO> loadoutToSlot = new List<CardSO>(DataPersistenceMNG.Instance.ConvertDataToScriptableObjects(data.loadoutData));
+        foreach(CardSO card in loadoutToSlot)
+        {
+            AddItem(card);
+        }
+
+        if(loadoutToSlot.Count == 0 && slotToLoad.Count == 0)
+        {
+            foreach(CardSO card in StarterPack)
+            {
+                AddItem(card);
+            }
         }
     }
 
@@ -92,6 +111,23 @@ public class Inventory : MonoBehaviour,IInventorable,IDataPersistence
             }
         }
         return true;
+    }
+
+    public void AddItem(CardSO _card, Sprite cardPic){
+    for(int i = 0;i < itemSlots.Length;i++){
+        if(!itemSlots[i].isFull){
+            itemSlots[i].AddItem(_card);
+            newCardPopup.SetActive(true);
+            Debug.Log("TTTT");
+            cardAddedTreasure.sprite = cardPic;
+            return;
+        }
+    }
+}
+
+    public void CloseUI()
+    {
+        newCardPopup.SetActive(false);
     }
 
     public bool CheckType(InventorySlot[] slots, bool isAttack, bool isDefence, bool isSupport)
