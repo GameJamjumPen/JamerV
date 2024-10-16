@@ -113,7 +113,7 @@ public class BattleInventory : MonoBehaviour, IInventorable
             // Check if enemyHolder is null for ATK cards
             if (enemyHolder == null)
             {
-                Debug.Log("Selected Enemy");
+                //Debug.Log("Selected Enemy");
                 return; // Exit the function if no enemy is selected
             }
 
@@ -129,5 +129,6 @@ public class BattleInventory : MonoBehaviour, IInventorable
         useSlot = null; //destroy itself
         battleController.isPlayerTurn = false;
         battleController.OnTurnChange(Turn.PlayerAnim);
+        Debug.Log("Change Turn");
     }
 }

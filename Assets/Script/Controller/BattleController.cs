@@ -15,7 +15,7 @@ public class BattleController : MonoBehaviour
     [Header("For Checking")]
     public List<EnemyHolder> enemyHolders;
     [Header("Turns")]
-    public Turn turn = new Turn();
+    public Turn turn;
     [Header("Animation")]
     public TextMeshProUGUI TextPopup;
     public GameObject playerObject;
@@ -90,7 +90,8 @@ public class BattleController : MonoBehaviour
                 break;
             case Turn.EnemyAnim:
                 for (int i = 0; i < enemies.Count; i++)
-                {
+                {   
+                    if(enemies[i].IsAlive()){
                     if (enemyAttackInfos[i].TargetenemyModel == null)
                     {
                         ShowDamage(enemyAttackInfos[i].valueStat, playerObject, TextPopup);
@@ -104,7 +105,8 @@ public class BattleController : MonoBehaviour
                             ShowDamage(enemyAttackInfos[i].valueStat, enemysObject[i], TextPopup);
                         }
                     }
-                }
+                    }
+                    }
                 OnTurnChange(Turn.PlayerAttack);
                 break;
                 
@@ -133,6 +135,7 @@ public class BattleController : MonoBehaviour
 
         // Start the fade-out animation
         StartCoroutine(FadeAndDestroy(damageText));
+        Debug.Log("Show UI");
     }
 
     // Coroutine to fade out the damage text and destroy it
