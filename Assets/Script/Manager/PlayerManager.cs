@@ -38,6 +38,13 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         AddScoreFromPaper();
+        if(Paper.Instance != null){
+            if(Paper.Instance.isplayed){
+                if(!Paper.Instance.isVictory){
+                    Die();
+                }
+            }
+        }
     }
 
 
