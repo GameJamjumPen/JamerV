@@ -4,7 +4,6 @@ using UnityEngine;
 public class CardSO : ScriptableObject
 {
     public string _cardName;
-    public Sprite _cardSprite;
     public CardType cardType;
     public float _value;
 

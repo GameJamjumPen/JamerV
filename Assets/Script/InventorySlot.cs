@@ -81,7 +81,7 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
 
     public void UpdateDisplay(){
         if(cardSO != null){
-            slotImage.sprite = cardSO._cardSprite;
+            slotImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
             slotValueText.text = cardSO._value.ToString();
             switch (cardSO.cardType)
             {

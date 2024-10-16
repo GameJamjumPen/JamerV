@@ -38,7 +38,6 @@ public class GameData
         public string cardName;
         public string cardType;
         public float cardValue;
-        public string sprite;
 
         public CardData(CardSO card)
     {
@@ -50,13 +49,6 @@ public class GameData
         cardName = card._cardName;
         cardValue = card._value;
         cardType = card.cardType.ToString();
-
-        // This is an editor-only feature, so we wrap it with a preprocessor directive
-        #if UNITY_EDITOR
-        sprite = UnityEditor.AssetDatabase.GetAssetPath(card._cardSprite);
-        #else
-        sprite = ""; // Or handle this differently for runtime, such as using Resources.Load if needed.
-        #endif
         
     }
 }

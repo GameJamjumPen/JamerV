@@ -171,7 +171,7 @@ public class Inventory : MonoBehaviour,IInventorable,IDataPersistence
         if(!cardType.gameObject.activeSelf) cardType.gameObject.SetActive(true);
         if(!cardStat.gameObject.activeSelf) cardStat.gameObject.SetActive(true);
         cardName.text = cardSelected._cardName;
-        cardImage.sprite = cardSelected._cardSprite;
+        cardImage.sprite = cardLoader.Instance.sprites[cardSelected._cardName];
         cardStat.text = cardSelected._value.ToString();
         if(cardSelected.cardType == CardType.ATK || cardSelected.cardType == CardType.ATKV2 || cardSelected.cardType == CardType.ATKV3){
             cardType.sprite = types[0];

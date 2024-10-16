@@ -127,25 +127,6 @@ public class DataPersistenceMNG : MonoBehaviour
         newCard._cardName = cardData.cardName;
         newCard._value = cardData.cardValue;
 
-        #if UNITY_EDITOR
-        if (!string.IsNullOrEmpty(cardData.sprite))
-        {
-            AssetBundle myLoadedAssetBundle = AssetBundle.LoadFromFile("path_to_your_bundle");
-
-            Sprite loadedSprite = myLoadedAssetBundle.LoadAsset<Sprite>(cardData.sprite);
-            newCard._cardSprite = loadedSprite;
-        }
-        #else
-        // Handle loading the sprite at runtime differently if necessary, for example, using Resources.Load
-        if (!string.IsNullOrEmpty(cardData.sprite))
-        {
-            // If you're using a Resource folder for runtime, you can load sprites like this:
-            // string spriteName = Path.GetFileNameWithoutExtension(cardData.sprite); // Remove extension
-            // newCard._cardSprite = Resources.Load<Sprite>("Sprites/" + spriteName); // Assuming sprites are in Resources/Sprites
-        }
-        #endif
-
-
         if (Enum.TryParse(cardData.cardType, out CardType parsedCardType))
         {
             newCard.cardType = parsedCardType;
