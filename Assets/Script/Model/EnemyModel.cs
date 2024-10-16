@@ -44,7 +44,6 @@ public class EnemyAttackInfo
 
 public abstract class EnemyModel : CharacterBase
 {
-    
     public EnemyDifficulty Difficulty { get; private set; }
     private static System.Random rng = new System.Random();
     public EnemyModel(string name, int health, int baseAttackPower, EnemyDifficulty difficulty) 

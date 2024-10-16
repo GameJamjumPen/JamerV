@@ -3347,7 +3347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00b79108f5fd40a5bec6dac7e7fbcad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldprop: 30
+  shieldprop: 10
   healprop: 10
   enemyHolders:
   - {fileID: 1790896009}

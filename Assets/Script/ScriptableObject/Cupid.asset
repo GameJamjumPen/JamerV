@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Cupid
   m_EditorClassIdentifier: 
   _cardName: Cupid
-  _cardSprite: {fileID: 21300000, guid: 51ed2a1876c0172448c4b8ec6d5008b5, type: 3}
   cardType: 3
   _value: 70
