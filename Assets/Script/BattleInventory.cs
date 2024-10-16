@@ -106,12 +106,12 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
             {
                 case CardType.DEF: 
                     player.setShield((int)cardSelected._value);
-                    battleController.popUpUI.ShowDamage((int)cardSelected._value, battleController.playerObject, battleController.defence);
+                    battleController.popUpUI.ShowDamage((int)(cardSelected._value+(defence*0.2)), battleController.playerObject, battleController.defence);
                     this.playerUIManager.UpdatePlayerUI(battleController.player);
                 break;
                 case CardType.SUP:
                     player.HealByAmount((int)cardSelected._value);
-                    battleController.popUpUI.ShowDamage((int)cardSelected._value, battleController.playerObject, battleController.heal);
+                    battleController.popUpUI.ShowDamage((int)(cardSelected._value+(heals*0.2)), battleController.playerObject, battleController.heal);
                     this.playerUIManager.UpdatePlayerUI(battleController.player);
                 break;
                 case CardType.ATK:
@@ -120,21 +120,21 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
                         return; // Exit the function if no enemy is selected
                     }
                     CharacterBase.Attack((int)cardSelected._value, enemyHolder.enemyContain);
-                    battleController.popUpUI.ShowDamage((int)cardSelected._value , enemyHolder.transform , battleController.attack);
+                    battleController.popUpUI.ShowDamage((int)(cardSelected._value+(strength*0.2)) , enemyHolder.transform , battleController.attack);
                     this.enemyUIManager.updateUI(battleController.enemies);
                     enemyHolder.Deselected();
                     break;
                 case CardType.ATKV2:
                     for(int i =0;i<enemyHolders.Length;i++){
                         enemyHolders[i].enemyContain.TakeDamage((int)cardSelected._value);
-                        battleController.popUpUI.ShowDamage((int)cardSelected._value , enemyHolder.transform , battleController.attack);
+                        battleController.popUpUI.ShowDamage((int)(cardSelected._value+(strength*0.2)) , enemyHolder.transform , battleController.attack);
                         this.enemyUIManager.updateUI(battleController.enemies);
                         enemyHolder.Deselected();
                     }
                 break;
                 case CardType.ATKV3:
                     enemyHolder.enemyContain.TakeDamageHealth((int)cardSelected._value);
-                    battleController.popUpUI.ShowDamage((int)cardSelected._value , enemyHolder.transform , battleController.attack);
+                    battleController.popUpUI.ShowDamage((int)(cardSelected._value+(strength*0.2)) , enemyHolder.transform , battleController.attack);
                     this.enemyUIManager.updateUI(battleController.enemies);
                     enemyHolder.Deselected();
                 break;
@@ -157,7 +157,9 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
 
     public void LoadData(GameData data)
     {
-        throw new System.NotImplementedException();
+        strength = data.strength;
+        defence = data.defense;
+        heals = data.heal;
     }
 
     public void SaveData(ref GameData data)
