@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.PackageManager.Requests;
 using UnityEditor.SearchService;
@@ -55,21 +56,19 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             PlaceRooms(data.roomPlacement);
         }
-
-        // transform.position = allrooms[currentRoom].transform.position;
     }
 
     public void SaveData(ref GameData data)
     {
         if (data.roomPlacement == null || data.roomPlacement.Count == 0)
         {
-
             for (int i = 0; i < availableRooms.Count; i++)
             {
                 RoomPlacement placementData = new RoomPlacement(i, roomPref.IndexOf(availableRooms[i]));
                 data.roomPlacement.Add(placementData);
             }
         }
+
         data.currentRoom = this.currentRoom;
         data.wentRoom = new List<int>(this.wentRoom);
     }
@@ -140,7 +139,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         room -= 1;
         Debug.Log("room" + room);
         selectedRoom = allrooms[room].GetComponentInChildren<Room>();
-        if (inventory.CheckFull(inventory.actualSlots) && inventory.CheckType(inventory.actualSlots))
+        if (inventory.CheckFull(inventory.actualSlots) && inventory.CheckType(inventory.actualSlots,true,true,false))
         {
             if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
             {
@@ -179,7 +178,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
             Debug.Log("make all not null");
             return;
         }
-        if(!inventory.CheckType(inventory.actualSlots)){
+        if(!inventory.CheckType(inventory.actualSlots,true,true,false)){
             Debug.Log("make all various Type");
         }
         if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)

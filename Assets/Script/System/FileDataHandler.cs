@@ -52,7 +52,7 @@ public class FileDataHandler
         {
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
-            JsonSerializerSettings settings = new JsonSerializerSettings();
+            JsonSerializerSettings settings = new JsonSerializerSettings{ReferenceLoopHandling = ReferenceLoopHandling.Ignore};
             // settings.Converters.Add(new Vector3Converter());
             string dataToStore = JsonConvert.SerializeObject(data, Formatting.Indented,settings);
             

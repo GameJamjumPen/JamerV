@@ -10,7 +10,7 @@ public class TreasureRoom : Room
     public override void OnPlayerAttack()
     {
         Inventory inventory = FindObjectOfType<Inventory>();
-        // inventory.AddItem(_cardReward);
+        inventory.AddItem(_cardReward);
         Debug.Log("GO to Treasure");
         inventory.istoggleable = true;
     }
