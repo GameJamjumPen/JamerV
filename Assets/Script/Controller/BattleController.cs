@@ -18,11 +18,15 @@ public class BattleController : MonoBehaviour
     public Turn turn;
     [Header("Animation")]
     public TextMeshProUGUI TextPopup;
-    public GameObject playerObject;
-    public GameObject[] enemysObject;
+    public Transform playerObject;
+    public Transform[] enemysPos;
     [SerializeField] private Animator _playerAnimator;
     [SerializeField] private Animator[] _enemyAnim;
     private static string ATTACK = "attack";
+    public PopUpUI popUpUI;
+    public Color attack;
+    public Color heal;
+    public Color defence;
     [Header("Etc...")]
     public EnemyUIManager enemyUIManager;
     public PlayerUIManager playerUIManager;
@@ -51,6 +55,7 @@ public class BattleController : MonoBehaviour
         battleInventory = FindObjectOfType<BattleInventory>();
         enemyUIManager = FindObjectOfType<EnemyUIManager>();
         playerUIManager = FindObjectOfType<PlayerUIManager>();
+        popUpUI = FindObjectOfType<PopUpUI>();
 
         if (enemyUIManager == null)
         {
@@ -109,12 +114,16 @@ public class BattleController : MonoBehaviour
                     {
                         if (enemyAttackInfos[i] != null && enemyAttackInfos[i].isAtk)
                         {
-                            ShowDamage(enemyAttackInfos[i].valueStat, playerObject, TextPopup);
+                            popUpUI.ShowDamage(enemyAttackInfos[i].valueStat,enemysPos[i],attack);
                             Debug.Log("Enemy atk");
                         }
                         else if (enemyAttackInfos[i] != null)
                         {
-                            ShowDamage(enemyAttackInfos[i].valueStat, enemysObject[i], TextPopup);
+                            if(enemyAttackInfos[i].isDef){
+                                popUpUI.ShowDamage(enemyAttackInfos[i].valueStat,enemysPos[i],defence);
+                            }else if(enemyAttackInfos[i].isHeal){
+                                popUpUI.ShowDamage(enemyAttackInfos[i].valueStat,enemysPos[i],heal);
+                            }
                             Debug.Log("Enemy Defence or heal"); //heal and def show the same so we merge it together
                         }
                     }
