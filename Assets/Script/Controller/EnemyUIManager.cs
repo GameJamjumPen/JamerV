@@ -55,6 +55,7 @@ public class EnemyUIManager : MonoBehaviour
         {
             if(!enemies[i].IsAlive()){
                 enemySlots[i].gameObject.SetActive(false);
+                spriteRenderers[i].gameObject.SetActive(false);
             }
             Slider healthSlider = enemySlots[i].Find("HealthSlider").GetComponent<Slider>();
             Slider shieldSlider = enemySlots[i].Find("ShieldSlider").GetComponent<Slider>();
