@@ -48,48 +48,17 @@ public abstract class EnemyModel : CharacterBase
     public EnemyDifficulty Difficulty { get; private set; }
     private static System.Random rng = new System.Random();
     public EnemyModel(string name, int health, int baseAttackPower, EnemyDifficulty difficulty) 
-        : base(name, RandomizeStat(health,difficulty), RandomizeStat(baseAttackPower,difficulty))
+        : base(name, RandomizeStat(health), RandomizeStat(baseAttackPower))
     {
         Difficulty = difficulty;
     }
 
     // Randomize the attack power by ±20%
-    private static int RandomizeStat(int baseValue, EnemyDifficulty difficulty)
+    private static int RandomizeStat(int baseValue, float minMultiplier = 1.0f, float maxMultiplier = 1.2f)
     {
-        float minMultiplier;
-        float maxMultiplier;
-        switch (difficulty)
-        {
-            case EnemyDifficulty.Easy:
-                minMultiplier = 1.0f; // No reduction for easy
-                maxMultiplier = 1.4f; // Increase up to 40%
-                break;
-
-            case EnemyDifficulty.Medium:
-                minMultiplier = 1.0f; // No reduction for medium
-                maxMultiplier = 1.25f; // Increase up to 25%
-                break;
-
-            case EnemyDifficulty.Hard:
-                minMultiplier = 1.0f; // No reduction for hard
-                maxMultiplier = 1.10f; // Increase up to 10%
-                break;
-
-            case EnemyDifficulty.Boss:
-                minMultiplier = 1.0f; // No reduction for boss
-                maxMultiplier = 1.05f; // Increase up to 5%
-                break;
-
-            default:
-                minMultiplier = 1.0f;
-                maxMultiplier = 1.2f; // Default to 0-20% if undefined
-                break;
-        }
-
         float randomMultiplier = Random.Range(minMultiplier, maxMultiplier);
         return Mathf.RoundToInt(baseValue * randomMultiplier);
     }
-
     public override void Attack(ICharacter target)
     {
         target.TakeDamage(AttackPower);
@@ -192,7 +161,7 @@ public class Fish : EnemyModel
 }
 public class Knive : EnemyModel
 {
-    public Knive() : base("Knive", 300, 150, EnemyDifficulty.Medium) { }
+    public Knive() : base("Knive", 450, 125, EnemyDifficulty.Medium) { }
 
     public override void Attack(ICharacter target)
     {
@@ -201,7 +170,7 @@ public class Knive : EnemyModel
 }
 public class Folk : EnemyModel
 {
-    public Folk() : base("Folk", 300, 150, EnemyDifficulty.Medium) { }
+    public Folk() : base("Folk", 300, 100, EnemyDifficulty.Medium) { }
     public override void Attack(ICharacter target)
     {
         base.Attack(target);
@@ -209,7 +178,7 @@ public class Folk : EnemyModel
 }
 public class Spoon : EnemyModel
 {
-    public Spoon() : base("Spoon", 300, 150, EnemyDifficulty.Medium) { }
+    public Spoon() : base("Spoon", 500, 150, EnemyDifficulty.Medium) { }
 
     public override void Attack(ICharacter target)
     {
@@ -219,7 +188,7 @@ public class Spoon : EnemyModel
 
 public class Bee : EnemyModel
 {
-    public Bee() : base("Bee", 500, 400, EnemyDifficulty.Hard) { }
+    public Bee() : base("Bee", 1000, 500, EnemyDifficulty.Hard) { }
 
     public override void Attack(ICharacter target)
     {
@@ -228,7 +197,7 @@ public class Bee : EnemyModel
 }
 public class Prince : EnemyModel
 {
-    public Prince() : base("Prince" , 1000, 600, EnemyDifficulty.Boss){}
+    public Prince() : base("Prince" , 2000, 500, EnemyDifficulty.Boss){}
 
     public override void Attack(ICharacter target)
     {
