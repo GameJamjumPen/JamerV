@@ -8,7 +8,7 @@ public class RollDice : MonoBehaviour
     public List<int> thiswentRoom;
     public Animator animator;
     public TMP_Text rolledTextUI;
-    private bool canRoll;
+    public bool canRoll;
     private int rolledRoom;
     private void Start()
     {
@@ -34,6 +34,7 @@ public class RollDice : MonoBehaviour
     private void OnMouseDown() {
         if(canRoll){
         animator.SetTrigger("roll");
+        SoundManager.Instance.PlaySFX("Dice");
         canRoll=false;}
     }
 

@@ -12,6 +12,7 @@ public class EasyRoom : HostileRoom
     public override void OnPlayerAttack()
     {
         base.OnPlayerAttack();
+        Paper.Instance.SetSceneName("Easy");
         Paper.Instance.SetEnemyDifficulty(EnemyDifficulty.Easy);
         SceneManager.LoadSceneAsync(combatScene);
     }
