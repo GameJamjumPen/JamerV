@@ -7,6 +7,7 @@ public class Paper : MonoBehaviour
 {
     public static Paper Instance;
     public int score;
+    public string sceneName;
     public EnemyDifficulty enemyDifficulty;
     public bool isVictory;
     public List<CardSO> cardSOs;
@@ -22,6 +23,11 @@ public class Paper : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void SetSceneName(string sceneName)
+    {
+        this.sceneName = sceneName;
     }
 
     public void SetVictory(bool victory)

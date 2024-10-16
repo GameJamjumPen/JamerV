@@ -18,6 +18,8 @@ public class TreasureRoom : Room
         inventory.AddItem(_cardReward,_cardReward._cardSprite);
         Debug.Log("GO to Treasure");
         inventory.istoggleable = true;
+        RollDice dice = FindObjectOfType<RollDice>();
+        dice.canRoll = true;
     }
 
     //UI display
