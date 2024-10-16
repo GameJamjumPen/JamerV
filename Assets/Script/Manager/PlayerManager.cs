@@ -75,6 +75,10 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
             Debug.Log("Added score from Paper. New StatPoints: " + StatPoints);
             ScoreAdded?.Invoke();
         }
+        if(Paper.Instance.GetResult()&&Paper.Instance.sceneName=="Boss")
+        {
+            SceneManager.LoadSceneAsync("Win");
+        }
     }
 
 

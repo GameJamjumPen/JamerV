@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TurnBaseCombat.unity
     guid: cc9c293a3ec514d02aa1eef382ea2759
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: da0013e2be97e874889c5d094c9524e6
+  - enabled: 1
+    path: Assets/Scenes/Win.unity
+    guid: 1e4be9e9f2590eb4dbc6bc663b83806d
   m_configObjects: {}
