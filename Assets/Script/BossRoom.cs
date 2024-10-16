@@ -15,4 +15,5 @@ public class BossRoom : MonoBehaviour
     {
         
     }
+    //Paper.Instance.SetSceneName("Boss");
 }
