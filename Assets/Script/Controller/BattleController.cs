@@ -38,6 +38,7 @@ public class BattleController : MonoBehaviour
     private List<CharacterView> enemyViews = new List<CharacterView>();
     public TextMeshProUGUI ShowTurn;
     public SpriteRenderer background;
+    public SpriteRenderer playerRenderer;
     private int currentWave = -1;
     private List<EnemyAttackInfo> enemyAttackInfos = new List<EnemyAttackInfo>();
     public BattleInventory battleInventory;
@@ -145,7 +146,7 @@ public class BattleController : MonoBehaviour
                     Debug.Log("Enemy Defence or heal");
                 }
                 // Optional delay between animations
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.3f);
             }
         }
     }
@@ -212,7 +213,7 @@ public class BattleController : MonoBehaviour
     private IEnumerator EnemyTurn()
     {
         BattleModel.ResetShield(enemies);
-        enemyAttackInfos = EnemyModel.AttackPlayer(enemies, player, shieldprop, healprop);
+        enemyAttackInfos = EnemyModel.AttackPlayer(enemies, player, shieldprop, healprop,this);
         playerUIManager.UpdatePlayerUI(player);
         enemyUIManager.updateUI(enemies);
         GameOver();

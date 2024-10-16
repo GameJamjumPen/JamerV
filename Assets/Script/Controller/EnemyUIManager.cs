@@ -9,7 +9,6 @@ public class EnemyUIManager : MonoBehaviour
     public List<Transform> enemySlots;  // UI Slots for displaying enemies
     public TextMeshProUGUI waveText;
     public List<GameObject> enemyObjects;    // Displays the current wave number
-
     public List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
     // Initialize the UI elements for a new wave
     public void DisplayNewWave(int waveNumber, List<EnemyModel> enemies, List<Sprite> sprites)

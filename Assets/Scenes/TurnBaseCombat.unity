@@ -3404,6 +3404,7 @@ MonoBehaviour:
   isPlayerTurn: 1
   ShowTurn: {fileID: 1880944144}
   background: {fileID: 1631116034}
+  playerRenderer: {fileID: 573263524}
   battleInventory: {fileID: 910361562}
   score: 0
 --- !u!4 &910361559
