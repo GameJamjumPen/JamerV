@@ -65,20 +65,21 @@ public class BattleController : MonoBehaviour
         initPlayer();
         NewWave();
         isPlayerTurn = true;
-        OnTurnChange(Turn.PlayerAttack);
+        StartCoroutine(ChangeTurn(Turn.PlayerAttack));
         SoundManager.Instance.PlayMusic(Paper.Instance.sceneName);
         score = Paper.Instance.score;
         background.sprite = Paper.Instance.sprite;
         // background.sprite = Paper.Instance.sprite;
     }
-    public void OnTurnChange(Turn newTurn)
+    
+    public IEnumerator ChangeTurn(Turn newTurn)
     {
         Debug.Log($"Attempting to change turn from {turn} to {newTurn}");
 
         if (newTurn == turn)
         {
             Debug.Log("Turn already set, skipping.");
-            return;
+            yield break;
         }
 
         turn = newTurn; // Change the turn here
@@ -87,45 +88,26 @@ public class BattleController : MonoBehaviour
         {
             case Turn.PlayerAttack:
                 Debug.Log("Player's Attack Turn");
-                return;
+                break;
             case Turn.PlayerAnim:
                 Debug.Log("Player's Animation Turn");
-                StartCoroutine(WaitforAnim(20f));
-                OnTurnChange(Turn.EnemyThink);
+                yield return StartCoroutine(WaitforAnim(2f));
+                StartCoroutine(ChangeTurn(Turn.EnemyThink));
                 break;
             case Turn.EnemyThink:
                 Debug.Log("Enemy's Thinking Turn");
-                StartCoroutine(WaitforDebug(50f)); // Coroutine waiting
-                OnTurnChange(Turn.Enemyattack);
+                yield return StartCoroutine(WaitforDebug(2f)); // Coroutine waiting
+                StartCoroutine(ChangeTurn(Turn.Enemyattack));
                 break;
             case Turn.Enemyattack:
                 Debug.Log("Enemy's Attack Turn");
-                EnemyTurn();
+                yield return StartCoroutine(EnemyTurn());
                 break;
             case Turn.EnemyAnim:
                 Debug.Log("Enemy's Animation Turn");
-                for (int i = 0; i < enemies.Count; i++)
-                {
-                    if (enemies[i].IsAlive() && enemyAttackInfos!=null)
-                    {
-                        if (enemyAttackInfos[i] != null && enemyAttackInfos[i].isAtk)
-                        {
-                            popUpUI.ShowDamage(enemyAttackInfos[i].valueStat,enemysPos[i],attack);
-                            Debug.Log("Enemy atk");
-                        }
-                        else if (enemyAttackInfos[i] != null)
-                        {
-                            if(enemyAttackInfos[i].isDef){
-                                popUpUI.ShowDamage(enemyAttackInfos[i].valueStat,enemysPos[i],defence);
-                            }else if(enemyAttackInfos[i].isHeal){
-                                popUpUI.ShowDamage(enemyAttackInfos[i].valueStat,enemysPos[i],heal);
-                            }
-                            Debug.Log("Enemy Defence or heal"); //heal and def show the same so we merge it together
-                        }
-                    }
-                }
+                yield return StartCoroutine(HandleEnemyAnimations());
                 battleInventory.attackable = true;
-                OnTurnChange(Turn.PlayerAttack);
+                StartCoroutine(ChangeTurn(Turn.PlayerAttack));
                 break;
         }
     }
@@ -134,6 +116,35 @@ public class BattleController : MonoBehaviour
         Debug.Log("Thinking");
         yield return new WaitForSeconds(Second);
     }
+    private IEnumerator HandleEnemyAnimations()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i].IsAlive() && enemyAttackInfos != null)
+            {
+                if (enemyAttackInfos[i] != null && enemyAttackInfos[i].isAtk)
+                {
+                    popUpUI.ShowDamage(enemyAttackInfos[i].valueStat, enemysPos[i], attack);
+                    Debug.Log("Enemy atk");
+                }
+                else if (enemyAttackInfos[i] != null)
+                {
+                    if (enemyAttackInfos[i].isDef)
+                    {
+                        popUpUI.ShowDamage(enemyAttackInfos[i].valueStat, enemysPos[i], defence);
+                    }
+                    else if (enemyAttackInfos[i].isHeal)
+                    {
+                        popUpUI.ShowDamage(enemyAttackInfos[i].valueStat, enemysPos[i], heal);
+                    }
+                    Debug.Log("Enemy Defence or heal");
+                }
+                // Optional delay between animations
+                yield return new WaitForSeconds(1f);
+            }
+        }
+    }
+
     private IEnumerator WaitforAnim(float second)
     {
         Debug.Log("Waiting For Animation");
@@ -193,51 +204,51 @@ public class BattleController : MonoBehaviour
         playerUIManager.UpdatePlayerUI(player, playerSprite);
     }
 
-    void PlayerTurn()
-    {
-        FindEnemyAddAttack();
-        Debug.Log("PlayerTurn");
-        GameOver();
-        isPlayerTurn = false;
-        OnTurnChange(Turn.EnemyThink);
-    }
-    public void PlayerClickAttack()
-    {
-        if (isPlayerTurn)
-        {
-            BattleModel.ResetShield(player);
-            FindEnemyAddAttack();
-            playerUIManager.UpdatePlayerUI(player);
-            isPlayerTurn = false;
-            OnTurnChange(Turn.EnemyThink);
-        }
+    // void PlayerTurn()
+    // {
+    //     FindEnemyAddAttack();
+    //     Debug.Log("PlayerTurn");
+    //     GameOver();
+    //     isPlayerTurn = false;
+    //     OnTurnChange(Turn.EnemyThink);
+    // }
+    // public void PlayerClickAttack()
+    // {
+    //     if (isPlayerTurn)
+    //     {
+    //         BattleModel.ResetShield(player);
+    //         FindEnemyAddAttack();
+    //         playerUIManager.UpdatePlayerUI(player);
+    //         isPlayerTurn = false;
+    //         OnTurnChange(Turn.EnemyThink);
+    //     }
 
-    }
-    public void PlayerShield()
-    {
-        if (isPlayerTurn)
-        {
-            BattleModel.ResetShield(player);
-            player.setShield(30);
-            playerUIManager.UpdatePlayerUI(player);
-            isPlayerTurn = false;
-            OnTurnChange(Turn.EnemyThink);
-        }
+    // }
+    // public void PlayerShield()
+    // {
+    //     if (isPlayerTurn)
+    //     {
+    //         BattleModel.ResetShield(player);
+    //         player.setShield(30);
+    //         playerUIManager.UpdatePlayerUI(player);
+    //         isPlayerTurn = false;
+    //         StartCoroutine(ChangeTurn(Turn.EnemyThink));
+    //     }
 
-    }
-    public void PlayerHealing()
-    {
-        if (isPlayerTurn)
-        {
-            BattleModel.ResetShield(player);
-            player.HealByAmount(30);
-            playerUIManager.UpdatePlayerUI(player);
-            isPlayerTurn = false;
-            BattleModel.ResetShield(enemies);
-            OnTurnChange(Turn.EnemyThink);
-        }
-    }
-    void EnemyTurn()
+    // }
+    // public void PlayerHealing()
+    // {
+    //     if (isPlayerTurn)
+    //     {
+    //         BattleModel.ResetShield(player);
+    //         player.HealByAmount(30);
+    //         playerUIManager.UpdatePlayerUI(player);
+    //         isPlayerTurn = false;
+    //         BattleModel.ResetShield(enemies);
+    //         OnTurnChange(Turn.EnemyThink);
+    //     }
+    // }
+    private IEnumerator EnemyTurn()
     {
         BattleModel.ResetShield(enemies);
         enemyAttackInfos = EnemyModel.AttackPlayer(enemies, player, shieldprop, healprop);
@@ -246,7 +257,8 @@ public class BattleController : MonoBehaviour
         GameOver();
         isPlayerTurn = true;
         ShowCurrentTurn();
-        OnTurnChange(Turn.EnemyAnim);
+        yield return new WaitForSeconds(1f); // Add delay before continuing
+        StartCoroutine(ChangeTurn(Turn.EnemyAnim));
     }
 
     void AttackCharacter(ICharacter attacker, ICharacter target)
@@ -257,25 +269,25 @@ public class BattleController : MonoBehaviour
             Debug.Log(target.Name + " current health is " + target.Health.ToString());
         }
     }
-    void FindEnemyAddAttack()
-    {
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            if (enemies[i].IsAlive())
-            {
-                Debug.Log("Attack");
-                AttackCharacter(player, enemies[i]);
-                if (!enemies[i].IsAlive())
-                {
-                    Debug.Log("Is Dead");
-                    enemyUIManager.SetActiveFalseOf(i);
-                    // enemyInstances[i].SetActive(false);
-                }
-                enemyUIManager.updateUI(enemies);
-                break;
-            }
-        }
-    }
+    // void FindEnemyAddAttack()
+    // {
+    //     for (int i = 0; i < enemies.Count; i++)
+    //     {
+    //         if (enemies[i].IsAlive())
+    //         {
+    //             Debug.Log("Attack");
+    //             AttackCharacter(player, enemies[i]);
+    //             if (!enemies[i].IsAlive())
+    //             {
+    //                 Debug.Log("Is Dead");
+    //                 enemyUIManager.SetActiveFalseOf(i);
+    //                 // enemyInstances[i].SetActive(false);
+    //             }
+    //             enemyUIManager.updateUI(enemies);
+    //             break;
+    //         }
+    //     }
+    // }
     void GameOver()
     {
         if (battleModel == null)

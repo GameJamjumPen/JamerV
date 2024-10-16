@@ -147,8 +147,8 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
             useSlot.RemoveItem(); //remove card from itself
             useSlot = null; //destroy itself
             battleController.isPlayerTurn = false;
-            battleController.OnTurnChange(Turn.PlayerAnim);
-            attackable = true;
+            battleController.StartCoroutine(battleController.ChangeTurn(Turn.PlayerAnim));
+            attackable = false;
             Debug.Log("Change Turn");
         }else{
             Debug.Log("UnAttackable");
