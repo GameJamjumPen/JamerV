@@ -11541,10 +11541,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1662304669110568058, guid: b2fa8f64bde2f32468ba0f51f3b422f0, type: 3}
-      propertyPath: spriteNames.Array.data[6]
-      value: Cheese
-      objectReference: {fileID: 0}
     - target: {fileID: 2643093293088796722, guid: b2fa8f64bde2f32468ba0f51f3b422f0, type: 3}
       propertyPath: m_Name
       value: cardLoader
