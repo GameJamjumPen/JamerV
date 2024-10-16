@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
         Debug.Log(a);
     }
 
-
     public void LoadData(GameData data)
     {
         this.currentRoom = data.currentRoom;
