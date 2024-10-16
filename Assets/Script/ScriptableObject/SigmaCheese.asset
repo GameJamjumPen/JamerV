@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardName: Cheese
   cardType: 1
-  _value: 400
+  _value: 200
