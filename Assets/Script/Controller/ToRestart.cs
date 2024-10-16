@@ -9,7 +9,7 @@ public class ToRestart : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            SceneManager.LoadSceneAsync("ToStart");
+            SceneManager.LoadSceneAsync("StartScene");
         }
     }
 }
