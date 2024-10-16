@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 public class BattleController : MonoBehaviour
-{   
+{
     [Header("Assignable")]
     public int shieldprop = 30;
     public int healprop = 10;
@@ -17,19 +17,22 @@ public class BattleController : MonoBehaviour
     [Header("Turns")]
     public Turn turn = new Turn();
     [Header("Animation")]
+    public TextMeshProUGUI TextPopup;
+    public GameObject playerObject;
+    public GameObject[] enemysObject;
     [SerializeField] private Animator _playerAnimator;
     [SerializeField] private Animator[] _enemyAnim;
     private static string ATTACK = "attack";
     [Header("Etc...")]
     public EnemyUIManager enemyUIManager;
     public PlayerUIManager playerUIManager;
-    public Sprite playerSprite; 
+    public Sprite playerSprite;
     public List<Sprite> FishSprites = new List<Sprite>();
     public List<Sprite> KniveSprites = new List<Sprite>();
     public List<Sprite> FolkSprites = new List<Sprite>();
     public List<Sprite> SpoonSprites = new List<Sprite>();
     public List<Sprite> BeeSprites = new List<Sprite>();
-    public List<List<EnemyModel> > waves = new List<List<EnemyModel> >();
+    public List<List<EnemyModel>> waves = new List<List<EnemyModel>>();
     public GameObject playerPrefab;
     private BattleModel battleModel;
     public bool isPlayerTurn = true;
@@ -39,8 +42,9 @@ public class BattleController : MonoBehaviour
     public TextMeshProUGUI ShowTurn;
     //public Image background;
     private int currentWave = -1;
+    private List<EnemyAttackInfo> enemyAttackInfos = new List<EnemyAttackInfo>();
 
-    
+
     void Awake()
     {
         enemyUIManager = FindObjectOfType<EnemyUIManager>();
@@ -51,54 +55,117 @@ public class BattleController : MonoBehaviour
             Debug.LogError("EnemyUIManager not found in the scene! Make sure it's attached to a GameObject.");
             return;
         }
-        if(GenerateEnemyWave.Instance == null){
+        if (GenerateEnemyWave.Instance == null)
+        {
             Debug.LogError("WTF Singleton bug");
         }
         GenerateEnemyWave.Instance.CreateEnemyWaves();
         waves = GenerateEnemyWave.Instance.GetEnemyWaves();
         initPlayer();
         NewWave();
+        isPlayerTurn = true;
+        OnTurnChange(Turn.PlayerAttack);
         //background.sprite = Paper.Instance.sprite;
         // background.sprite = Paper.Instance.sprite;
     }
-    public void OnTurnChange(Turn newTurn){
-        if(newTurn == turn) return;
+    public void OnTurnChange(Turn newTurn)
+    {
+        if (newTurn == turn) return;
         turn = newTurn;
-        switch(turn){
+        switch (turn)
+        {
             case Turn.PlayerAttack:
-            return;
+                return;
             case Turn.PlayerAnim:
-            break;
+                //StartCoroutine(WaitforAnim(2f , _playerAnimator , ATTACK));
+                WaitforDebug(5f);
+                OnTurnChange(Turn.EnemyThink);
+                break;
             case Turn.EnemyThink:
-            WaitforDebug(5f);
-            OnTurnChange(Turn.Enemyattack);
-            break;
+                WaitforDebug(5f);
+                OnTurnChange(Turn.Enemyattack);
+                break;
             case Turn.Enemyattack:
-            
-            break;
+                EnemyTurn();
+                break;
             case Turn.EnemyAnim:
-            for(int i = 0;i< enemyHolders.Count;i++){
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    if (enemyAttackInfos[i].TargetenemyModel == null)
+                    {
+                        ShowDamage(enemyAttackInfos[i].valueStat, playerObject, TextPopup);
+                    }
+                    else if (enemyAttackInfos[i].TargetenemyModel != null)
+                    {
+                        if (TextPopup != null && enemyAttackInfos[i].isDef)
+                        {
+                            ShowDamage(enemyAttackInfos[i].valueStat, enemysObject[i], TextPopup);
+                        }else if(TextPopup != null && enemyAttackInfos[i].isHeal){
+                            ShowDamage(enemyAttackInfos[i].valueStat, enemysObject[i], TextPopup);
+                        }
+                    }
+                }
+                OnTurnChange(Turn.PlayerAttack);
+                break;
                 
-            }
-            break;
         }
     }
-    private IEnumerator WaitforDebug(float Second){
+    private IEnumerator WaitforDebug(float Second)
+    {
         Debug.Log("Thinking");
         yield return new WaitForSeconds(Second);
     }
-    private IEnumerator WaitforAnim(float second,Animator animator , string state){
+    private IEnumerator WaitforAnim(float second, Animator animator, string state)
+    {
         animator.Play(state);
         yield return new WaitForSeconds(second);
 
     }
+    #region UIAnim
+    public void ShowDamage(int damage, GameObject gameObjectPos, TextMeshProUGUI damageTextPrefabs)
+    {
+        // Instantiate a damage text object at the specified gameObjectPos
+        TextMeshProUGUI damageText = Instantiate(damageTextPrefabs, gameObjectPos.transform.position, Quaternion.identity, transform);
+
+        // Set the damage amount and color
+        damageText.text = $"-{damage}";
+        damageText.color = new Color(1, 0, 0, 1); // Red color with full alpha
+
+        // Start the fade-out animation
+        StartCoroutine(FadeAndDestroy(damageText));
+    }
+
+    // Coroutine to fade out the damage text and destroy it
+    private IEnumerator FadeAndDestroy(TextMeshProUGUI damageText)
+    {
+        float duration = 3.0f;  // Duration of the fade-out
+        float elapsedTime = 0f;
+
+        Color initialColor = damageText.color;
+
+        while (elapsedTime < duration)
+        {
+            // Gradually reduce the alpha value
+            float alpha = Mathf.Lerp(1, 0, elapsedTime / duration);
+            damageText.color = new Color(initialColor.r, initialColor.g, initialColor.b, alpha);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;  // Wait for the next frame
+        }
+
+        Destroy(damageText.gameObject);  // Destroy the damage text after fading out
+    }
+    #endregion
 
     void Update()
     {
-        if (!isPlayerTurn){
-            ShowCurrentTurn();
-            EnemyTurn();
-        }
+        Debug.Log(turn);
+        // if (!isPlayerTurn)
+        // {
+        //     ShowCurrentTurn();
+        //     EnemyTurn();
+        // }
+        ShowCurrentTurn();
     }
     void initPlayer()
     {
@@ -114,41 +181,51 @@ public class BattleController : MonoBehaviour
         isPlayerTurn = false;
         OnTurnChange(Turn.EnemyThink);
     }
-    public void PlayerClickAttack(){
-        if(isPlayerTurn){
+    public void PlayerClickAttack()
+    {
+        if (isPlayerTurn)
+        {
             BattleModel.ResetShield(player);
             FindEnemyAddAttack();
             playerUIManager.UpdatePlayerUI(player);
             isPlayerTurn = false;
+            OnTurnChange(Turn.EnemyThink);
         }
-        
+
     }
-    public void PlayerShield(){
-        if(isPlayerTurn){
+    public void PlayerShield()
+    {
+        if (isPlayerTurn)
+        {
             BattleModel.ResetShield(player);
             player.setShield(30);
             playerUIManager.UpdatePlayerUI(player);
             isPlayerTurn = false;
+            OnTurnChange(Turn.EnemyThink);
         }
-        
+
     }
-    public void PlayerHealing(){
-        if(isPlayerTurn){
+    public void PlayerHealing()
+    {
+        if (isPlayerTurn)
+        {
             BattleModel.ResetShield(player);
             player.HealByAmount(30);
             playerUIManager.UpdatePlayerUI(player);
             isPlayerTurn = false;
             BattleModel.ResetShield(enemies);
+            OnTurnChange(Turn.EnemyThink);
         }
     }
     void EnemyTurn()
     {
         BattleModel.ResetShield(enemies);
-        EnemyModel.AttackPlayer(enemies,player,shieldprop,healprop);
+        enemyAttackInfos = EnemyModel.AttackPlayer(enemies, player, shieldprop, healprop);
         enemyUIManager.updateUI(enemies);
         GameOver();
         isPlayerTurn = true;
         ShowCurrentTurn();
+        OnTurnChange(Turn.EnemyAnim);
     }
 
     void AttackCharacter(ICharacter attacker, ICharacter target)
@@ -159,14 +236,16 @@ public class BattleController : MonoBehaviour
             Debug.Log(target.Name + " current health is " + target.Health.ToString());
         }
     }
-    void FindEnemyAddAttack(){
-        for(int i =0;i<enemies.Count;i++)
+    void FindEnemyAddAttack()
+    {
+        for (int i = 0; i < enemies.Count; i++)
         {
             if (enemies[i].IsAlive())
-            {   
+            {
                 Debug.Log("Attack");
                 AttackCharacter(player, enemies[i]);
-                if(!enemies[i].IsAlive()){
+                if (!enemies[i].IsAlive())
+                {
                     Debug.Log("Is Dead");
                     enemyUIManager.SetActiveFalseOf(i);
                     // enemyInstances[i].SetActive(false);
@@ -176,12 +255,15 @@ public class BattleController : MonoBehaviour
             }
         }
     }
-    void GameOver(){
-        if(battleModel == null){
+    void GameOver()
+    {
+        if (battleModel == null)
+        {
             Debug.LogError("BattleModel is NULL");
             return;
         }
-        if (battleModel.player == null || battleModel.enemies == null){
+        if (battleModel.player == null || battleModel.enemies == null)
+        {
             Debug.LogError("BattleModel's player or enemies are NULL");
             return;
         }
@@ -195,7 +277,7 @@ public class BattleController : MonoBehaviour
             else
             {
                 //check win or lose
-                if(battleModel.player.IsAlive())
+                if (battleModel.player.IsAlive())
                 {
                     Paper.Instance.SetVictory(true);
                 }
@@ -215,14 +297,15 @@ public class BattleController : MonoBehaviour
         enemyViews.Clear();
         // enemyInstances.Clear();
     }
-    void NewWave(){
+    void NewWave()
+    {
         Debug.Log("NEW WAVE !!!");
         currentWave++;
         ClearLists();
         RenderEnemy();
     }
     void RenderEnemy()
-    
+
     {
         enemies = waves[currentWave];
 
@@ -234,21 +317,26 @@ public class BattleController : MonoBehaviour
         }
         enemyUIManager.DisplayNewWave(currentWave, enemies, enemySprites);
         AddEnemyToHolder(enemies);
-        
+
         battleModel = new BattleModel(player, enemies);
 
-        if(battleModel == null){
+        if (battleModel == null)
+        {
             Debug.LogError("BattleModel is NULL after init");
             return;
         }
-        if (battleModel.player == null || battleModel.enemies == null){
+        if (battleModel.player == null || battleModel.enemies == null)
+        {
             Debug.LogError("BattleModel's player or enemies are NULL");
             return;
         }
     }
-    public void AddEnemyToHolder(List<EnemyModel> enemies){
-        for(int i = 0;i<enemies.Count;i++){
-            if(!enemies[i].IsAlive()){
+    public void AddEnemyToHolder(List<EnemyModel> enemies)
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (!enemies[i].IsAlive())
+            {
                 continue;
             }
             enemyHolders[i].enemyContain = enemies[i];
@@ -273,8 +361,10 @@ public class BattleController : MonoBehaviour
                 return FishSprites[0]; // Default fallback sprite
         }
     }
-    void ShowCurrentTurn(){
-        if(isPlayerTurn){
+    void ShowCurrentTurn()
+    {
+        if (isPlayerTurn)
+        {
             ShowTurn.text = "Player Turn !";
             return;
         }
@@ -282,7 +372,8 @@ public class BattleController : MonoBehaviour
     }
 }
 
-public enum Turn{
+public enum Turn
+{
     PlayerAnim,
     EnemyThink,
     Enemyattack,

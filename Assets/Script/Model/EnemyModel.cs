@@ -12,10 +12,7 @@ public enum EnemyDifficulty
     Medium,
     Hard
 }
-
-public abstract class EnemyModel : CharacterBase
-{
-    public class EnemyAttackInfo
+public class EnemyAttackInfo
     {
         public bool isAtk;
         public bool isDef;
@@ -45,6 +42,10 @@ public abstract class EnemyModel : CharacterBase
             return enemyModel;
         }
     }
+
+public abstract class EnemyModel : CharacterBase
+{
+    
     public EnemyDifficulty Difficulty { get; private set; }
     private static System.Random rng = new System.Random();
     public EnemyModel(string name, int health, int baseAttackPower, EnemyDifficulty difficulty) 
