@@ -100,34 +100,45 @@ public class BattleInventory : MonoBehaviour, IInventorable
     public void Use()
     {
         if(attackable){
-            if (cardSelected.cardType == CardType.DEF)
+            switch (cardSelected.cardType)
             {
-                player.setShield((int)cardSelected._value);
-                battleController.ShowDamage((int)cardSelected._value, battleController.playerObject, battleController.TextPopup);
-                this.playerUIManager.UpdatePlayerUI(battleController.player);
+                case CardType.DEF: 
+                    player.setShield((int)cardSelected._value);
+                    battleController.ShowDamage((int)cardSelected._value, battleController.playerObject, battleController.TextPopup);
+                    this.playerUIManager.UpdatePlayerUI(battleController.player);
+                break;
+                case CardType.SUP:
+                    player.HealByAmount((int)cardSelected._value);
+                    battleController.ShowDamage((int)cardSelected._value, battleController.playerObject, battleController.TextPopup);
+                    this.playerUIManager.UpdatePlayerUI(battleController.player);
+                break;
+                case CardType.ATK:
+                    if (enemyHolder == null)
+                    {
+                        return; // Exit the function if no enemy is selected
+                    }
+                    CharacterBase.Attack((int)cardSelected._value, enemyHolder.enemyContain);
+                    battleController.ShowDamage((int)cardSelected._value , enemyHolder.gameObject , battleController.TextPopup);
+                    this.enemyUIManager.updateUI(battleController.enemies);
+                    enemyHolder.Deselected();
+                    break;
+                case CardType.ATKV2:
+                    for(int i =0;i<enemyHolders.Length;i++){
+                        enemyHolders[i].enemyContain.TakeDamage((int)cardSelected._value);
+                        battleController.ShowDamage((int)cardSelected._value , enemyHolders[i].gameObject , battleController.TextPopup);
+                        this.enemyUIManager.updateUI(battleController.enemies);
+                        enemyHolder.Deselected();
+                    }
+                break;
+                case CardType.ATKV3:
+                    enemyHolder.enemyContain.TakeDamageHealth((int)cardSelected._value);
+                    battleController.ShowDamage((int)cardSelected._value , enemyHolder.gameObject , battleController.TextPopup);
+                    this.enemyUIManager.updateUI(battleController.enemies);
+                    enemyHolder.Deselected();
+                break;
+                default:
+                    break;
             }
-            if (cardSelected.cardType == CardType.SUP)
-            {
-                player.HealByAmount((int)cardSelected._value);
-                battleController.ShowDamage((int)cardSelected._value, battleController.playerObject, battleController.TextPopup);
-                this.playerUIManager.UpdatePlayerUI(battleController.player);
-            }
-            if (cardSelected.cardType == CardType.ATK)
-            {
-                // Check if enemyHolder is null for ATK cards
-                if (enemyHolder == null)
-                {
-                    //Debug.Log("Selected Enemy");
-                    return; // Exit the function if no enemy is selected
-                }
-
-                
-                CharacterBase.Attack((int)cardSelected._value, enemyHolder.enemyContain);
-                battleController.ShowDamage((int)cardSelected._value , enemyHolder.gameObject , battleController.TextPopup);
-                this.enemyUIManager.updateUI(battleController.enemies);
-                enemyHolder.Deselected();
-            }
-            
             playerUIManager.AttackAnimate();
             // Reset cardSelected and useSlot after use
             useSlot.OnDeselected(); //unselected

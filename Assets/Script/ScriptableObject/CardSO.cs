@@ -11,4 +11,4 @@ public class CardSO : ScriptableObject
     public float _value;
 
 }
-public enum CardType{ATK , DEF, SUP}
+public enum CardType{ATK , DEF, SUP,ATKV2,ATKV3}

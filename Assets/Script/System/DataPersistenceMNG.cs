@@ -117,9 +117,8 @@ public class DataPersistenceMNG : MonoBehaviour
         }
         return cardDataList;
     }
-
     public List<CardSO> ConvertDataToScriptableObjects(List<CardData> cardDataList)
-{
+    {
     List<CardSO> cardSOList = new List<CardSO>();
 
     foreach (var cardData in cardDataList)
