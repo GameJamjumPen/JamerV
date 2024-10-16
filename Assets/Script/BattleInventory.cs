@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BattleInventory : MonoBehaviour ,IInventorable
+public class BattleInventory : MonoBehaviour, IInventorable
 {
     public PlayerModel player;
     public List<CardSO> cardSOPools;
@@ -16,18 +16,23 @@ public class BattleInventory : MonoBehaviour ,IInventorable
     public EnemyHolder enemyHolder;
     private EnemyUIManager enemyUIManager;
     private PlayerUIManager playerUIManager;
-    public void getCard(List<CardSO> cardSOList){
-        foreach(CardSO cardSO in cardSOList){
+    public void getCard(List<CardSO> cardSOList)
+    {
+        foreach (CardSO cardSO in cardSOList)
+        {
             cardSOPools.Add(cardSO);
         }
     }
-    public void Shuffle(List<CardSO> cardSOList){
-        int rand = Random.Range(0,cardSOList.Count);
+    public void Shuffle(List<CardSO> cardSOList)
+    {
+        int rand = Random.Range(0, cardSOList.Count);
         AddItem(cardSOList[rand]);
     }
 
-    public void AddDeck(int deckLength){
-        for(int i = 0; i< deckLength;i++){
+    public void AddDeck(int deckLength)
+    {
+        for (int i = 0; i < deckLength; i++)
+        {
             Shuffle(cardSOPools);
         }
     }
@@ -41,22 +46,28 @@ public class BattleInventory : MonoBehaviour ,IInventorable
         //getCard(Paper.Instance.cardSOs);
         AddDeck(3);
     }
-    public void DeselectedAllHolder(){
-        for(int i = 0;i< enemyHolders.Length;i++){
+    public void DeselectedAllHolder()
+    {
+        for (int i = 0; i < enemyHolders.Length; i++)
+        {
             enemyHolders[i].Deselected();
         }
     }
 
-    public void Update(){
-        if(CheckEmpty(slotDisplay)){
+    public void Update()
+    {
+        if (CheckEmpty(slotDisplay))
+        {
             shuffleUI.SetActive(true);
         }
     }
 
     public void AddItem(CardSO _card)
     {
-        for(int i = 0;i < slotDisplay.Length;i++){
-            if(!slotDisplay[i].isFull){
+        for (int i = 0; i < slotDisplay.Length; i++)
+        {
+            if (!slotDisplay[i].isFull)
+            {
                 slotDisplay[i].AddItem(_card);
                 return;
             }
@@ -65,8 +76,10 @@ public class BattleInventory : MonoBehaviour ,IInventorable
 
     public bool CheckEmpty(InventorySlot[] slots)
     {
-        for(int i = 0;i< slots.Length;i++){
-            if(slots[i].isFull){
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].isFull)
+            {
                 return false;
             }
         }
@@ -75,7 +88,8 @@ public class BattleInventory : MonoBehaviour ,IInventorable
 
     public void DeselectedAllSlot()
     {
-        foreach(InventorySlot inventorySlot in slotDisplay){
+        foreach (InventorySlot inventorySlot in slotDisplay)
+        {
             inventorySlot.OnDeselected();
         }
     }
@@ -85,11 +99,13 @@ public class BattleInventory : MonoBehaviour ,IInventorable
         if (cardSelected.cardType == CardType.DEF)
         {
             player.setShield((int)cardSelected._value);
+            battleController.ShowDamage((int)cardSelected._value, battleController.playerObject, battleController.TextPopup);
             this.playerUIManager.UpdatePlayerUI(battleController.player);
         }
         if (cardSelected.cardType == CardType.SUP)
         {
             player.HealByAmount((int)cardSelected._value);
+            battleController.ShowDamage((int)cardSelected._value, battleController.playerObject, battleController.TextPopup);
             this.playerUIManager.UpdatePlayerUI(battleController.player);
         }
         if (cardSelected.cardType == CardType.ATK)
@@ -102,14 +118,16 @@ public class BattleInventory : MonoBehaviour ,IInventorable
             }
 
             CharacterBase.Attack((int)cardSelected._value, enemyHolder.enemyContain);
+            battleController.ShowDamage((int)cardSelected._value , enemyHolder.gameObject , battleController.TextPopup);
             this.enemyUIManager.updateUI(battleController.enemies);
             enemyHolder.Deselected();
         }
-        
+
         // Reset cardSelected and useSlot after use
         useSlot.OnDeselected(); //unselected
         useSlot.RemoveItem(); //remove card from itself
         useSlot = null; //destroy itself
         battleController.isPlayerTurn = false;
+        battleController.OnTurnChange(Turn.PlayerAnim);
     }
-} 
+}
