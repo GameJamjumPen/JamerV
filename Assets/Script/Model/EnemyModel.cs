@@ -15,6 +15,36 @@ public enum EnemyDifficulty
 
 public abstract class EnemyModel : CharacterBase
 {
+    public class EnemyAttackInfo
+    {
+        public bool isAtk;
+        public bool isDef;
+        public bool isHeal;
+        public int valueStat;
+        public EnemyModel TargetenemyModel;
+
+        public EnemyAttackInfo(bool isAtk,bool isDef,bool isHeal,EnemyModel enemyModel){
+            this.isAtk = isAtk;
+            this.isDef = isDef;
+            this.isHeal = isHeal;
+            this.TargetenemyModel = enemyModel;
+        }
+    }
+    public class EnemyTargetBool{
+        public bool isSuccess;
+        public EnemyModel enemyModel;
+
+        public EnemyTargetBool(bool isSuccess,EnemyModel enemyModel){
+            this.isSuccess = isSuccess;
+            this.enemyModel = enemyModel;
+        }
+        public bool Issuccess(){
+            return isSuccess;
+        }
+        public EnemyModel TargetHelp(){
+            return enemyModel;
+        }
+    }
     public EnemyDifficulty Difficulty { get; private set; }
     private static System.Random rng = new System.Random();
     public EnemyModel(string name, int health, int baseAttackPower, EnemyDifficulty difficulty) 
@@ -33,12 +63,12 @@ public abstract class EnemyModel : CharacterBase
     {
         target.TakeDamage(AttackPower);
     }
-    public static void AttackPlayer(List<EnemyModel> enemyModels, PlayerModel player,int shieldProp,int healprop)
+    public static List<EnemyAttackInfo> AttackPlayer(List<EnemyModel> enemyModels, PlayerModel player,int shieldProp,int healProp)
     {
         bool shieldUsed = false;
         bool healUsed = false;
         int i = 0;
-
+        List<EnemyAttackInfo> enemyAttackInfo = new List<EnemyAttackInfo>();
         foreach (EnemyModel enemy in enemyModels)
         {
             Debug.Log("Alive");
@@ -48,32 +78,45 @@ public abstract class EnemyModel : CharacterBase
 
             if (decision < shieldProp && !shieldUsed)
             {
-                bool shielded = SetShieldToLowestHealthEnemy(enemyModels);
-                if (shielded) shieldUsed = true;
-                else enemy.Attack(player);
-                //enemyModelList[i][1] = enemy;
-                Debug.Log("Using Shield");
+                EnemyTargetBool shielded = SetShieldToLowestHealthEnemy(enemyModels);
+                if (shielded.Issuccess())
+                {
+                    shieldUsed = true;
+                    enemyAttackInfo.Add(new EnemyAttackInfo(false, true, false, shielded.TargetHelp()));
+                }
+                else
+                {
+                    enemy.Attack(player);
+                    enemyAttackInfo.Add(new EnemyAttackInfo(true, false, false, null)); // Log attack
+                }
             }
-            else if (decision < shieldProp+healprop && !healUsed)
+            else if (decision < shieldProp + healProp && !healUsed)
             {
-                bool healed = HealLowHealthEnemy(enemyModels);
-                if (healed) healUsed = true;
-                else enemy.Attack(player);
-                //enemyModelList[i][2] = enemy;
-                Debug.Log("Healing");
+                EnemyTargetBool healed = HealLowHealthEnemy(enemyModels);
+                if (healed.Issuccess())
+                {
+                    healUsed = true;
+                    enemyAttackInfo.Add(new EnemyAttackInfo(false, false, true, healed.TargetHelp())); // Log heal
+                }
+                else
+                {
+                    enemy.Attack(player);
+                    enemyAttackInfo.Add(new EnemyAttackInfo(true, false, false, null)); // Log attack
+                }
             }
             else
             {
                 enemy.Attack(player);
-                //enemyModelList[i][0] = enemy;
+                enemyAttackInfo.Add(new EnemyAttackInfo(true, false, false, null)); // Log attack
                 Debug.Log("Attack player");
             }
             i++;
             
         }
+        return enemyAttackInfo;
         //return enemyModelList;
     }
-    private static bool SetShieldToLowestHealthEnemy(List<EnemyModel> enemies)
+    private static EnemyTargetBool SetShieldToLowestHealthEnemy(List<EnemyModel> enemies)
     {
         var lowestHealthEnemy = enemies
             .Where(e => e.IsAlive())
@@ -83,25 +126,25 @@ public abstract class EnemyModel : CharacterBase
         if (lowestHealthEnemy != null)
         {
             lowestHealthEnemy.setShield(30);
-            return true;
+            return new EnemyTargetBool(true,lowestHealthEnemy);
         }
 
         Debug.Log("No valid enemy found to shield.");
-        return false;
+        return new EnemyTargetBool(false,enemies[0]);
     }
-    private static bool HealLowHealthEnemy(List<EnemyModel> enemies)
+    private static EnemyTargetBool HealLowHealthEnemy(List<EnemyModel> enemies)
     {
         foreach (var enemy in enemies)
         {
             if (enemy.IsAlive())
             {
                 enemy.HealByPercentage(0.2f);
-                return true;
+                return new EnemyTargetBool(true,enemy);
             }
         }
 
         Debug.Log("No enemies with health below 20% found to heal.");
-        return false;
+        return new EnemyTargetBool(false,enemies[0]);
     }
 }
 
