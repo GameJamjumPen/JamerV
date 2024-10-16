@@ -3545,6 +3545,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 559850960}
   m_CullTransparentMesh: 1
+--- !u!1 &589097416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 589097417}
+  m_Layer: 0
+  m_Name: hello
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &589097417
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589097416}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1777650035}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &591103628 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7580349240746877679, guid: f6c5e33161eb0944999d7a0061958acd, type: 3}
@@ -9598,6 +9629,7 @@ Transform:
   - {fileID: 1836668299}
   - {fileID: 1116304484}
   - {fileID: 1153275953}
+  - {fileID: 589097417}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1782696212 stripped
@@ -11814,6 +11846,10 @@ PrefabInstance:
       propertyPath: itemSlots.Array.data[11]
       value: 
       objectReference: {fileID: 370427368}
+    - target: {fileID: 1129693709579419506, guid: 62f5653871f9e2c4ebaaa9c38d3ed804, type: 3}
+      propertyPath: StarterPack.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: e2d71adb67ca2e04490224e09d62fa82, type: 2}
     - target: {fileID: 1129693709579419506, guid: 62f5653871f9e2c4ebaaa9c38d3ed804, type: 3}
       propertyPath: actualSlots.Array.data[0]
       value: 
