@@ -1,9 +1,7 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using UnityEngine.Rendering;
 
 // Define difficulty levels
 public enum EnemyDifficulty

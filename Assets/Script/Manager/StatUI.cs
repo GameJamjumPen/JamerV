@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 using TMPro;
 
 public class StatUI : MonoBehaviour
