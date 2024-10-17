@@ -59,11 +59,11 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
 
     public void Update()
     {
-        if (CheckEmpty(slotDisplay))
+        if (CheckFull(slotDisplay))
         {
-            shuffleUI.SetActive(true);
-        }else{
             shuffleUI.SetActive(false);
+        }else{
+            shuffleUI.SetActive(true);
         }
     }
 
@@ -79,11 +79,11 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
         }
     }
 
-    public bool CheckEmpty(InventorySlot[] slots)
+    public bool CheckFull(InventorySlot[] slots)
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].isFull)
+            if (!slots[i].isFull)
             {
                 return false;
             }
