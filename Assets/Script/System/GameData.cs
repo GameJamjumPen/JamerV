@@ -18,7 +18,7 @@ public class GameData
 
     public GameData()
     {
-        Name = "Player";
+        Name = "Princess";
         inventoryData = new List<CardData>(){};
         loadoutData = new List<CardData>(){};
         life = 3;
