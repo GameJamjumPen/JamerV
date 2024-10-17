@@ -13,8 +13,12 @@ public class ToStart : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
+        
+    }
+
+    public void Click()
+    {
+        
             if (PlayerPrefs.HasKey("cutscene"))
             {
                 SceneManager.LoadSceneAsync("MainBoard");
@@ -23,6 +27,5 @@ public class ToStart : MonoBehaviour
                 SceneManager.LoadSceneAsync("CutScene");
                 PlayerPrefs.SetString("cutscene","0");
             }
-        }
     }
 }
