@@ -247,7 +247,7 @@ public class BattleController : MonoBehaviour
         if (battleModel.IsBattleOver())
         {
             Debug.Log("Wave Over");
-            if (currentWave < 2 && battleModel.player.IsAlive())
+            if (currentWave < waves.Count-1 && battleModel.player.IsAlive())
             {
                 NewWave();
             }
