@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour, IDataPersistence
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     [Header("Inventory Related")]
     public Room selectedRoom;
     public Inventory inventory;
+    public CardSO[] cardSOPool;
     [Tooltip("Card to give to paper instance")]
     public CardSO[] cardSOs;
     public GameObject lockIn;
@@ -30,6 +32,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
             return;
         }
         singleton = this;
+        for(int i = 0;i< cardSOPool.Length;i++){
+            inventory.AddItem(cardSOPool[i]);
+        }
     }
 
     public void Debugger(string a)
@@ -91,21 +96,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
         roomget = room;
         Debug.Log("room" + room);
         selectedRoom = allrooms[room].GetComponentInChildren<Room>();
-        if (inventory.CheckFull(inventory.actualSlots) && inventory.CheckType(inventory.actualSlots, true, true, false))
+        if (inventory.CheckType(inventory.actualSlots, true, true, false))
         {
-            if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
-            {
-                cardSOs = new CardSO[inventory.actualSlots.Length];
-            }
-
-            // Assign cardSOs
-            for (int i = 0; i < inventory.actualSlots.Length; i++)
-            {
-                if (inventory.actualSlots[i] != null)
-                {
-                    cardSOs[i] = inventory.actualSlots[i].cardSO;
-                }
-            }
+            GetPureCardSOfromArr();
             Paper.Instance.roomNum = room;
 
             selectedRoom.OnPlayerAttack();
@@ -137,18 +130,25 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void Lock()
     {
-        if (!inventory.CheckFull(inventory.actualSlots))
-        {
-            Debug.Log("make all not null");
-            return;
-        }
+        // if (!inventory.CheckFull(inventory.actualSlots))
+        // {
+        //     Debug.Log("make all not null");
+        //     return;
+        // }
         if (!inventory.CheckType(inventory.actualSlots, true, true, false))
         {
             Debug.Log("make all various Type");
         }
+        GetPureCardSOfromArr();
+        Paper.Instance.roomNum = roomget;
+        selectedRoom.OnPlayerAttack();
+    }
+
+    public void GetPureCardSOfromArr()
+    {
         if (cardSOs == null || cardSOs.Length != inventory.actualSlots.Length)
         {
-            cardSOs = new CardSO[inventory.actualSlots.Length];
+            cardSOs = new CardSO[inventory.actualSlots.Length]; // init cardSO arr
         }
 
         // Assign cardSOs
@@ -159,8 +159,20 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 cardSOs[i] = inventory.actualSlots[i].cardSO;
             }
         }
-        Paper.Instance.roomNum = roomget;
-        selectedRoom.OnPlayerAttack();
+        // Filter out null values from cardSOs array
+        List<CardSO> validCardSOs = new List<CardSO>();
+
+        for (int i = 0; i < cardSOs.Length; i++)
+        {
+            if (cardSOs[i] != null)
+            {
+                validCardSOs.Add(cardSOs[i]);
+            }
+        }
+
+        // Reassign the array with valid values
+        cardSOs = validCardSOs.ToArray();
+
     }
 
 }

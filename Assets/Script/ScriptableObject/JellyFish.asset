@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfc778e0a12bf814abf17767d1d395b2, type: 3}
   m_Name: JellyFish
   m_EditorClassIdentifier: 
-  _cardName: JellyFish
+  _cardName: Jellyfish
   cardType: 1
   _value: 100

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfc778e0a12bf814abf17767d1d395b2, type: 3}
-  m_Name: Rose
+  m_Name: Shellfish
   m_EditorClassIdentifier: 
-  _cardName: Roses
-  cardType: 4
+  _cardName: Shellfish
+  cardType: 3
   _value: 150
