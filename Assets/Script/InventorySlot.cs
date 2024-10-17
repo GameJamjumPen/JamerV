@@ -82,6 +82,27 @@ public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHa
     public void UpdateDisplay(){
         if(cardSO != null){
             slotImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
+            if(battleInventory != null){
+                float damage = cardSO._value;
+                switch (cardSO.cardType)
+            {
+                case CardType.ATK:
+                slotValueText.text = ((int)(damage*(1+(battleInventory.strength*0.2)))).ToString();
+                break;
+                case CardType.ATKV2:
+                slotValueText.text = ((int)(damage*(1+(battleInventory.strength*0.2)))).ToString();
+                break;
+                case CardType.ATKV3:
+                slotValueText.text = ((int)(damage*(1+(battleInventory.strength*0.2)))).ToString();
+                break;
+                case CardType.DEF:
+                slotValueText.text = ((int)(damage*(1+(battleInventory.defence*0.2)))).ToString();
+                break;
+                case CardType.SUP:
+                slotValueText.text = ((int)(damage*(1+(battleInventory.heals*0.2)))).ToString();
+                break;
+            }
+            }
             slotValueText.text = cardSO._value.ToString();
             switch (cardSO.cardType)
             {

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour,IInventorable,IDataPersistence
+public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
 {
     #region Declare Variable
     public KeyCode openCloseKey = KeyCode.Tab;
@@ -33,7 +33,8 @@ public class Inventory : MonoBehaviour,IInventorable,IDataPersistence
     public Sprite[] types;
 
     #endregion
-    public void Awake(){
+    public void Awake()
+    {
         istoggleable = true;
         inv.SetActive(false);
     }
@@ -41,20 +42,20 @@ public class Inventory : MonoBehaviour,IInventorable,IDataPersistence
     public void LoadData(GameData data)
     {
         List<CardSO> slotToLoad = new List<CardSO>(DataPersistenceMNG.Instance.ConvertDataToScriptableObjects(data.inventoryData));
-        foreach(CardSO card in slotToLoad)
+        foreach (CardSO card in slotToLoad)
         {
             AddItem(card);
         }
 
         List<CardSO> loadoutToSlot = new List<CardSO>(DataPersistenceMNG.Instance.ConvertDataToScriptableObjects(data.loadoutData));
-        foreach(CardSO card in loadoutToSlot)
+        foreach (CardSO card in loadoutToSlot)
         {
             AddItem(card);
         }
 
-        if(loadoutToSlot.Count == 0 && slotToLoad.Count == 0)
+        if (loadoutToSlot.Count == 0 && slotToLoad.Count == 0)
         {
-            foreach(CardSO card in StarterPack)
+            foreach (CardSO card in StarterPack)
             {
                 AddItem(card);
             }
@@ -64,23 +65,31 @@ public class Inventory : MonoBehaviour,IInventorable,IDataPersistence
     public void SaveData(ref GameData data)
     {
         List<CardSO> slotToSave = new List<CardSO>();
-        foreach(InventorySlot card in itemSlots)
+        foreach (InventorySlot card in itemSlots)
         {
-            if(card.cardSO!=null){
-            slotToSave.Add(card.cardSO);}
+            if (card.cardSO != null)
+            {
+                slotToSave.Add(card.cardSO);
+            }
         }
 
         data.inventoryData = DataPersistenceMNG.Instance.ConvertScriptableObjectsToData(slotToSave);
     }
 
-    public void Update(){
-        if(istoggleable){
-            if(Input.GetKeyDown(openCloseKey)){
-                if(image.enabled){
+    public void Update()
+    {
+        if (istoggleable)
+        {
+            if (Input.GetKeyDown(openCloseKey))
+            {
+                if (image.enabled)
+                {
                     image.enabled = false;
                     inv.SetActive(false);
                     dice.enabled = true;
-                }else{
+                }
+                else
+                {
                     image.enabled = true;
                     inv.SetActive(true);
                     dice.enabled = false;
@@ -91,35 +100,44 @@ public class Inventory : MonoBehaviour,IInventorable,IDataPersistence
     // public void Update(){
     //     if()
     // }
-    public void AddItem(CardSO _card){
-        for(int i = 0;i < itemSlots.Length;i++){
-            if(!itemSlots[i].isFull){
+    public void AddItem(CardSO _card)
+    {
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (!itemSlots[i].isFull)
+            {
                 itemSlots[i].AddItem(_card);
                 return;
             }
         }
     }
 
-    public bool CheckFull(InventorySlot[] slots){
-        for(int i = 0;i< slots.Length;i++){
-            if(!slots[i].isFull){
+    public bool CheckFull(InventorySlot[] slots)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (!slots[i].isFull)
+            {
                 return false;
             }
         }
         return true;
     }
 
-    public void AddItem(CardSO _card, Sprite cardPic){
-    for(int i = 0;i < itemSlots.Length;i++){
-        if(!itemSlots[i].isFull){
-            itemSlots[i].AddItem(_card);
-            newCardPopup.SetActive(true);
-            Debug.Log("TTTT");
-            cardAddedTreasure.sprite = cardPic;
-            return;
+    public void AddItem(CardSO _card, Sprite cardPic)
+    {
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (!itemSlots[i].isFull)
+            {
+                itemSlots[i].AddItem(_card);
+                newCardPopup.SetActive(true);
+                Debug.Log("TTTT");
+                cardAddedTreasure.sprite = cardPic;
+                return;
+            }
         }
     }
-}
 
     public void CloseUI()
     {
@@ -127,61 +145,73 @@ public class Inventory : MonoBehaviour,IInventorable,IDataPersistence
     }
 
     public bool CheckType(InventorySlot[] slots, bool isAttack, bool isDefence, bool isSupport)
-{
-    bool ATKalr = false;
-    bool DEFalr = false;
-    bool SUPalr = false;
-
-    // Check the slots to set the flags for each card type
-    for (int i = 0; i < slots.Length; i++)
     {
-        if (slots[i].cardSO.cardType == CardType.ATK)
+        bool ATKalr = false;
+        bool DEFalr = false;
+        bool SUPalr = false;
+
+        // Check the slots to set the flags for each card type
+        for (int i = 0; i < slots.Length; i++)
         {
-            ATKalr = true;
+            if (slots[i].cardSO == null)
+            {
+                continue;
+            }
+            if (slots[i].cardSO.cardType == CardType.ATK)
+            {
+                ATKalr = true;
+            }
+            if (slots[i].cardSO.cardType == CardType.DEF)
+            {
+                DEFalr = true;
+            }
+            if (slots[i].cardSO.cardType == CardType.SUP)
+            {
+                SUPalr = true;
+            }
         }
-        if (slots[i].cardSO.cardType == CardType.DEF)
-        {
-            DEFalr = true;
-        }
-        if (slots[i].cardSO.cardType == CardType.SUP)
-        {
-            SUPalr = true;
-        }
+
+        // Only check the required card types based on the parameters
+        bool attackCheck = !isAttack || ATKalr;
+        bool defenceCheck = !isDefence || DEFalr;
+        bool supportCheck = !isSupport || SUPalr;
+
+        // If all required conditions are met, return true
+        return attackCheck && defenceCheck && supportCheck;
     }
-
-    // Only check the required card types based on the parameters
-    bool attackCheck = !isAttack || ATKalr;
-    bool defenceCheck = !isDefence || DEFalr;
-    bool supportCheck = !isSupport || SUPalr;
-
-    // If all required conditions are met, return true
-    return attackCheck && defenceCheck && supportCheck;
-}
     #region SlotSelected
-    public void DeselectedAllSlot(){
+    public void DeselectedAllSlot()
+    {
         foreach (InventorySlot slot in allSlots)
         {
             slot.OnDeselected();
         }
     }
 
-    public void DisplaySelected(){
-        if(!cardName.gameObject.activeSelf) cardName.gameObject.SetActive(true);
-        if(!cardImage.gameObject.activeSelf) cardImage.gameObject.SetActive(true);
-        if(!cardType.gameObject.activeSelf) cardType.gameObject.SetActive(true);
-        if(!cardStat.gameObject.activeSelf) cardStat.gameObject.SetActive(true);
+    public void DisplaySelected()
+    {
+        if (!cardName.gameObject.activeSelf) cardName.gameObject.SetActive(true);
+        if (!cardImage.gameObject.activeSelf) cardImage.gameObject.SetActive(true);
+        if (!cardType.gameObject.activeSelf) cardType.gameObject.SetActive(true);
+        if (!cardStat.gameObject.activeSelf) cardStat.gameObject.SetActive(true);
         cardName.text = cardSelected._cardName;
         cardImage.sprite = cardLoader.Instance.sprites[cardSelected._cardName];
         cardStat.text = cardSelected._value.ToString();
-        if(cardSelected.cardType == CardType.ATK || cardSelected.cardType == CardType.ATKV2 || cardSelected.cardType == CardType.ATKV3){
+        if (cardSelected.cardType == CardType.ATK || cardSelected.cardType == CardType.ATKV2 || cardSelected.cardType == CardType.ATKV3)
+        {
             cardType.sprite = types[0];
-        }else if(cardSelected.cardType == CardType.DEF){
+        }
+        else if (cardSelected.cardType == CardType.DEF)
+        {
             cardType.sprite = types[1];
-        }else{
+        }
+        else
+        {
             cardType.sprite = types[2];
         }
     }
-    public void DisplayDeselected(){
+    public void DisplayDeselected()
+    {
         cardName.gameObject.SetActive(false);
         cardImage.gameObject.SetActive(false);
         cardType.gameObject.SetActive(false);

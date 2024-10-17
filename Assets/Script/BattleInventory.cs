@@ -59,11 +59,11 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
 
     public void Update()
     {
-        if (CheckEmpty(slotDisplay))
+        if (CheckFull(slotDisplay))
         {
-            shuffleUI.SetActive(true);
-        }else{
             shuffleUI.SetActive(false);
+        }else{
+            shuffleUI.SetActive(true);
         }
     }
 
@@ -79,11 +79,11 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
         }
     }
 
-    public bool CheckEmpty(InventorySlot[] slots)
+    public bool CheckFull(InventorySlot[] slots)
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].isFull)
+            if (!slots[i].isFull)
             {
                 return false;
             }
@@ -102,16 +102,17 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
     public void Use()
     {
         if(attackable){
+            float damage = cardSelected._value;
             switch (cardSelected.cardType)
             {
                 case CardType.DEF: 
-                    player.setShield((int)cardSelected._value);
-                    battleController.popUpUI.ShowDamage((int)(cardSelected._value+(defence*0.2)), battleController.playerObject, battleController.defence);
+                    player.setShield((int)(damage*(1+(defence*0.2))));
+                    battleController.popUpUI.ShowDamage((int)(damage*(1+(defence*0.2))), battleController.playerObject, battleController.defence);
                     this.playerUIManager.UpdatePlayerUI(battleController.player);
                 break;
                 case CardType.SUP:
-                    player.HealByAmount((int)cardSelected._value);
-                    battleController.popUpUI.ShowDamage((int)(cardSelected._value+(heals*0.2)), battleController.playerObject, battleController.heal);
+                    player.HealByAmount((int)(damage*(1+(heals*0.2))));
+                    battleController.popUpUI.ShowDamage((int)(damage*(1+(heals*0.2))), battleController.playerObject, battleController.heal);
                     this.playerUIManager.UpdatePlayerUI(battleController.player);
                 break;
                 case CardType.ATK:
@@ -119,20 +120,20 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
                     {
                         return; // Exit the function if no enemy is selected
                     }
-                    CharacterBase.Attack((int)cardSelected._value, enemyHolder.enemyContain);
+                    CharacterBase.Attack((int)(damage*(1+(strength*0.2))), enemyHolder.enemyContain);
                     Debug.Log(strength);
                     Debug.Log((enemyHolder==null).ToString());
-                    battleController.popUpUI.ShowDamage((int)(cardSelected._value+(strength*0.2)) , enemyHolder.transform , battleController.attack);
+                    battleController.popUpUI.ShowDamage((int)(damage*(1+(strength*0.2))) , enemyHolder.transform , battleController.attack);
                     this.enemyUIManager.updateUI(battleController.enemies);
                     enemyHolder.Deselected();
                     break;
                 case CardType.ATKV2:
                     for(int i =0;i<enemyHolders.Length;i++){
-                        enemyHolders[i].enemyContain.TakeDamage((int)cardSelected._value);
+                        enemyHolders[i].enemyContain.TakeDamage((int)(damage*(1+(strength*0.2))));
                         Debug.Log(strength);
                         Debug.Log((enemyHolder==null).ToString());
                         enemyHolder = enemyHolders[i];
-                        battleController.popUpUI.ShowDamage((int)(cardSelected._value+(strength*0.2)) , enemyHolder.transform , battleController.attack);
+                        battleController.popUpUI.ShowDamage((int)(damage*(1+(strength*0.2))) , enemyHolder.transform , battleController.attack);
                         this.enemyUIManager.updateUI(battleController.enemies);
                         enemyHolder.Deselected();
                     }
@@ -141,10 +142,10 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
                     if(enemyHolder == null){
                         return;
                     }
-                    enemyHolder.enemyContain.TakeDamageHealth((int)cardSelected._value);
+                    enemyHolder.enemyContain.TakeDamageHealth((int)(damage*(1+(strength*0.2))));
                     Debug.Log(strength);
                     Debug.Log((enemyHolder==null).ToString());
-                    battleController.popUpUI.ShowDamage((int)(cardSelected._value+(strength*0.2)) , enemyHolder.transform , battleController.attack);
+                    battleController.popUpUI.ShowDamage((int)(damage*(1+(strength*0.2))) , enemyHolder.transform , battleController.attack);
                     this.enemyUIManager.updateUI(battleController.enemies);
                     enemyHolder.Deselected();
                 break;

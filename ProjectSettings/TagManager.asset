@@ -51,3 +51,6 @@ TagManager:
   - name: Player
     uniqueID: 3979108529
     locked: 0
+  - name: Heart
+    uniqueID: 1121555439
+    locked: 0
