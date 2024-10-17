@@ -1,35 +1,28 @@
 using UnityEngine;
 using TMPro;
-using System.Collections;
 using UnityEngine.UI;
 
-public class PlayerUIManager : MonoBehaviour
+public class PlayerUIManager : UIManager
 {
-    public TextMeshProUGUI playerNameText;  // Reference to the player's name UI
+    public TextMeshProUGUI playerNameText;
     public TextMeshProUGUI healthText;
-    public Slider playerHealthSlider;       // Reference to the player's health slider
+    public Slider playerHealthSlider;
     public Slider playerShieldSlider;
-    public SpriteRenderer playerSpriteRenderer;  // Reference to the SpriteRenderer component
+    public SpriteRenderer playerSpriteRenderer;
     public Animator animator;
-    
-    // Method to update the player's UI
+
     public void UpdatePlayerUI(PlayerModel player, Sprite playerSprite)
     {
-        // Update the player's name
         playerNameText.text = player.Name;
-
-        // Update the player's health slider
-        playerHealthSlider.maxValue = player.MaxHealth; // Assuming there's a MaxHealth property in PlayerModel
+        playerHealthSlider.maxValue = player.MaxHealth;
         playerHealthSlider.value = player.Health;
         playerShieldSlider.maxValue = 100;
-        playerShieldSlider.value = 0; // Set shield value accordingly
+        playerShieldSlider.value = player.Shield; // Update shield value as needed
         healthText.text = player.Health.ToString();
 
-        // Update the player's sprite
         playerSpriteRenderer.sprite = playerSprite;
     }
 
-    // Method to update the player's health slider during gameplay
     public void UpdatePlayerUI(PlayerModel player)
     {
         playerHealthSlider.value = player.Health;
@@ -37,55 +30,10 @@ public class PlayerUIManager : MonoBehaviour
         healthText.text = player.Health.ToString();
     }
 
-    /// <summary>
-    /// Shakes the player sprite and flashes it red to simulate damage feedback.
-    /// </summary>
-    /// <param name="shakeDuration">The duration of the shake effect, in seconds.</param>
-    /// <param name="shakeAmount">The amount of shake (intensity).</param>
     public void ShakeAndFlashRed(float shakeDuration = 1f, float shakeAmount = 1f)
     {
-        StartCoroutine(ShakeSprite(shakeDuration, shakeAmount));
-        StartCoroutine(FlashRed(0.5f)); // Flash red for 0.5 seconds
-    }
-
-    private IEnumerator ShakeSprite(float duration, float amount)
-    {
-        Vector3 originalPosition = playerSpriteRenderer.transform.localPosition;
-
-        float elapsedTime = 0f;
-        while (elapsedTime < duration)
-        {
-            // Create a small random offset for shaking effect
-            float offsetX = Random.Range(-amount, amount);
-            float offsetY = Random.Range(-amount, amount);
-
-            // Apply the offset to the playerSprite's position
-            playerSpriteRenderer.transform.localPosition = new Vector3(
-                originalPosition.x + offsetX,
-                originalPosition.y + offsetY,
-                originalPosition.z
-            );
-
-            elapsedTime += Time.deltaTime;
-            yield return null; // Wait for the next frame
-        }
-
-        // Reset to the original position after shaking
-        playerSpriteRenderer.transform.localPosition = originalPosition;
-    }
-
-    private IEnumerator FlashRed(float duration)
-    {
-        Color originalColor = playerSpriteRenderer.color;
-
-        // Set the playerSprite to red
-        playerSpriteRenderer.color = Color.red;
-
-        // Wait for the specified duration
-        yield return new WaitForSeconds(duration);
-
-        // Reset the playerSprite to its original color
-        playerSpriteRenderer.color = originalColor;
+        StartCoroutine(ShakeImage(playerSpriteRenderer.transform, shakeDuration, shakeAmount));
+        StartCoroutine(FlashRed(playerSpriteRenderer, 0.5f));
     }
 
     public void AttackAnimate()

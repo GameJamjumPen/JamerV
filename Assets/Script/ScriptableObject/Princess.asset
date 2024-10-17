@@ -15,3 +15,4 @@ MonoBehaviour:
   _cardName: Princess
   cardType: 0
   _value: 300
+  cardDes: Attack 1 Enemy 300 Damage

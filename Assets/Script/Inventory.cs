@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +30,8 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
     public Image cardImage;
     public Image cardType;
     public TextMeshProUGUI cardStat;
+    public TextMeshProUGUI cardDes;
+
     [Tooltip("Types[0] will be ATK Types[1] will be DEF Types[2] will be SUP card")]
     public Sprite[] types;
 
@@ -194,9 +197,12 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
         if (!cardImage.gameObject.activeSelf) cardImage.gameObject.SetActive(true);
         if (!cardType.gameObject.activeSelf) cardType.gameObject.SetActive(true);
         if (!cardStat.gameObject.activeSelf) cardStat.gameObject.SetActive(true);
+        if (!cardDes.gameObject.activeSelf) cardDes.gameObject.SetActive(true);
+
         cardName.text = cardSelected._cardName;
         cardImage.sprite = cardLoader.Instance.sprites[cardSelected._cardName];
         cardStat.text = cardSelected._value.ToString();
+        this.cardDes.text = cardSelected.cardDes;
         if (cardSelected.cardType == CardType.ATK || cardSelected.cardType == CardType.ATKV2 || cardSelected.cardType == CardType.ATKV3)
         {
             cardType.sprite = types[0];
@@ -216,6 +222,7 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
         cardImage.gameObject.SetActive(false);
         cardType.gameObject.SetActive(false);
         cardStat.gameObject.SetActive(false);
+        cardDes.gameObject.SetActive(false);
     }
 
 

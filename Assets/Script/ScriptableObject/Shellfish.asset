@@ -15,3 +15,4 @@ MonoBehaviour:
   _cardName: Shellfish
   cardType: 3
   _value: 150
+  cardDes: Attack All Enemies On Field 150 Damage

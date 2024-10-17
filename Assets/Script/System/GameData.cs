@@ -38,6 +38,7 @@ public class GameData
         public string cardName;
         public string cardType;
         public float cardValue;
+        public string cardDes;
 
         public CardData(CardSO card) //PolyMorph
     {
@@ -49,6 +50,7 @@ public class GameData
         cardName = card._cardName;
         cardValue = card._value;
         cardType = card.cardType.ToString();
+        cardDes  = card.cardDes;
         
     }
 }

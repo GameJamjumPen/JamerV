@@ -6,6 +6,8 @@ public class CardSO : ScriptableObject
     public string _cardName;
     public CardType cardType;
     public float _value;
+    
+    public string cardDes;
 
 }
 public enum CardType{ATK , DEF, SUP,ATKV2,ATKV3}

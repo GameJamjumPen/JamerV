@@ -215,7 +215,7 @@ public class BattleController : MonoBehaviour
         BattleModel.ResetShield(enemies);
         enemyAttackInfos = EnemyModel.AttackPlayer(enemies, player, shieldprop, healprop,this);
         playerUIManager.UpdatePlayerUI(player);
-        enemyUIManager.updateUI(enemies);
+        enemyUIManager.UpdateUI(enemies);
         GameOver();
         isPlayerTurn = true;
         // ShowCurrentTurn();

@@ -15,3 +15,4 @@ MonoBehaviour:
   _cardName: ChessPiece
   cardType: 1
   _value: 200
+  cardDes: Add 200 Shield To Player

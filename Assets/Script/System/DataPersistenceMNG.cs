@@ -126,6 +126,7 @@ public class DataPersistenceMNG : MonoBehaviour
 
         newCard._cardName = cardData.cardName;
         newCard._value = cardData.cardValue;
+        newCard.cardDes = cardData.cardDes;
 
         if (Enum.TryParse(cardData.cardType, out CardType parsedCardType))
         {

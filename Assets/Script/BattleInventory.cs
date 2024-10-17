@@ -124,7 +124,7 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
                     Debug.Log(strength);
                     Debug.Log((enemyHolder==null).ToString());
                     battleController.popUpUI.ShowDamage((int)(damage*(1+(strength*0.2))) , enemyHolder.transform , battleController.attack);
-                    this.enemyUIManager.updateUI(battleController.enemies);
+                    this.enemyUIManager.UpdateUI(battleController.enemies);
                     enemyHolder.Deselected();
                     break;
                 case CardType.ATKV2:
@@ -134,7 +134,7 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
                         Debug.Log((enemyHolder==null).ToString());
                         enemyHolder = enemyHolders[i];
                         battleController.popUpUI.ShowDamage((int)(damage*(1+(strength*0.2))) , enemyHolder.transform , battleController.attack);
-                        this.enemyUIManager.updateUI(battleController.enemies);
+                        this.enemyUIManager.UpdateUI(battleController.enemies);
                         enemyHolder.Deselected();
                     }
                 break;
@@ -146,7 +146,7 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
                     Debug.Log(strength);
                     Debug.Log((enemyHolder==null).ToString());
                     battleController.popUpUI.ShowDamage((int)(damage*(1+(strength*0.2))) , enemyHolder.transform , battleController.attack);
-                    this.enemyUIManager.updateUI(battleController.enemies);
+                    this.enemyUIManager.UpdateUI(battleController.enemies);
                     enemyHolder.Deselected();
                 break;
                 default:

@@ -15,3 +15,4 @@ MonoBehaviour:
   _cardName: Jello
   cardType: 0
   _value: 250
+  cardDes: Attack 1 Enemy 250 Damage

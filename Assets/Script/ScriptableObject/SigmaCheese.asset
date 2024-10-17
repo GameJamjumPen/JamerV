@@ -15,3 +15,4 @@ MonoBehaviour:
   _cardName: SigmaCheese
   cardType: 1
   _value: 100
+  cardDes: Add 100 Shield To Player

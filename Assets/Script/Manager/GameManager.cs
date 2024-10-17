@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         this.currentRoom = data.currentRoom;
         this.wentRoom = Paper.Instance.wentRoom;
-
+        
         PlaceRooms(data.wentRoom);
 
     }

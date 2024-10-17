@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cardName: Roses
   cardType: 4
-  _value: 150
+  _value: 200
+  cardDes: Piercing Through Enemy Shield Duel 150 damage
