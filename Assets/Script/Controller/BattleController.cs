@@ -124,7 +124,7 @@ public class BattleController : MonoBehaviour
     }
     private IEnumerator HandleEnemyAnimations()
     {
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < enemies.Count && i < enemyAttackInfos.Count; i++)
         {
             if (enemies[i].IsAlive() && enemyAttackInfos != null)
             {
