@@ -11835,6 +11835,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1840518925}
     - target: {fileID: 1129693709579419506, guid: 62f5653871f9e2c4ebaaa9c38d3ed804, type: 3}
+      propertyPath: StarterPack.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1129693709579419506, guid: 62f5653871f9e2c4ebaaa9c38d3ed804, type: 3}
       propertyPath: allSlots.Array.data[0]
       value: 
       objectReference: {fileID: 1999255112}
@@ -11953,7 +11957,11 @@ PrefabInstance:
     - target: {fileID: 1129693709579419506, guid: 62f5653871f9e2c4ebaaa9c38d3ed804, type: 3}
       propertyPath: StarterPack.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: e2d71adb67ca2e04490224e09d62fa82, type: 2}
+      objectReference: {fileID: 11400000, guid: f56e61f2285d84c41b6994d0e12e08b4, type: 2}
+    - target: {fileID: 1129693709579419506, guid: 62f5653871f9e2c4ebaaa9c38d3ed804, type: 3}
+      propertyPath: StarterPack.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 5958709b545ef144e91c67fd2a7a01bd, type: 2}
     - target: {fileID: 1129693709579419506, guid: 62f5653871f9e2c4ebaaa9c38d3ed804, type: 3}
       propertyPath: actualSlots.Array.data[0]
       value: 

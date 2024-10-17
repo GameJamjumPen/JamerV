@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
     [Header("Inventory Related")]
     public Room selectedRoom;
     public Inventory inventory;
-    public CardSO[] cardSOPool;
     [Tooltip("Card to give to paper instance")]
     public CardSO[] cardSOs;
     public GameObject lockIn;
@@ -32,9 +31,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
             return;
         }
         singleton = this;
-        for(int i = 0;i< cardSOPool.Length;i++){
-            inventory.AddItem(cardSOPool[i]);
-        }
     }
 
     public void Debugger(string a)
