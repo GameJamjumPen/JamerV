@@ -38,6 +38,7 @@ public class PlayerManager : MonoBehaviour, IDataPersistence
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if(scene.name!="CutScene"&&scene.name!="StartScene")
         AddScoreFromPaper();
         if(Paper.Instance != null){
             if(Paper.Instance.isplayed){

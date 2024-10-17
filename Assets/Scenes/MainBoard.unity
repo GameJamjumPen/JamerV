@@ -12373,6 +12373,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8882212891114201999, guid: a7e2b3c8a0e0f7b4089edaea4447b49e, type: 3}
+      propertyPath: musicSounds.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882212891114201999, guid: a7e2b3c8a0e0f7b4089edaea4447b49e, type: 3}
+      propertyPath: musicSounds.Array.data[6].name
+      value: CutScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882212891114201999, guid: a7e2b3c8a0e0f7b4089edaea4447b49e, type: 3}
+      propertyPath: musicSounds.Array.data[6].audioClip
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
