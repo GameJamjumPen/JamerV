@@ -1,26 +1,28 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.Video;
 
 public class CutScene : MonoBehaviour
 {
-    private PlayerManager playerManager;
-    public GameObject randomButton;
-    public TMP_Text lifetext;
+    private VideoPlayer videoPlayer;
+    public GameObject next;
 
-    private void Awake(){
-        playerManager = GetComponent<PlayerManager>();
+    void Start()
+    {
+        videoPlayer = GetComponent<VideoPlayer>();
+        videoPlayer.loopPointReached += OnVideoFinished;
     }
 
-    public void OnRandomHealthClicked()
+    // This method will be called when the video finishes
+    private void OnVideoFinished(VideoPlayer vp)
     {
-        randomButton.SetActive(false);
-        randomHealth();
+        Debug.Log("Video has finished playing.");
+        next.SetActive(true);
+        Destroy(gameObject);
     }
 
-    private void randomHealth()
+    void OnDestroy()
     {
-        int life = UnityEngine.Random.Range(1,3);
-        playerManager.SetLife(life);
-        lifetext.text = $"YOU GOT {life} LIVES";
+        videoPlayer.loopPointReached -= OnVideoFinished;
     }
 }
