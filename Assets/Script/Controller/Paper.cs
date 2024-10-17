@@ -16,7 +16,11 @@ public class Paper : MonoBehaviour, IDataPersistence
     public Sprite sprite;
     private void Awake()
     {
-        if (Instance == null)
+        if(sceneName == "GameOver" || sceneName == "Win")
+        {
+            Destroy(this);
+        }
+        else if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
