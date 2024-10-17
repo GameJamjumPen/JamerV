@@ -277,6 +277,8 @@ public class BattleController : MonoBehaviour
     void NewWave()
     {
         Debug.Log("NEW WAVE !!!");
+        isPlayerTurn = true;
+        ChangeTurn(Turn.PlayerAttack);
         currentWave++;
         ClearLists();
         RenderEnemy();

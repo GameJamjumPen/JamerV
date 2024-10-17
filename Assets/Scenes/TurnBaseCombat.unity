@@ -3398,7 +3398,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 75dc3d87b90eadf498a7200b60f75501, type: 3}
   BeeSprites:
   - {fileID: 21300000, guid: 627e7900f509c8349b872889d9f5192a, type: 3}
-  Prince:
+  PrinceSprites:
   - {fileID: 21300000, guid: b36a8d00509d83f49a0785eeb1e0e1cb, type: 3}
   playerPrefab: {fileID: 6728637366969356498, guid: 06f780fd626334d458e0a7e12b4e733f, type: 3}
   isPlayerTurn: 1
