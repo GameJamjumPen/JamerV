@@ -28,7 +28,7 @@ public class BattleController : MonoBehaviour
     public List<Sprite> FolkSprites = new List<Sprite>();
     public List<Sprite> SpoonSprites = new List<Sprite>();
     public List<Sprite> BeeSprites = new List<Sprite>();
-    public List<Sprite> Prince = new List<Sprite>();
+    public List<Sprite> PrinceSprites = new List<Sprite>();
     public List<List<EnemyModel>> waves = new List<List<EnemyModel>>();
     public GameObject playerPrefab;
     private BattleModel battleModel;
@@ -124,7 +124,7 @@ public class BattleController : MonoBehaviour
     }
     private IEnumerator HandleEnemyAnimations()
     {
-        for (int i = 0; i < enemies.Count; i++)
+        for (int i = 0; i < enemies.Count && i < enemyAttackInfos.Count; i++)
         {
             if (enemies[i].IsAlive() && enemyAttackInfos != null)
             {
@@ -335,7 +335,7 @@ public class BattleController : MonoBehaviour
             case "Bee":
                 return BeeSprites[UnityEngine.Random.Range(0, BeeSprites.Count)];
             case "Prince":
-                return BeeSprites[UnityEngine.Random.Range(0, BeeSprites.Count)];
+                return PrinceSprites[UnityEngine.Random.Range(0, PrinceSprites.Count)];
             default:
                 return FishSprites[0]; // Default fallback sprite
         }
