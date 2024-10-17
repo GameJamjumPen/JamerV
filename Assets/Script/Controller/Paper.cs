@@ -1,11 +1,13 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Paper : MonoBehaviour, IDataPersistence
 {
     public static Paper Instance;
     public List<int> wentRoom;
+    private Scene scene;
     public int roomNum;
     public int score;
     public string sceneName;
@@ -16,11 +18,10 @@ public class Paper : MonoBehaviour, IDataPersistence
     public Sprite sprite;
     private void Awake()
     {
-        if(sceneName == "GameOver" || sceneName == "Win")
-        {
-            Destroy(this);
-        }
-        else if (Instance == null)
+        Scene scene = SceneManager.GetActiveScene();
+
+
+        if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
@@ -34,7 +35,8 @@ public class Paper : MonoBehaviour, IDataPersistence
     public void SetSceneName(string sceneName)
     {
         this.sceneName = sceneName;
-        if(sceneName == "treasure"){
+        if (sceneName == "treasure")
+        {
             wentRoom.Add(roomNum);
         }
     }
@@ -43,14 +45,15 @@ public class Paper : MonoBehaviour, IDataPersistence
     {
         isplayed = true;
         isVictory = victory;
-        if(victory){
+        if (victory)
+        {
             wentRoom.Add(roomNum);
         }
     }
 
     public void SetScore(int score)
     {
-        this.score=score;
+        this.score = score;
     }
 
     public void SetEnemyDifficulty(EnemyDifficulty Diff)
@@ -83,10 +86,19 @@ public class Paper : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         wentRoom = data.wentRoom;
+        if (scene.name == "GameOver" || scene.name == "Win")
+        {
+            wentRoom = new List<int>();
+        }
     }
 
     public void SaveData(ref GameData data)
     {
-        data.wentRoom = wentRoom;
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        if (currentSceneName != "Win" && currentSceneName != "GameOver")
+        {
+            data.wentRoom = wentRoom;
+        }
     }
 }
