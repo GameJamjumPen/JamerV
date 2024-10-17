@@ -39,7 +39,7 @@ public class GameData
         public string cardType;
         public float cardValue;
 
-        public CardData(CardSO card)
+        public CardData(CardSO card) //PolyMorph
     {
         if (card == null)
         {
