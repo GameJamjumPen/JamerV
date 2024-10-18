@@ -49,6 +49,7 @@ public class Paper : MonoBehaviour, IDataPersistence
         {
             wentRoom.Add(roomNum);
         }
+        ClearCard();
     }
 
     public void SetScore(int score)

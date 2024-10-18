@@ -126,14 +126,17 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void Lock()
     {
-        // if (!inventory.CheckFull(inventory.actualSlots))
-        // {
-        //     Debug.Log("make all not null");
-        //     return;
-        // }
+        if (!inventory.CheckFull(inventory.actualSlots))
+        {
+            Debug.Log("make all not null");
+            return;
+        }
+
         if (!inventory.CheckType(inventory.actualSlots, true, true, false))
         {
+            
             Debug.Log("make all various Type");
+            return;
         }
         GetPureCardSOfromArr();
         Paper.Instance.roomNum = roomget;
