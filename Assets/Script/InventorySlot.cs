@@ -15,13 +15,14 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     [Header("Item Slot")]
     [SerializeField]
     private Image slotImage;
-    [SerializeField] private Image battleImage;
     [SerializeField] private Image slotImageOutline;
+    [SerializeField] private Image battleImage;
+    [SerializeField] private Image bIOutline;
     [SerializeField] private TextMeshProUGUI slotValueText;
     [SerializeField] private Image slotType;
     public GameObject selectedShader;
     public bool isSelected;
-    public Transform _transform;
+    public Transform slotTypePos;
     //[Header("Reference")]
     [Header("Reference")]
     private Inventory inventory;
@@ -49,11 +50,19 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         inventory = FindObjectOfType<Inventory>();
         battleInventory = FindObjectOfType<BattleInventory>();
         currentstate = NORMAL;
+        if(battleInventory != null){
+            slotType.transform.position = slotTypePos.position;
+        }
     }
     #region Add/Remove Item
     public void AddItem(CardSO cardSO)
     {
-        slotImage.gameObject.SetActive(true);
+        if(inventory != null){
+            slotImage.gameObject.SetActive(true);
+        }
+        if(battleInventory != null){
+            battleImage.gameObject.SetActive(true);
+        }
         slotType.gameObject.SetActive(true);
         this.cardSO = cardSO;
         isFull = true;
@@ -100,6 +109,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             if (battleInventory != null)
             {
                 battleImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
+                bIOutline.gameObject.SetActive(true);
                 float damage = cardSO._value;
                 switch (cardSO.cardType)
                 {
@@ -148,6 +158,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             slotType.gameObject.SetActive(false);
             slotImageOutline.gameObject.SetActive(false);
             battleImage.gameObject.SetActive(false);
+            bIOutline.gameObject.SetActive(false);
         }
     }
     #region Selected/Deselected Slot
