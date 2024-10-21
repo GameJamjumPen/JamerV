@@ -2917,6 +2917,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2327505637135352880, guid: bc45883bdb9a12d488204623949c7e97, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2327505637135352880, guid: bc45883bdb9a12d488204623949c7e97, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
@@ -2939,6 +2943,10 @@ PrefabInstance:
     - target: {fileID: 2327505637135352880, guid: bc45883bdb9a12d488204623949c7e97, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: esc, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2327505637135352880, guid: bc45883bdb9a12d488204623949c7e97, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2327505637135352880, guid: bc45883bdb9a12d488204623949c7e97, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -10902,7 +10910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1997788901
 RectTransform:
   m_ObjectHideFlags: 0

@@ -76,7 +76,17 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
             }
         }
 
+        List<CardSO> LoadoutToSave = new List<CardSO>();
+        foreach (InventorySlot card in actualSlots)
+        {
+            if (card.cardSO != null)
+            {
+                LoadoutToSave.Add(card.cardSO);
+            }
+        }
+
         data.inventoryData = DataPersistenceMNG.Instance.ConvertScriptableObjectsToData(slotToSave);
+        data.loadoutData = DataPersistenceMNG.Instance.ConvertScriptableObjectsToData(LoadoutToSave);
     }
 
     public void Update()
@@ -119,12 +129,12 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (!slots[i].isFull)
+            if (slots[i].isFull)
             {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public void AddItem(CardSO _card, Sprite cardPic)

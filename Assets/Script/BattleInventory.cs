@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
+public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
 {
     public PlayerModel player;
     public List<CardSO> cardSOPools;
@@ -59,10 +59,12 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
 
     public void Update()
     {
-        if (CheckFull(slotDisplay))
+        if (!CheckFull(slotDisplay))
         {
             shuffleUI.SetActive(false);
-        }else{
+        }
+        else
+        {
             shuffleUI.SetActive(true);
         }
     }
@@ -81,14 +83,17 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
 
     public bool CheckFull(InventorySlot[] slots)
     {
+        int c = 0;
         for (int i = 0; i < slots.Length; i++)
         {
             if (!slots[i].isFull)
             {
-                return false;
+                c+=1;
             }
         }
-        return true;
+        if (c > 1)
+        { return true; }
+        else { return false; }
     }
 
     public void DeselectedAllSlot()
@@ -101,54 +106,57 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
 
     public void Use()
     {
-        if(attackable){
+        if (attackable)
+        {
             float damage = cardSelected._value;
             switch (cardSelected.cardType)
             {
-                case CardType.DEF: 
-                    player.setShield((int)(damage*(1+(defence*0.2))));
-                    battleController.popUpUI.ShowDamage((int)(damage*(1+(defence*0.2))), battleController.playerObject, battleController.defence);
+                case CardType.DEF:
+                    player.setShield((int)(damage * (1 + (defence * 0.2))));
+                    battleController.popUpUI.ShowDamage((int)(damage * (1 + (defence * 0.2))), battleController.playerObject, battleController.defence);
                     this.playerUIManager.UpdatePlayerUI(battleController.player);
-                break;
+                    break;
                 case CardType.SUP:
-                    player.HealByAmount((int)(damage*(1+(heals*0.2))));
-                    battleController.popUpUI.ShowDamage((int)(damage*(1+(heals*0.2))), battleController.playerObject, battleController.heal);
+                    player.HealByAmount((int)(damage * (1 + (heals * 0.2))));
+                    battleController.popUpUI.ShowDamage((int)(damage * (1 + (heals * 0.2))), battleController.playerObject, battleController.heal);
                     this.playerUIManager.UpdatePlayerUI(battleController.player);
-                break;
+                    break;
                 case CardType.ATK:
                     if (enemyHolder == null)
                     {
                         return; // Exit the function if no enemy is selected
                     }
-                    CharacterBase.Attack((int)(damage*(1+(strength*0.2))), enemyHolder.enemyContain);
+                    CharacterBase.Attack((int)(damage * (1 + (strength * 0.2))), enemyHolder.enemyContain);
                     Debug.Log(strength);
-                    Debug.Log((enemyHolder==null).ToString());
-                    battleController.popUpUI.ShowDamage((int)(damage*(1+(strength*0.2))) , enemyHolder.transform , battleController.attack);
+                    Debug.Log((enemyHolder == null).ToString());
+                    battleController.popUpUI.ShowDamage((int)(damage * (1 + (strength * 0.2))), enemyHolder.transform, battleController.attack);
                     this.enemyUIManager.UpdateUI(battleController.enemies);
                     enemyHolder.Deselected();
                     break;
                 case CardType.ATKV2:
-                    for(int i =0;i<enemyHolders.Length;i++){
-                        enemyHolders[i].enemyContain.TakeDamage((int)(damage*(1+(strength*0.2))));
+                    for (int i = 0; i < enemyHolders.Length; i++)
+                    {
+                        enemyHolders[i].enemyContain.TakeDamage((int)(damage * (1 + (strength * 0.2))));
                         Debug.Log(strength);
-                        Debug.Log((enemyHolder==null).ToString());
+                        Debug.Log((enemyHolder == null).ToString());
                         enemyHolder = enemyHolders[i];
-                        battleController.popUpUI.ShowDamage((int)(damage*(1+(strength*0.2))) , enemyHolder.transform , battleController.attack);
+                        battleController.popUpUI.ShowDamage((int)(damage * (1 + (strength * 0.2))), enemyHolder.transform, battleController.attack);
                         this.enemyUIManager.UpdateUI(battleController.enemies);
                         enemyHolder.Deselected();
                     }
-                break;
+                    break;
                 case CardType.ATKV3:
-                    if(enemyHolder == null){
+                    if (enemyHolder == null)
+                    {
                         return;
                     }
-                    enemyHolder.enemyContain.TakeDamageHealth((int)(damage*(1+(strength*0.2))));
+                    enemyHolder.enemyContain.TakeDamageHealth((int)(damage * (1 + (strength * 0.2))));
                     Debug.Log(strength);
-                    Debug.Log((enemyHolder==null).ToString());
-                    battleController.popUpUI.ShowDamage((int)(damage*(1+(strength*0.2))) , enemyHolder.transform , battleController.attack);
+                    Debug.Log((enemyHolder == null).ToString());
+                    battleController.popUpUI.ShowDamage((int)(damage * (1 + (strength * 0.2))), enemyHolder.transform, battleController.attack);
                     this.enemyUIManager.UpdateUI(battleController.enemies);
                     enemyHolder.Deselected();
-                break;
+                    break;
                 default:
                     break;
             }
@@ -161,7 +169,9 @@ public class BattleInventory : MonoBehaviour, IInventorable , IDataPersistence
             battleController.StartCoroutine(battleController.ChangeTurn(Turn.PlayerAnim));
             attackable = false;
             Debug.Log("Change Turn");
-        }else{
+        }
+        else
+        {
             Debug.Log("UnAttackable");
         }
     }
