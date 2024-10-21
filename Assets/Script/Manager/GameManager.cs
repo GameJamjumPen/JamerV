@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour, IDataPersistence
 {
+    [Header("tutorials")]
+    public GameObject tutorial;
+
     public List<string> scenes;
     public List<int> wentRoom { get; private set; }
     public int currentRoom;
@@ -31,6 +34,14 @@ public class GameManager : MonoBehaviour, IDataPersistence
             return;
         }
         singleton = this;
+    }
+
+    private void Start()
+    {
+        if(!PlayerPrefs.HasKey("dice"))
+        {
+            tutorial.SetActive(true);
+        }
     }
 
     public void Debugger(string a)
