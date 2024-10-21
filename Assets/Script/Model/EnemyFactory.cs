@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-
 public class EnemyFactory
 {
     private static Dictionary<EnemyDifficulty, List<Func<EnemyModel>>> enemyCreators = 

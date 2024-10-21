@@ -1,9 +1,11 @@
+using System;
+using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 public class HostileRoom : Room
 {
+    public List<List<EnemyType>> enemyTypes = new List<List<EnemyType>>();
     public int minscore;
     public int maxscore;
     public RoomType roomType;
@@ -14,7 +16,7 @@ public class HostileRoom : Room
     }
     public override void OnPlayerAttack()
     {
-        Paper.Instance.SetScore(Random.Range(minscore, maxscore));
+        Paper.Instance.SetScore(UnityEngine.Random.Range(minscore, maxscore));
         Paper.Instance.SetCard(GameManager.singleton.cardSOs);
         Paper.Instance.SetBackground(_background);
     }
