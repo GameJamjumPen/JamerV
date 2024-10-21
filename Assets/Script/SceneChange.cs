@@ -11,4 +11,16 @@ public class SceneChange : MonoBehaviour
     {
         Begin.SetActive(true);
     }
+
+    void Update()
+    {
+        Scene thisScene = SceneManager.GetActiveScene();
+        if(thisScene.name == "CutScene")
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                ChangeSceneFunc("MainBoard");
+            }
+        }
+    }
 }
