@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class InventorySlot : MonoBehaviour , IPointerClickHandler , IBeginDragHandler , IDragHandler , IEndDragHandler
 {
     //ITEM DATA//
     public CardSO cardSO;
@@ -14,9 +14,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     [Header("Item Slot")]
     [SerializeField]
     private Image slotImage;
-    [SerializeField] private Image slotImageOutline;
-    [SerializeField] private TextMeshProUGUI slotValueText;
-    [SerializeField] private Image slotType;
+    [SerializeField]private TextMeshProUGUI slotValueText;
+    [SerializeField]private Image slotType;
     public GameObject selectedShader;
     public bool isSelected;
     public Transform _transform;
@@ -34,12 +33,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     Transform parentAfterDrag;
     public Transform draggableItem;
     [Header("Animation")]
-    [SerializeField] private Animator _animator;
-    [SerializeField] private bool isBar;
+    [SerializeField]private Animator _animator;
+    [SerializeField]private bool isBar;
     private string currentstate;
     private static string NORMAL = "Idle";
-    private static string DRAG = "OnDragSlot";
-    private static string HOVER = "OnMouseHighlighted";
+    private static string HOVER = "OnDragSlot";
     private static string SELECTED = "OnSelected";
     private static string BARSELECTED = "OnSelectedBar";
     void Awake()
@@ -49,16 +47,14 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         currentstate = NORMAL;
     }
     #region Add/Remove Item
-    public void AddItem(CardSO cardSO)
-    {
+    public void AddItem(CardSO cardSO){
         slotImage.gameObject.SetActive(true);
         slotType.gameObject.SetActive(true);
         this.cardSO = cardSO;
         isFull = true;
         UpdateDisplay();
     }
-    public void RemoveItem()
-    {
+    public void RemoveItem(){
         this.cardSO = null;
         isFull = false;
         UpdateDisplay();
@@ -68,153 +64,123 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
+        if(eventData.button == PointerEventData.InputButton.Left){
             OnSelected();
         }
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            if (isSelected)
-            {
-                OnUse();
+        if(eventData.button == PointerEventData.InputButton.Right){
+            if(isSelected){
+            OnUse();
             }
         }
-        if (eventData.button == PointerEventData.InputButton.Middle)
-        {
-            if (isSelected)
-            {
+        if(eventData.button == PointerEventData.InputButton.Middle){
+            if(isSelected){
                 RemoveItem();
             }
-        }
+        }        
     }
 
-    public void UpdateDisplay()
-    {
-        if (cardSO != null)
-        {
+    public void UpdateDisplay(){
+        if(cardSO != null){
             slotImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
-            slotImageOutline.gameObject.SetActive(true);
-            if (battleInventory != null)
-            {
+            if(battleInventory != null){
                 float damage = cardSO._value;
                 switch (cardSO.cardType)
-                {
-                    case CardType.ATK:
-                        slotValueText.text = ((int)(damage * (1 + (battleInventory.strength * 0.2)))).ToString();
-                        break;
-                    case CardType.ATKV2:
-                        slotValueText.text = ((int)(damage * (1 + (battleInventory.strength * 0.2)))).ToString();
-                        break;
-                    case CardType.ATKV3:
-                        slotValueText.text = ((int)(damage * (1 + (battleInventory.strength * 0.2)))).ToString();
-                        break;
-                    case CardType.DEF:
-                        slotValueText.text = ((int)(damage * (1 + (battleInventory.defence * 0.2)))).ToString();
-                        break;
-                    case CardType.SUP:
-                        slotValueText.text = ((int)(damage * (1 + (battleInventory.heals * 0.2)))).ToString();
-                        break;
-                }
+            {
+                case CardType.ATK:
+                slotValueText.text = ((int)(damage*(1+(battleInventory.strength*0.2)))).ToString();
+                break;
+                case CardType.ATKV2:
+                slotValueText.text = ((int)(damage*(1+(battleInventory.strength*0.2)))).ToString();
+                break;
+                case CardType.ATKV3:
+                slotValueText.text = ((int)(damage*(1+(battleInventory.strength*0.2)))).ToString();
+                break;
+                case CardType.DEF:
+                slotValueText.text = ((int)(damage*(1+(battleInventory.defence*0.2)))).ToString();
+                break;
+                case CardType.SUP:
+                slotValueText.text = ((int)(damage*(1+(battleInventory.heals*0.2)))).ToString();
+                break;
+            }
             }
             slotValueText.text = cardSO._value.ToString();
             switch (cardSO.cardType)
             {
                 case CardType.ATK:
-                    slotType.sprite = types[0];
-                    break;
+                slotType.sprite = types[0];
+                break;
                 case CardType.ATKV2:
-                    slotType.sprite = types[0];
-                    break;
+                slotType.sprite = types[0];
+                break;
                 case CardType.ATKV3:
-                    slotType.sprite = types[0];
-                    break;
+                slotType.sprite = types[0];
+                break;
                 case CardType.DEF:
-                    slotType.sprite = types[1];
-                    break;
+                slotType.sprite = types[1];
+                break;
                 case CardType.SUP:
-                    slotType.sprite = types[2];
-                    break;
+                slotType.sprite = types[2];
+                break;
             }
-        }
-        else
-        {
+        }else{
             slotImage.gameObject.SetActive(false);
             slotType.gameObject.SetActive(false);
-            slotImageOutline.gameObject.SetActive(false);
 
         }
     }
     #region Selected/Deselected Slot
-    public void OnSelected()
-    {
-        if (inventory != null)
-        {
+    public void OnSelected(){
+        if(inventory != null){
             inventory.DeselectedAllSlot();
         }
-        if (battleInventory != null)
-        {
+        if(battleInventory != null){
             battleInventory.DeselectedAllSlot();
         }
         selectedShader.SetActive(true);
         isSelected = true;
-        string sound = " ";
-        int rand = Random.Range(0, 3);
-        switch (rand)
-        {
-            case 0:
-                sound = "PickCard1";
-                break;
+            string sound =" ";
+            int rand = Random.Range(0,3);
+            switch (rand){
+            case 0: 
+            sound = "PickCard1";
+            break;
             case 1:
-                sound = "PickCard2";
-                break;
+            sound = "PickCard2";
+            break;
             case 2:
-                sound = "PickCard3";
-                break;
-        }
-        SoundManager.Instance.PlaySFX(sound);
-        if (isBar)
-        {
+            sound = "PickCard3";
+            break;
+            }
+            SoundManager.Instance.PlaySFX(sound);
+        if(isBar){
             ChangeAnimationState(BARSELECTED);
-        }
-        else
-        {
+        }else{
             ChangeAnimationState(SELECTED);
         }
-        if (inventory != null)
-        {
-            if (this.cardSO != null)
-            {
+        if(inventory != null){
+            if(this.cardSO != null){
                 inventory.cardSelected = this.cardSO;
                 inventory.DisplaySelected();
-            }
-            else
-            {
+            }else{
                 inventory.DisplayDeselected();
             }
         }
-        if (battleInventory != null)
-        {
-            if (this.cardSO != null)
-            {
+        if(battleInventory != null){
+            if(this.cardSO != null){
                 battleInventory.cardSelected = this.cardSO;
                 battleInventory.useSlot = this;
-            }
-            else
-            {
+            }else{
                 Debug.Log("this.cardSO = null");
             }
         }
     }
-    public void OnDeselected()
-    {
+    public void OnDeselected(){
         selectedShader.SetActive(false);
         isSelected = false;
-        if (inventory != null)
-        {
-            inventory.DisplayDeselected();
+        if(inventory != null){
+        inventory.DisplayDeselected();
         }
-        if (battleInventory != null)
-        {
+        if(battleInventory != null){
             battleInventory.cardSelected = null;
         }
         ChangeAnimationState(NORMAL);
@@ -223,128 +189,98 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     #region Dragging
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (inventory != null)
-        {
-            if (!isSelected) return;
-            else
-            {
-                inventorySlot = null;
-                parentAfterDrag = transform;
-                draggableItem.SetParent(transform.root);
-                draggableItem.SetAsLastSibling();
-                slotImageOutline.gameObject.SetActive(false);
-            }
-            // DraggableObject.gameObject.SetActive(true);
-
-
-            //ChangeAnimationState(DRAG  , slotImage.GetComponent<Animator>());
-            Debug.Log("Begin Drag");
+        if(inventory!= null){
+        if(!isSelected) return;
+        else{
+            inventorySlot = null;
+            parentAfterDrag = transform;
+            draggableItem.SetParent(transform.root);
+            draggableItem.SetAsLastSibling();
+        }
+        // DraggableObject.gameObject.SetActive(true);
+        
+        
+        //ChangeAnimationState(HOVER  , slotImage.GetComponent<Animator>());
+        Debug.Log("Begin Drag");
         }
     }
 
     public void OnDrag(PointerEventData eventData)
-    {
-        if (inventory != null)
+    {   
+        if(inventory != null){
+
+        if(!isSelected){
+            return;
+        }else{
+            ChangeAnimationState(HOVER);
+            slotImage.transform.position = Input.mousePosition;
+        }
+        // List to hold all raycast hits
+        List<RaycastResult> results = new List<RaycastResult>();
+
+        // Raycast for UI elements under the mouse
+        EventSystem.current.RaycastAll(eventData, results);
+
+        // Iterate through the results to find an InventorySlot component
+        foreach (RaycastResult result in results)
         {
-
-            if (!isSelected)
+            // Try to get the InventorySlot component on the hit object;
+            InventorySlot slot;
+            if (result.gameObject.TryGetComponent<InventorySlot>(out slot))
             {
-                return;
+                // If the InventorySlot component is found, assign it and break
+                inventorySlot = slot;
+                Debug.Log("InventorySlot found: " + inventorySlot);
+                break;
             }
-            else
-            {
-                ChangeAnimationState(DRAG);
-                slotImage.transform.position = Input.mousePosition;
-            }
-            // List to hold all raycast hits
-            List<RaycastResult> results = new List<RaycastResult>();
-
-            // Raycast for UI elements under the mouse
-            EventSystem.current.RaycastAll(eventData, results);
-
-            // Iterate through the results to find an InventorySlot component
-            foreach (RaycastResult result in results)
-            {
-                // Try to get the InventorySlot component on the hit object;
-                InventorySlot slot;
-                if (result.gameObject.TryGetComponent<InventorySlot>(out slot))
-                {
-                    // If the InventorySlot component is found, assign it and break
-                    inventorySlot = slot;
-                    Debug.Log("InventorySlot found: " + inventorySlot);
-                    break;
-                }
-            }
-            if (inventorySlot == null)
-            {
-                Debug.Log("No InventorySlot found under mouse.");
-            }
-            //Debug.Log("Dragging");
+        }
+        if (inventorySlot == null)
+        {
+            Debug.Log("No InventorySlot found under mouse.");
+        }
+        //Debug.Log("Dragging");
         }
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (inventory != null)
-        {
+        if(inventory != null){
 
-            if (!isSelected)
-            {
-                return;
+        if(!isSelected){
+            return;
+        }
+        if(isSelected && cardSO != null){
+            if(inventorySlot != null && !inventorySlot.isFull){
+                inventorySlot.AddItem(cardSO);
+                RemoveItem();
+                ChangeAnimationState(NORMAL);
+                Debug.Log("Added");
             }
-            if (isSelected && cardSO != null)
-            {
-                if (inventorySlot != null && !inventorySlot.isFull)
-                {
-                    inventorySlot.AddItem(cardSO);
-                    RemoveItem();
-                    ChangeAnimationState(NORMAL);
-                    Debug.Log("Added");
-                }
-            }
-            Debug.Log("End Drag");
-            //ChangeAnimationState(NORMAL  , slotImage.GetComponent<Animator>());
-            draggableItem.SetParent(parentAfterDrag);
-            draggableItem.transform.position = beforeDragPos.transform.position;
-            slotImage.transform.position = draggableItem.transform.position;
-            UpdateDisplay();
+        }
+        Debug.Log("End Drag");
+        //ChangeAnimationState(NORMAL  , slotImage.GetComponent<Animator>());
+        draggableItem.SetParent(parentAfterDrag);
+        draggableItem.transform.position = beforeDragPos.transform.position;
+        slotImage.transform.position = draggableItem.transform.position;
         }
     }
     #endregion
 
-    public void OnMouseEnter()
-    {
-        ChangeAnimationState(HOVER);
-    }
-
-    private void OnMouseExit()
-    {
-        ChangeAnimationState(NORMAL);
-    }
-    public void ChangeAnimationState(string state)
-    {
-        if (currentstate == state)
-        {
+    public void ChangeAnimationState(string state){
+        if(currentstate == state){
             return;
         }
         currentstate = state;
-        _animator.CrossFadeInFixedTime(state, 0.1f);
+        _animator.CrossFadeInFixedTime(state , 0.1f);
         Debug.Log("Change state to" + state);
     }
-    public void OnUse()
-    {
-        if (battleInventory != null)
-        {
-            if (battleInventory.cardSelected == this.cardSO)
-            {
+    public void OnUse(){
+        if(battleInventory != null){
+            if(battleInventory.cardSelected == this.cardSO){
                 battleInventory.Use();
-            }
-            else
-            {
+            }else{
                 Debug.Log("battleInventory.cardSelected != this.cardSO");
             }
-        }
-        else
-        {
+        }else{
             Debug.Log("battleInventory = null");
         }
     }
