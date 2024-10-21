@@ -15,6 +15,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     [Header("Item Slot")]
     [SerializeField]
     private Image slotImage;
+    [SerializeField] private Image battleImage;
     [SerializeField] private Image slotImageOutline;
     [SerializeField] private TextMeshProUGUI slotValueText;
     [SerializeField] private Image slotType;
@@ -92,11 +93,13 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     public void UpdateDisplay()
     {
         if (cardSO != null)
-        {
-            slotImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
-            slotImageOutline.gameObject.SetActive(true);
+        {   
+            if(inventory != null)
+                slotImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
+                slotImageOutline.gameObject.SetActive(true);
             if (battleInventory != null)
             {
+                battleImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
                 float damage = cardSO._value;
                 switch (cardSO.cardType)
                 {
@@ -117,7 +120,9 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                         break;
                 }
             }
-            slotValueText.text = cardSO._value.ToString();
+            if(inventory != null){
+                slotValueText.text = cardSO._value.ToString();
+            }
             switch (cardSO.cardType)
             {
                 case CardType.ATK:
@@ -142,7 +147,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             slotImage.gameObject.SetActive(false);
             slotType.gameObject.SetActive(false);
             slotImageOutline.gameObject.SetActive(false);
-
+            battleImage.gameObject.SetActive(false);
         }
     }
     #region Selected/Deselected Slot
@@ -311,7 +316,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         }
     }
     #endregion
-
+    #region Animation
     public void ChangeAnimationState(string state)
     {
         if (currentstate == state)
@@ -322,6 +327,17 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         _animator.CrossFadeInFixedTime(state, 0.1f);
         Debug.Log("Change state to" + state);
     }
+    public void ChangeAnimationState(string state , float time)
+    {
+        if (currentstate == state)
+        {
+            return;
+        }
+        currentstate = state;
+        _animator.CrossFadeInFixedTime(state, time);
+        Debug.Log("Change state to" + state);
+    }
+    #endregion
     public void OnUse()
     {
         if (battleInventory != null)
@@ -343,10 +359,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ChangeAnimationState(HOVER);
+        ChangeAnimationState(HOVER , 0.5f);
     }
 
     public void OnPointerExit(PointerEventData eventData){
-        ChangeAnimationState(NORMAL);
+        ChangeAnimationState(NORMAL , 0.5f);
     }
 }
