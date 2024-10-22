@@ -66,6 +66,7 @@ public abstract class EnemyModel : CharacterBase
     {
         target.TakeDamage(AttackPower);
     }
+
     public static List<EnemyAttackInfo> AttackPlayer(List<EnemyModel> enemyModels, PlayerModel player,int shieldProp,int healProp,BattleController battleController)
     {
         bool shieldUsed = false;

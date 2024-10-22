@@ -5,6 +5,11 @@ using System.Collections.Generic;
 
 public class EnemyUIManager : UIManager
 {
+    public static EnemyUIManager Instance { get; private set;}
+    void Awake()
+    {
+        if(Instance == null){Instance=this;}
+    }
     public List<Transform> enemySlots;
     public TextMeshProUGUI waveText;
     public List<SpriteRenderer> spriteRenderers;
@@ -54,6 +59,11 @@ public class EnemyUIManager : UIManager
             TextMeshProUGUI healthText = healthSlider.GetComponentInChildren<TextMeshProUGUI>();
             healthSlider.value = enemies[i].Health;
             shieldSlider.value = enemies[i].Shield;
+            if(enemies[i].IsAlive() && healthText.text!=enemies[i].Health.ToString())
+            {
+                ShakeAndFlashRed(spriteRenderers[i].color,spriteRenderers[i].gameObject);
+            }
+
             healthText.text = enemies[i].Health.ToString();
         }
     }
@@ -70,9 +80,9 @@ public class EnemyUIManager : UIManager
         }
     }
 
-    public void ShakeAndFlashRed(GameObject enemyGameobject, float shakeDuration = 1f, float shakeAmount = 1f)
+    public override void ShakeAndFlashRed(Color objColor,GameObject enemyGameobject=null, float shakeDuration = .8f, float shakeAmount = .5f)
     {
         StartCoroutine(ShakeImage(enemyGameobject.transform, shakeDuration, shakeAmount));
-        StartCoroutine(FlashRed(enemyGameobject.GetComponentInChildren<Image>(), 0.5f));
+        StartCoroutine(FlashRed(objColor, enemyGameobject.GetComponentInChildren<SpriteRenderer>(), 0.5f));
     }
 }

@@ -27,9 +27,8 @@ public class UIManager : MonoBehaviour
     }
 
     // Flash an image to red and then back to its original color
-    protected IEnumerator FlashRed(SpriteRenderer spriteRenderer, float duration)
+    protected IEnumerator FlashRed(Color originalColor, SpriteRenderer spriteRenderer, float duration)
     {
-        Color originalColor = spriteRenderer.color;
         spriteRenderer.color = Color.red;
 
         yield return new WaitForSeconds(duration);
@@ -37,13 +36,16 @@ public class UIManager : MonoBehaviour
         spriteRenderer.color = originalColor;
     }
 
-    protected IEnumerator FlashRed(Image image, float duration)
-    {
-        Color originalColor = image.color;
-        image.color = Color.red;
+    // protected IEnumerator FlashRed(Image image, float duration)
+    // {
+    //     Color originalColor = image.color;
+    //     image.color = Color.red;
 
-        yield return new WaitForSeconds(duration);
+    //     yield return new WaitForSeconds(duration);
 
-        image.color = originalColor;
-    }
+    //     image.color = originalColor;
+    // }
+
+    public virtual void ShakeAndFlashRed(Color objColor,GameObject obj=null, float shakeDuration = .8f, float shakeAmount = .5f){}
+    
 }

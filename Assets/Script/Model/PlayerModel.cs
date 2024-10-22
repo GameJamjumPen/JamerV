@@ -8,6 +8,11 @@ public class PlayerModel : CharacterBase
     {
         target.TakeDamage(AttackPower);
     }
+
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+    }
     public void attackAll(List<CharacterBase> target){
         foreach(ICharacter tar in target){
             tar.TakeDamage(AttackPower);

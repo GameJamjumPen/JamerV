@@ -23,7 +23,7 @@ public abstract class CharacterBase : ICharacter
     {
         return Health > 0;
     }
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         if (Shield > 0)
         {

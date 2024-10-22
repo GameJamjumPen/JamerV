@@ -352,15 +352,6 @@ public class BattleController : MonoBehaviour
                 return FishSprites[0]; // Default fallback sprite
         }
     }
-    // void ShowCurrentTurn()
-    // {
-    //     if (isPlayerTurn)
-    //     {
-    //         ShowTurn.text = "Player Turn !";
-    //         return;
-    //     }
-    //     ShowTurn.text = "Enemy Turn !";
-    // }
 }
 
 public enum Turn

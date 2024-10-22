@@ -4,6 +4,12 @@ using UnityEngine.UI;
 
 public class PlayerUIManager : UIManager
 {
+    public static PlayerUIManager Instance { get; private set;}
+    void Awake()
+    {
+        if(Instance == null){Instance=this;}
+    }
+
     public TextMeshProUGUI playerNameText;
     public TextMeshProUGUI healthText;
     public Slider playerHealthSlider;
@@ -27,13 +33,17 @@ public class PlayerUIManager : UIManager
     {
         playerHealthSlider.value = player.Health;
         playerShieldSlider.value = player.Shield;
+        if(healthText.text!=player.Health.ToString())
+            {
+                ShakeAndFlashRed(playerSpriteRenderer.color);
+            }
         healthText.text = player.Health.ToString();
     }
 
-    public void ShakeAndFlashRed(float shakeDuration = 1f, float shakeAmount = 1f)
+    public override void ShakeAndFlashRed(Color objColor,GameObject obj=null,float shakeDuration = .8f, float shakeAmount = .5f)
     {
         StartCoroutine(ShakeImage(playerSpriteRenderer.transform, shakeDuration, shakeAmount));
-        StartCoroutine(FlashRed(playerSpriteRenderer, 0.5f));
+        StartCoroutine(FlashRed(objColor,playerSpriteRenderer, 0.5f));
     }
 
     public void AttackAnimate()
