@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 {
     [Header("tutorials")]
     public GameObject tutorial;
+    public GameObject cardTutorial;
 
     public List<string> scenes;
     public List<int> wentRoom { get; private set; }
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
-        if(!PlayerPrefs.HasKey("dice"))
+        if(!PlayerPrefs.HasKey(tutorial.gameObject.name))
         {
             tutorial.SetActive(true);
         }
@@ -121,6 +122,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
         { //no item in inventory slot
             if (!inventory.inv.activeSelf && !selectedRoom.Treasure)
             {
+                if(!PlayerPrefs.HasKey(cardTutorial.gameObject.name))
+                {
+                    cardTutorial.SetActive(true);
+                }
+                
                 inventory.inv.SetActive(true);
                 bar.SetActive(true);
                 lockIn.SetActive(true);
