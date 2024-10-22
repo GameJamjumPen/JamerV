@@ -58,17 +58,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             slotType.transform.position = slotTypePos.position;
         }
     }
+    void Start(){
+        UpdateDisplay();
+    }
     #region Add/Remove Item
     public void AddItem(CardSO cardSO)
     {
-        if (inventory != null)
-        {
-            slotImage.gameObject.SetActive(true);
-        }
-        if (battleInventory != null)
-        {
-            battleImage.gameObject.SetActive(true);
-        }
         slotType.gameObject.SetActive(true);
         this.cardSO = cardSO;
         isFull = true;
@@ -109,12 +104,16 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     {
         if (cardSO != null)
         {
-            if (inventory != null)
+            if (inventory != null){
                 slotImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
-            slotImageOutline.gameObject.SetActive(true);
+                slotImage.gameObject.SetActive(true);
+                slotImageOutline.gameObject.SetActive(true);
+                slotValueText.text = cardSO._value.ToString();
+            }
             if (battleInventory != null)
             {
                 battleImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
+                battleImage.gameObject.SetActive(true);
                 bIOutline.gameObject.SetActive(true);
                 float damage = cardSO._value;
                 switch (cardSO.cardType)
@@ -135,10 +134,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                         slotValueText.text = ((int)(damage * (1 + (battleInventory.heals * 0.2)))).ToString();
                         break;
                 }
-            }
-            if (inventory != null)
-            {
-                slotValueText.text = cardSO._value.ToString();
             }
             switch (cardSO.cardType)
             {
@@ -269,7 +264,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             if (!isSelected) return;
             else
             {
-                if (cardSO != null)
+                if (cardSO != null && cardSO.cardType == CardType.ATK)
                 {
                     parentAfterDrag = transform;
                     draggableItem.SetParent(transform.root);
