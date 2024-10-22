@@ -3,8 +3,10 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
+using System.Threading.Tasks;
 
-public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler , IPointerEnterHandler , IPointerExitHandler
+public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     //ITEM DATA//
     [Header("Data")]
@@ -34,6 +36,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
     public Transform beforeDragPos;
     public InventorySlot inventorySlot;
+    public EnemyHolder enemyHolder;
     Transform parentAfterDrag;
     public Transform draggableItem;
     [Header("Animation")]
@@ -50,17 +53,20 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         inventory = FindObjectOfType<Inventory>();
         battleInventory = FindObjectOfType<BattleInventory>();
         currentstate = NORMAL;
-        if(battleInventory != null){
+        if (battleInventory != null)
+        {
             slotType.transform.position = slotTypePos.position;
         }
     }
     #region Add/Remove Item
     public void AddItem(CardSO cardSO)
     {
-        if(inventory != null){
+        if (inventory != null)
+        {
             slotImage.gameObject.SetActive(true);
         }
-        if(battleInventory != null){
+        if (battleInventory != null)
+        {
             battleImage.gameObject.SetActive(true);
         }
         slotType.gameObject.SetActive(true);
@@ -102,10 +108,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     public void UpdateDisplay()
     {
         if (cardSO != null)
-        {   
-            if(inventory != null)
+        {
+            if (inventory != null)
                 slotImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
-                slotImageOutline.gameObject.SetActive(true);
+            slotImageOutline.gameObject.SetActive(true);
             if (battleInventory != null)
             {
                 battleImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
@@ -130,7 +136,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                         break;
                 }
             }
-            if(inventory != null){
+            if (inventory != null)
+            {
                 slotValueText.text = cardSO._value.ToString();
             }
             switch (cardSO.cardType)
@@ -257,6 +264,21 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             //ChangeAnimationState(DRAG  , slotImage.GetComponent<Animator>());
             Debug.Log("Begin Drag");
         }
+        if (battleInventory != null)
+        {
+            if (!isSelected) return;
+            else
+            {
+                if (cardSO != null)
+                {
+                    parentAfterDrag = transform;
+                    draggableItem.SetParent(transform.root);
+                    draggableItem.SetAsLastSibling();
+                    bIOutline.gameObject.SetActive(false);
+                }
+                enemyHolder = null;
+            }
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -298,6 +320,44 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             }
             //Debug.Log("Dragging");
         }
+        if (battleInventory != null && cardSO != null)
+        {
+            if (cardSO.cardType == CardType.ATK)
+            {
+                if (!isSelected)
+                {
+                    return;
+                }
+                else
+                {
+                    ChangeAnimationState(DRAG);
+                    battleImage.transform.position = Input.mousePosition;
+                }
+                // List to hold all raycast hits
+                List<RaycastResult> results = new List<RaycastResult>();
+
+                // Raycast for UI elements under the mouse
+                EventSystem.current.RaycastAll(eventData, results);
+
+                // Iterate through the results to find an InventorySlot component
+                foreach (RaycastResult result in results)
+                {
+                    // Try to get the InventorySlot component on the hit object;
+                    EnemyHolder holder;
+                    if (result.gameObject.TryGetComponent<EnemyHolder>(out holder))
+                    {
+                        // If the InventorySlot component is found, assign it and break
+                        enemyHolder = holder;
+                        Debug.Log("enemyHolder found: " + enemyHolder);
+                        break;
+                    }
+                }
+                if (enemyHolder == null)
+                {
+                    Debug.Log("No enemyHolder found under mouse.");
+                }
+            }
+        }
     }
     public void OnEndDrag(PointerEventData eventData)
     {
@@ -325,6 +385,24 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             slotImage.transform.position = draggableItem.transform.position;
             UpdateDisplay();
         }
+        if (battleInventory != null)
+        {
+            if (!isSelected) return;
+            if (isSelected && cardSO != null)
+            {
+                if (cardSO.cardType == CardType.ATK)
+                {
+                    if (enemyHolder != null)
+                    {
+                        battleInventory.enemyHolder = enemyHolder;
+                        OnUse();
+                    }
+                }
+            }
+            draggableItem.SetParent(parentAfterDrag);
+            draggableItem.transform.position = beforeDragPos.transform.position;
+            battleImage.transform.position = draggableItem.transform.position;
+        }
     }
     #endregion
     #region Animation
@@ -338,7 +416,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         _animator.CrossFadeInFixedTime(state, 0.1f);
         Debug.Log("Change state to" + state);
     }
-    public void ChangeAnimationState(string state , float time)
+    public void ChangeAnimationState(string state, float time)
     {
         if (currentstate == state)
         {
@@ -370,10 +448,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ChangeAnimationState(HOVER , 0.5f);
+        ChangeAnimationState(HOVER, 0.5f);
     }
 
-    public void OnPointerExit(PointerEventData eventData){
-        ChangeAnimationState(NORMAL , 0.5f);
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ChangeAnimationState(NORMAL, 0.5f);
     }
 }
