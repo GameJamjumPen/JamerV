@@ -124,7 +124,7 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
                 c += 1;
             }
         }
-        if (c > 1)
+        if (c >= 1)
         {
             return true;
         }
@@ -199,6 +199,7 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
                     break;
             }
             playerUIManager.AttackAnimate();
+            SoundManager.Instance.PlaySFX("useCard");
             useSlot.OnDeselected(); //unselected
             useSlot.RemoveItem(); //remove card from itself
             useSlot = null; //destroy itself
