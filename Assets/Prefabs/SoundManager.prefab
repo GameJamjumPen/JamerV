@@ -333,7 +333,7 @@ MonoBehaviour:
   - name: PickCard3
     audioClip: {fileID: 8300000, guid: d368d0dbeb1db994bb88e2eac8c23cb8, type: 3}
   - name: useCard
-    audioClip: {fileID: 8300000, guid: 76c47af5d37c2134d86f610a50b41b06, type: 3}
+    audioClip: {fileID: 8300000, guid: ec321bf9e4a183f43b98623508d925e8, type: 3}
   - name: takeDamage
     audioClip: {fileID: 8300000, guid: 165eb3da97bee6048a697c1623a843b6, type: 3}
   musicSource: {fileID: 6289841908745599012}

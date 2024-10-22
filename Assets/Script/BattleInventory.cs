@@ -199,6 +199,7 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
                     break;
             }
             playerUIManager.AttackAnimate();
+            SoundManager.Instance.PlaySFX("useCard");
             useSlot.OnDeselected(); //unselected
             useSlot.RemoveItem(); //remove card from itself
             useSlot = null; //destroy itself
