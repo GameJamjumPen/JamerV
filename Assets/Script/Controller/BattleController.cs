@@ -4,6 +4,8 @@ using TMPro;
 using System.Collections;
 public class BattleController : MonoBehaviour
 {
+    public GameObject tutorial;
+
     [Header("Assignable")]
     public int shieldprop = 30;
     public int healprop = 10;
@@ -71,6 +73,14 @@ public class BattleController : MonoBehaviour
         score = Paper.Instance.score;
         background.sprite = Paper.Instance.sprite;
         // background.sprite = Paper.Instance.sprite;
+    }
+
+    void Start()
+    {
+        if(!PlayerPrefs.HasKey(tutorial.gameObject.name))
+        {
+            tutorial.SetActive(true);
+        }
     }
     
     public IEnumerator ChangeTurn(Turn newTurn)

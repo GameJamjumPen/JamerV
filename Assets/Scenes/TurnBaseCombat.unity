@@ -3315,6 +3315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00b79108f5fd40a5bec6dac7e7fbcad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorial: {fileID: 1154278181}
   shieldprop: 30
   healprop: 40
   enemyHolders:
@@ -4738,7 +4739,7 @@ GameObject:
   - component: {fileID: 1154278184}
   - component: {fileID: 1154278183}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: shuf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4776,6 +4777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c319364faaae0d47a48aad65014860d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Next: {fileID: 0}
 --- !u!114 &1154278184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5516,7 +5518,7 @@ GameObject:
   - component: {fileID: 1397732476}
   - component: {fileID: 1397732475}
   m_Layer: 5
-  m_Name: Image
+  m_Name: card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5554,6 +5556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c319364faaae0d47a48aad65014860d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Next: {fileID: 0}
 --- !u!114 &1397732476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9419,6 +9422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c319364faaae0d47a48aad65014860d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Next: {fileID: 0}
 --- !u!114 &8032018473404771191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9463,7 +9467,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7988192280734781212}
+      - m_Target: {fileID: 1154278183}
         m_TargetAssemblyTypeName: TutorialBtn, Assembly-CSharp
         m_MethodName: Press
         m_Mode: 1
@@ -9527,19 +9531,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TutorialBtn, Assembly-CSharp
-        m_MethodName: Press
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1397732475}
         m_TargetAssemblyTypeName: TutorialBtn, Assembly-CSharp
         m_MethodName: Press
         m_Mode: 1
