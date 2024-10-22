@@ -19,6 +19,11 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
     public float strength;
     public float defence;
     public float heals;
+
+    /// <summary>
+    /// Adds cards from a provided list to the cardSOPools list.
+    /// </summary>
+    /// <param name="cardSOList">List of cards to add.</param>
     public void getCard(List<CardSO> cardSOList)
     {
         foreach (CardSO cardSO in cardSOList)
@@ -26,12 +31,21 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
             cardSOPools.Add(cardSO);
         }
     }
+
+    /// <summary>
+    /// Randomly picks a card from the list and adds it to the inventory.
+    /// </summary>
+    /// <param name="cardSOList">List of cards to shuffle from.</param>
     public void Shuffle(List<CardSO> cardSOList)
     {
         int rand = Random.Range(0, cardSOList.Count);
         AddItem(cardSOList[rand]);
     }
 
+    /// <summary>
+    /// Adds a random selection of cards to the deck based on the given deck size.
+    /// </summary>
+    /// <param name="deckLength">The number of cards to add.</param>
     public void AddDeck(int deckLength)
     {
         for (int i = 0; i < deckLength; i++)
@@ -40,6 +54,9 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
         }
     }
 
+    /// <summary>
+    /// Initializes key references for enemy holders, UI managers, and the player, and adds cards from a singleton source to the pool.
+    /// </summary>
     public void Awake()
     {
         enemyHolders = FindObjectsOfType<EnemyHolder>();
@@ -49,6 +66,10 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
         getCard(Paper.Instance.cardSOs);
         // AddDeck(3);
     }
+
+    /// <summary>
+    /// Deselects all enemy holders.
+    /// </summary>
     public void DeselectedAllHolder()
     {
         for (int i = 0; i < enemyHolders.Length; i++)
@@ -57,6 +78,9 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
         }
     }
 
+    /// <summary>
+    /// Toggles the shuffle UI based on whether the slots are full or not.
+    /// </summary>
     public void Update()
     {
         if (!CheckFull(slotDisplay))
@@ -69,6 +93,10 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
         }
     }
 
+    /// <summary>
+    /// Adds a card to the first available slot in the inventory.
+    /// </summary>
+    /// <param name="_card">The card to add to the slot.</param>
     public void AddItem(CardSO _card)
     {
         for (int i = 0; i < slotDisplay.Length; i++)
@@ -81,6 +109,11 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
         }
     }
 
+    /// <summary>
+    /// Returns true if more than one slot is empty.
+    /// </summary>
+    /// <param name="slots">The array of slots to check.</param>
+    /// <returns>True if more than one slot is empty, otherwise false.</returns>
     public bool CheckFull(InventorySlot[] slots)
     {
         int c = 0;
@@ -88,14 +121,22 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
         {
             if (!slots[i].isFull)
             {
-                c+=1;
+                c += 1;
             }
         }
         if (c > 1)
-        { return true; }
-        else { return false; }
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
+    /// <summary>
+    /// Deselects all inventory slots.
+    /// </summary>
     public void DeselectedAllSlot()
     {
         foreach (InventorySlot inventorySlot in slotDisplay)
@@ -104,6 +145,9 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
         }
     }
 
+    /// <summary>
+    /// Executes the selected card’s action (attack, defend, heal, etc.) on the appropriate target based on the card type.
+    /// </summary>
     public void Use()
     {
         if (attackable)
@@ -127,8 +171,6 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
                         return; // Exit the function if no enemy is selected
                     }
                     CharacterBase.Attack((int)(damage * (1 + (strength * 0.2))), enemyHolder.enemyContain);
-                    Debug.Log(strength);
-                    Debug.Log((enemyHolder == null).ToString());
                     battleController.popUpUI.ShowDamage((int)(damage * (1 + (strength * 0.2))), enemyHolder.transform, battleController.attack);
                     this.enemyUIManager.UpdateUI(battleController.enemies);
                     enemyHolder.Deselected();
@@ -137,8 +179,6 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
                     for (int i = 0; i < enemyHolders.Length; i++)
                     {
                         enemyHolders[i].enemyContain.TakeDamage((int)(damage * (1 + (strength * 0.2))));
-                        Debug.Log(strength);
-                        Debug.Log((enemyHolder == null).ToString());
                         enemyHolder = enemyHolders[i];
                         battleController.popUpUI.ShowDamage((int)(damage * (1 + (strength * 0.2))), enemyHolder.transform, battleController.attack);
                         this.enemyUIManager.UpdateUI(battleController.enemies);
@@ -151,8 +191,6 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
                         return;
                     }
                     enemyHolder.enemyContain.TakeDamageHealth((int)(damage * (1 + (strength * 0.2))));
-                    Debug.Log(strength);
-                    Debug.Log((enemyHolder == null).ToString());
                     battleController.popUpUI.ShowDamage((int)(damage * (1 + (strength * 0.2))), enemyHolder.transform, battleController.attack);
                     this.enemyUIManager.UpdateUI(battleController.enemies);
                     enemyHolder.Deselected();
@@ -161,14 +199,12 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
                     break;
             }
             playerUIManager.AttackAnimate();
-            // Reset cardSelected and useSlot after use
             useSlot.OnDeselected(); //unselected
             useSlot.RemoveItem(); //remove card from itself
             useSlot = null; //destroy itself
             battleController.isPlayerTurn = false;
             battleController.StartCoroutine(battleController.ChangeTurn(Turn.PlayerAnim));
             attackable = false;
-            Debug.Log("Change Turn");
         }
         else
         {
@@ -176,6 +212,10 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
         }
     }
 
+    /// <summary>
+    /// Loads player attributes (strength, defense, heals) from saved data.
+    /// </summary>
+    /// <param name="data">The game data to load.</param>
     public void LoadData(GameData data)
     {
         strength = data.strength;
@@ -183,6 +223,10 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
         heals = data.heal;
     }
 
+    /// <summary>
+    /// Empty method, presumably for saving game data. (To be implemented)
+    /// </summary>
+    /// <param name="data">The game data to save.</param>
     public void SaveData(ref GameData data)
     {
     }
