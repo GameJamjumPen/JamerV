@@ -134,6 +134,7 @@ public class BattleController : MonoBehaviour
     }
     private IEnumerator HandleEnemyAnimations()
     {
+
         for (int i = 0; i < enemies.Count && i < enemyAttackInfos.Count; i++)
         {
             if (enemies[i].IsAlive() && enemyAttackInfos != null)
@@ -159,6 +160,8 @@ public class BattleController : MonoBehaviour
                 yield return new WaitForSeconds(0.3f);
             }
         }
+        playerUIManager.UpdatePlayerUI(player);
+        enemyUIManager.UpdateUI(enemies);   
     }
 
     private IEnumerator WaitforAnim(float second)
@@ -224,8 +227,7 @@ public class BattleController : MonoBehaviour
     {
         BattleModel.ResetShield(enemies);
         enemyAttackInfos = EnemyModel.AttackPlayer(enemies, player, shieldprop, healprop,this);
-        playerUIManager.UpdatePlayerUI(player);
-        enemyUIManager.UpdateUI(enemies);
+
         GameOver();
         isPlayerTurn = true;
         // ShowCurrentTurn();

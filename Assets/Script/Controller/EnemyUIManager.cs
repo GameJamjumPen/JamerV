@@ -59,7 +59,9 @@ public class EnemyUIManager : UIManager
             TextMeshProUGUI healthText = healthSlider.GetComponentInChildren<TextMeshProUGUI>();
             healthSlider.value = enemies[i].Health;
             shieldSlider.value = enemies[i].Shield;
-            if(enemies[i].IsAlive() && healthText.text!=enemies[i].Health.ToString())
+            float.TryParse(healthText.text, out float Thealth);
+            float.TryParse(enemies[i].Health.ToString(), out float Phealth);
+            if(enemies[i].IsAlive() && Thealth>Phealth)
             {
                 ShakeAndFlashRed(spriteRenderers[i].color,spriteRenderers[i].gameObject);
             }
