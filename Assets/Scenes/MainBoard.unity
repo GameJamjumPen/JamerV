@@ -499,6 +499,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5113680992477738676, guid: cc7a0e0761a9c1a44996047e3d768025, type: 3}
+      propertyPath: roomNumber
+      value: 
+      objectReference: {fileID: 1353479218}
     - target: {fileID: 7766764045490387466, guid: cc7a0e0761a9c1a44996047e3d768025, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.008
@@ -857,6 +861,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4659908327454891746, guid: 005bb9d5f0b6efa46bdf486e144e3442, type: 3}
+      propertyPath: roomNumber
+      value: 
+      objectReference: {fileID: 299093907}
     - target: {fileID: 5826241232798869134, guid: 005bb9d5f0b6efa46bdf486e144e3442, type: 3}
       propertyPath: m_Name
       value: medium (1) Variant
@@ -1250,6 +1258,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: easy Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4380491023313696387, guid: bd9bbacd1ba653b46b08a92ea95678fd, type: 3}
+      propertyPath: roomNumber
+      value: 
+      objectReference: {fileID: 1141921979}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4117,6 +4129,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 794608081290779918, guid: 2e5395975e3ba6d4fa43e42f44c289bb, type: 3}
+      propertyPath: roomNumber
+      value: 
+      objectReference: {fileID: 906782773}
     - target: {fileID: 8729766727049928828, guid: 2e5395975e3ba6d4fa43e42f44c289bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8889,6 +8905,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5305656854154388605, guid: 1152bf6f2e3d5744fb488a9a60c278cf, type: 3}
+      propertyPath: roomNumber
+      value: 
+      objectReference: {fileID: 877170887}
     - target: {fileID: 6775367859188459788, guid: 1152bf6f2e3d5744fb488a9a60c278cf, type: 3}
       propertyPath: m_Name
       value: easy (2) Variant
@@ -10487,6 +10507,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 125202329}
     m_Modifications:
+    - target: {fileID: 656128815551634522, guid: 4f786be9f04a8634e81e90525c8770a7, type: 3}
+      propertyPath: roomNumber
+      value: 
+      objectReference: {fileID: 125202328}
     - target: {fileID: 4578368661530881450, guid: 4f786be9f04a8634e81e90525c8770a7, type: 3}
       propertyPath: m_Name
       value: easy (3) Variant
@@ -10928,6 +10952,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 924689328}
     m_Modifications:
+    - target: {fileID: 1031456780405171103, guid: a875d166b25f05845b9d4e23c55e2d71, type: 3}
+      propertyPath: roomNumber
+      value: 
+      objectReference: {fileID: 924689327}
     - target: {fileID: 3247830086880559763, guid: a875d166b25f05845b9d4e23c55e2d71, type: 3}
       propertyPath: m_SortingOrder
       value: 5
@@ -11796,6 +11824,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8275013391602936065, guid: f6c5e33161eb0944999d7a0061958acd, type: 3}
+      propertyPath: roomNumber
+      value: 
+      objectReference: {fileID: 1873121610}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12177,6 +12209,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: medium Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 7040178284127708785, guid: ef06fff968c66c8458f243aa23aa4a1d, type: 3}
+      propertyPath: roomNumber
+      value: 
+      objectReference: {fileID: 516591638}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13196,6 +13232,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: easy (1) Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8665358928822254525, guid: 0ea0a753ae7dbf74d853a9ab7d137bc1, type: 3}
+      propertyPath: roomNumber
+      value: 
+      objectReference: {fileID: 895622045}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

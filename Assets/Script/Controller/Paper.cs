@@ -16,6 +16,7 @@ public class Paper : MonoBehaviour, IDataPersistence
     public bool isplayed = false;
     public List<CardSO> cardSOs;
     public Sprite sprite;
+    public List<List<EnemyType.Enemytype> > enemyTypes = new List<List<EnemyType.Enemytype> >();
     private void Awake()
     {
         Scene scene = SceneManager.GetActiveScene();

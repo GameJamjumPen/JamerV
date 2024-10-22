@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyType : MonoBehaviour
+public class EnemyType
 {
     public enum Enemytype{
         Fish,
@@ -12,5 +12,4 @@ public class EnemyType : MonoBehaviour
         Bee,
         Prince,
     }
-    public List<List<Enemytype>> enemyGrid = new List<List<Enemytype>>();
 }
