@@ -39,7 +39,14 @@ public class HostileRoom : Room
         Debug.Log("Size of gen" + sth.Count.ToString());
         return sth;
     }
-
+    private List<List<EnemyType.Enemytype>> GenerateEnemyWaves(EnemyType.Enemytype[] wave1)
+    {
+        List<List<EnemyType.Enemytype>> sth =  new List<List<EnemyType.Enemytype>> {
+            new List<EnemyType.Enemytype>(wave1), // First wave
+        };
+        Debug.Log("Size of gen" + sth.Count.ToString());
+        return sth;
+    }
     private void SetEnemyWaves()
     {
         int roomNum = int.Parse(roomNumber.name);
@@ -49,9 +56,7 @@ public class HostileRoom : Room
         {
             case 0:
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Knive, EnemyType.Enemytype.Folk },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Bee, EnemyType.Enemytype.Prince },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Folk, EnemyType.Enemytype.Knive, EnemyType.Enemytype.Spoon }
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Prince}
                 );
                 break;
             case 1:
