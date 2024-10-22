@@ -124,7 +124,7 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
                 c += 1;
             }
         }
-        if (c > 1)
+        if (c >= 1)
         {
             return true;
         }
