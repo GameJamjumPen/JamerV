@@ -38,6 +38,7 @@ public class PlayerUIManager : UIManager
         if(Thealth>Phealth)
             {
                 ShakeAndFlashRed(playerSpriteRenderer.color);
+                SoundManager.Instance.PlaySFX("takeDamage");
             }
         healthText.text = player.Health.ToString();
     }
