@@ -33,7 +33,9 @@ public class PlayerUIManager : UIManager
     {
         playerHealthSlider.value = player.Health;
         playerShieldSlider.value = player.Shield;
-        if(healthText.text!=player.Health.ToString())
+        float.TryParse(healthText.text, out float Thealth);
+        float.TryParse(player.Health.ToString(), out float Phealth);
+        if(Thealth>Phealth)
             {
                 ShakeAndFlashRed(playerSpriteRenderer.color);
             }
