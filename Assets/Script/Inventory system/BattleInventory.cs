@@ -63,7 +63,12 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
         enemyUIManager = battleController.enemyUIManager;
         playerUIManager = battleController.playerUIManager;
         player = battleController.player;
-        getCard(Paper.Instance.cardSOs);
+        if(!GodMode.Instance.isGod){
+            getCard(Paper.Instance.cardSOs);
+        }
+        else{
+            getCard(GodMode.Instance.godPools);
+        }
         // AddDeck(3);
     }
 
