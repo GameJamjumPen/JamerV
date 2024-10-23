@@ -49,9 +49,24 @@ public class GenerateEnemyWave : Singleton<GenerateEnemyWave>
 
         return wave;
     }
-    public void CreateEnemyWaves()
+    // New function to generate a wave of enemies
+    private List<List<EnemyType.Enemytype>> GenerateEnemyWaves(EnemyType.Enemytype[] wave1)
     {
-        enemyTypes = Paper.Instance.enemyTypes;
+        List<List<EnemyType.Enemytype>> sth =  new List<List<EnemyType.Enemytype>> {
+            new List<EnemyType.Enemytype>(wave1), // First wave
+        };
+        Debug.Log("Size of gen" + sth.Count.ToString());
+        return sth;
+    }
+    public void CreateEnemyWaves()
+    {   
+        if(!GodMode.Instance.isGod){ 
+            enemyTypes = Paper.Instance.enemyTypes;
+        }else{
+            enemyTypes = GenerateEnemyWaves(
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Prince}
+                );
+        }
         waves.Clear();
         Debug.Log(enemyTypes.Count.ToString());
         for (int i = 0; i < enemyTypes.Count; i++)
@@ -62,5 +77,6 @@ public class GenerateEnemyWave : Singleton<GenerateEnemyWave>
         Debug.Log("Waves Size? = " + waves.Count.ToString());
         Debug.Log("Enemy waves created!");
     }
+    
 
 }

@@ -82,6 +82,15 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
             enemyHolders[i].Deselected();
         }
     }
+    /// <summary>
+    /// This is for fake selected and not affecting any variable in enemy holder just show a selected shader only
+    /// </summary>
+    public void SelectedAllHolder(){
+        for (int i = 0; i < enemyHolders.Length; i++)
+        {
+            enemyHolders[i].FakeSelected();
+        }
+    }
 
     /// <summary>
     /// Toggles the shuffle UI based on whether the slots are full or not.
@@ -149,6 +158,8 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
             inventorySlot.OnDeselected();
         }
     }
+
+    
 
     /// <summary>
     /// Executes the selected card’s action (attack, defend, heal, etc.) on the appropriate target based on the card type.

@@ -38,4 +38,7 @@ public class EnemyHolder : MonoBehaviour ,IPointerClickHandler
             selectedShader.SetActive(false);
         }
     }
+    public void FakeSelected(){
+        selectedShader.SetActive(true);
+    }
 }

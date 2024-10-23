@@ -15,12 +15,12 @@ public class HostileRoom : Room
     public string combatScene;
     public void Awake(){
         SetEnemyWaves();
-        Debug.Log("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+       // Debug.Log("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
     }
     public override void OnPlayerAttack()
     {
         SetEnemyWaves();
-        Debug.Log("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+        //Debug.Log("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         Paper.Instance.SetScore(UnityEngine.Random.Range(minscore, maxscore));
         Paper.Instance.SetCard(GameManager.singleton.cardSOs);
         Paper.Instance.SetBackground(_background);

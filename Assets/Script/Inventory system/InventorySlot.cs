@@ -58,7 +58,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             slotType.transform.position = slotTypePos.position;
         }
     }
-    void Start(){
+    void Start()
+    {
         UpdateDisplay();
     }
     #region Add/Remove Item
@@ -104,7 +105,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     {
         if (cardSO != null)
         {
-            if (inventory != null){
+            if (inventory != null)
+            {
                 slotImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
                 slotImage.gameObject.SetActive(true);
                 slotImageOutline.gameObject.SetActive(true);
@@ -264,12 +266,15 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             if (!isSelected) return;
             else
             {
-                if (cardSO != null && cardSO.cardType == CardType.ATK)
+                if (cardSO != null)
                 {
-                    parentAfterDrag = transform;
-                    draggableItem.SetParent(transform.root);
-                    draggableItem.SetAsLastSibling();
-                    bIOutline.gameObject.SetActive(false);
+                    if (cardSO.cardType == CardType.ATK || cardSO.cardType == CardType.ATKV2|| cardSO.cardType == CardType.ATKV3)
+                    {
+                        parentAfterDrag = transform;
+                        draggableItem.SetParent(transform.root);
+                        draggableItem.SetAsLastSibling();
+                        bIOutline.gameObject.SetActive(false);
+                    }
                 }
                 enemyHolder = null;
             }
@@ -280,7 +285,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
     {
         if (inventory != null)
         {
-
             if (!isSelected)
             {
                 return;
@@ -290,34 +294,21 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                 ChangeAnimationState(DRAG);
                 slotImage.transform.position = Input.mousePosition;
             }
-            // List to hold all raycast hits
-            List<RaycastResult> results = new List<RaycastResult>();
 
-            // Raycast for UI elements under the mouse
-            EventSystem.current.RaycastAll(eventData, results);
-
-            // Iterate through the results to find an InventorySlot component
-            foreach (RaycastResult result in results)
+            // Use the generic method for InventorySlot
+            inventorySlot = GetComponentUnderMouse<InventorySlot>(eventData);
+            if (inventorySlot != null)
             {
-                // Try to get the InventorySlot component on the hit object;
-                InventorySlot slot;
-                if (result.gameObject.TryGetComponent<InventorySlot>(out slot))
-                {
-                    // If the InventorySlot component is found, assign it and break
-                    inventorySlot = slot;
-                    Debug.Log("InventorySlot found: " + inventorySlot);
-                    break;
-                }
+                Debug.Log("InventorySlot found: " + inventorySlot);
             }
-            if (inventorySlot == null)
+            else
             {
                 Debug.Log("No InventorySlot found under mouse.");
             }
-            //Debug.Log("Dragging");
         }
         if (battleInventory != null && cardSO != null)
         {
-            if (cardSO.cardType == CardType.ATK)
+            if (cardSO.cardType == CardType.ATK || cardSO.cardType == CardType.ATKV2 || cardSO.cardType == CardType.ATKV3)
             {
                 if (!isSelected)
                 {
@@ -328,31 +319,48 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                     ChangeAnimationState(DRAG);
                     battleImage.transform.position = Input.mousePosition;
                 }
-                // List to hold all raycast hits
-                List<RaycastResult> results = new List<RaycastResult>();
 
-                // Raycast for UI elements under the mouse
-                EventSystem.current.RaycastAll(eventData, results);
+                // Use the generic method for EnemyHolder
+                enemyHolder = GetComponentUnderMouse<EnemyHolder>(eventData);
 
-                // Iterate through the results to find an InventorySlot component
-                foreach (RaycastResult result in results)
+                if (enemyHolder != null)
                 {
-                    // Try to get the InventorySlot component on the hit object;
-                    EnemyHolder holder;
-                    if (result.gameObject.TryGetComponent<EnemyHolder>(out holder))
-                    {
-                        // If the InventorySlot component is found, assign it and break
-                        enemyHolder = holder;
-                        Debug.Log("enemyHolder found: " + enemyHolder);
-                        break;
+                    Debug.Log("enemyHolder found: " + enemyHolder);
+                    if(cardSO.cardType != CardType.ATKV2){                        
+                    battleInventory.enemyHolder = enemyHolder;
+                    battleInventory.enemyHolder.Selected();
+                    }else{
+                        battleInventory.SelectedAllHolder();
                     }
                 }
-                if (enemyHolder == null)
+                else
                 {
                     Debug.Log("No enemyHolder found under mouse.");
+                    battleInventory.enemyHolder = null;
+                    battleInventory.DeselectedAllHolder();
                 }
             }
         }
+    }
+
+    // Add this generic method to your class
+    private T GetComponentUnderMouse<T>(PointerEventData eventData) where T : Component
+    {
+        List<RaycastResult> results = new List<RaycastResult>();
+
+        // Raycast for UI elements under the mouse
+        EventSystem.current.RaycastAll(eventData, results);
+
+        // Iterate through the results to find the component of type T
+        foreach (RaycastResult result in results)
+        {
+            T component = result.gameObject.GetComponent<T>();
+            if (component != null)
+            {
+                return component;
+            }
+        }
+        return null;
     }
     public void OnEndDrag(PointerEventData eventData)
     {
@@ -385,18 +393,25 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             if (!isSelected) return;
             if (isSelected && cardSO != null)
             {
-                if (cardSO.cardType == CardType.ATK)
+                if (cardSO.cardType == CardType.ATK || cardSO.cardType == CardType.ATKV2|| cardSO.cardType == CardType.ATKV3)
                 {
                     if (enemyHolder != null)
                     {
-                        battleInventory.enemyHolder = enemyHolder;
+                        // battleInventory.enemyHolder = enemyHolder;
+                        bIOutline.gameObject.SetActive(true);
                         OnUse();
+                        battleInventory.enemyHolder = null;
                     }
+                    else
+                    {
+                        bIOutline.gameObject.SetActive(true);
+                    }
+                    draggableItem.SetParent(parentAfterDrag);
+                    draggableItem.transform.position = beforeDragPos.transform.position;
+                    battleImage.transform.position = draggableItem.transform.position;
                 }
             }
-            draggableItem.SetParent(parentAfterDrag);
-            draggableItem.transform.position = beforeDragPos.transform.position;
-            battleImage.transform.position = draggableItem.transform.position;
+
         }
     }
     #endregion

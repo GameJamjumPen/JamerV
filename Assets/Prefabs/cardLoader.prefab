@@ -45,22 +45,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteNames:
+  - ChessPiece
   - Cupid
-  - FlashLight
+  - Flashlight
   - Jello
-  - JellyFish
-  - Perfume
-  - Rose
-  - Cheese
+  - Jellyfish
   - Juice
+  - Perfume
+  - Princess
+  - Roses
+  - Shellfish
+  - SigmaCheese
   - Tea
+  - SigmaATK
+  - SigmaDEF
+  - SigmaSUP
   spritesList:
+  - {fileID: 21300000, guid: fc49214418339ce429b2f29784351c9b, type: 3}
   - {fileID: 21300000, guid: c0f413329b4e5c04eb3e63c67980c081, type: 3}
   - {fileID: 21300000, guid: fb0ca2d6a9e6703448ac8d7550cd8fcf, type: 3}
   - {fileID: 21300000, guid: b00e4dc8bdae97e4996d776e0ad9cbe5, type: 3}
   - {fileID: 21300000, guid: c5dbef17acc187a4b9b1e72fe2b98e9e, type: 3}
-  - {fileID: 21300000, guid: 51ed2a1876c0172448c4b8ec6d5008b5, type: 3}
-  - {fileID: 21300000, guid: 665ec8847c8ff16428022fa6c393f032, type: 3}
-  - {fileID: 21300000, guid: 0627daaeeb4134ac68d7ed9025062246, type: 3}
   - {fileID: 21300000, guid: eb74ce84aac79a341ad6264f8a86151f, type: 3}
+  - {fileID: 21300000, guid: 51ed2a1876c0172448c4b8ec6d5008b5, type: 3}
+  - {fileID: 21300000, guid: 1232e25a49c1aaf4db197417e19126ff, type: 3}
+  - {fileID: 21300000, guid: 665ec8847c8ff16428022fa6c393f032, type: 3}
+  - {fileID: 21300000, guid: 99c9a97c9a65c3a43a9e8fcbac2913da, type: 3}
+  - {fileID: 21300000, guid: 0627daaeeb4134ac68d7ed9025062246, type: 3}
   - {fileID: 21300000, guid: 27c39df0e2757d44f9693c5ab9b9f010, type: 3}
+  - {fileID: 21300000, guid: 0627daaeeb4134ac68d7ed9025062246, type: 3}
+  - {fileID: 21300000, guid: 0627daaeeb4134ac68d7ed9025062246, type: 3}
+  - {fileID: 21300000, guid: 0627daaeeb4134ac68d7ed9025062246, type: 3}

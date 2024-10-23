@@ -69,10 +69,12 @@ public class BattleController : MonoBehaviour
         NewWave();
         isPlayerTurn = true;
         StartCoroutine(ChangeTurn(Turn.PlayerAttack));
+        if(!GodMode.Instance.isGod){
         SoundManager.Instance.PlayMusic(Paper.Instance.sceneName);
         score = Paper.Instance.score;
         background.sprite = Paper.Instance.sprite;
         // background.sprite = Paper.Instance.sprite;
+        }
     }
 
     void Start()
