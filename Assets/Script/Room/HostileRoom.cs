@@ -54,86 +54,72 @@ public class HostileRoom : Room
         // Switch case for specific room numbers
         switch (roomNum)
         {
-            case 0:
+            case 1: //boss
                 enemyTypes = GenerateEnemyWaves(
                     new EnemyType.Enemytype[] { EnemyType.Enemytype.Prince}
                 );
                 break;
-            case 1:
+            case 3: //hard
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Prince, EnemyType.Enemytype.Fish },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Bee, EnemyType.Enemytype.Knive },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Folk, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Prince }
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee,EnemyType.Enemytype.Bee,EnemyType.Enemytype.Bee},
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee},
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee}
                 );
                 break;
-            case 3:
+            case 4: //easy
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Knive, EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Bee },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Folk, EnemyType.Enemytype.Prince, EnemyType.Enemytype.Knive },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Spoon }
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish},
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish},
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish }
                 );
                 break;
-            case 4:
+            case 5: //medium
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Prince, EnemyType.Enemytype.Folk, EnemyType.Enemytype.Bee },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Knive },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Folk, EnemyType.Enemytype.Prince }
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Folk, EnemyType.Enemytype.Knive, EnemyType.Enemytype.Spoon },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Knive, EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Spoon },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Knive, EnemyType.Enemytype.Spoon }
                 );
                 break;
-            case 5:
+            case 8: //Hard
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Folk, EnemyType.Enemytype.Knive, EnemyType.Enemytype.Fish },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Prince, EnemyType.Enemytype.Spoon },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Knive, EnemyType.Enemytype.Bee }
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee},
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee},
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee}
                 );
                 break;
-            case 8:
-                enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Folk, EnemyType.Enemytype.Knive, EnemyType.Enemytype.Fish },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Prince, EnemyType.Enemytype.Spoon },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Knive, EnemyType.Enemytype.Bee }
-                );
-                break;
-            case 17:
+            case 17: //medium
                 enemyTypes = GenerateEnemyWaves(
                     new EnemyType.Enemytype[] { EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Prince, EnemyType.Enemytype.Folk },
                     new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Bee, EnemyType.Enemytype.Knive },
                     new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Prince, EnemyType.Enemytype.Fish }
                 );
                 break;
-            case 15:
+            case 15: //easy
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Knive, EnemyType.Enemytype.Fish },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Folk, EnemyType.Enemytype.Prince, EnemyType.Enemytype.Spoon },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Knive, EnemyType.Enemytype.Folk, EnemyType.Enemytype.Bee }
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish},
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish }
                 );
                 break;
-            case 16:
+            case 16: //easy
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Bee, EnemyType.Enemytype.Spoon },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Knive, EnemyType.Enemytype.Prince, EnemyType.Enemytype.Folk },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Bee, EnemyType.Enemytype.Fish }
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish }
                 );
                 break;
-            case 20:
+            case 20: //easy
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Prince, EnemyType.Enemytype.Knive, EnemyType.Enemytype.Bee },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Folk },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Prince, EnemyType.Enemytype.Spoon }
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish},
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish }
                 );
                 break;
-            case 19:
+            case 19: //medium
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Knive, EnemyType.Enemytype.Bee, EnemyType.Enemytype.Folk },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Prince },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Folk, EnemyType.Enemytype.Spoon }
-                );
-                break;
-            case 18:
-                enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Knive, EnemyType.Enemytype.Bee, EnemyType.Enemytype.Folk },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Prince },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Folk, EnemyType.Enemytype.Spoon }
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Knive, EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Folk },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Knive, EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Folk },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Folk, EnemyType.Enemytype.Spoon }
                 );
                 break;
             default:
