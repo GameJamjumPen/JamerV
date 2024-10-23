@@ -66,13 +66,6 @@ public class HostileRoom : Room
                     new EnemyType.Enemytype[] { EnemyType.Enemytype.Folk, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Prince }
                 );
                 break;
-            case 2:
-                enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Prince, EnemyType.Enemytype.Fish },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Bee, EnemyType.Enemytype.Knive },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Folk, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Prince }
-                );
-                break;
             case 3:
                 enemyTypes = GenerateEnemyWaves(
                     new EnemyType.Enemytype[] { EnemyType.Enemytype.Knive, EnemyType.Enemytype.Spoon, EnemyType.Enemytype.Bee },
