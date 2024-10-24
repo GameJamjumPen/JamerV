@@ -50,10 +50,12 @@ public class GenerateEnemyWave : Singleton<GenerateEnemyWave>
         return wave;
     }
     // New function to generate a wave of enemies
-    private List<List<EnemyType.Enemytype>> GenerateEnemyWaves(EnemyType.Enemytype[] wave1)
+    private List<List<EnemyType.Enemytype>> GenerateEnemyWaves(EnemyType.Enemytype[] wave1, EnemyType.Enemytype[] wave2, EnemyType.Enemytype[] wave3)
     {
         List<List<EnemyType.Enemytype>> sth =  new List<List<EnemyType.Enemytype>> {
             new List<EnemyType.Enemytype>(wave1), // First wave
+            new List<EnemyType.Enemytype>(wave2), // Second wave
+            new List<EnemyType.Enemytype>(wave3)  // Third wave
         };
         Debug.Log("Size of gen" + sth.Count.ToString());
         return sth;
@@ -64,6 +66,8 @@ public class GenerateEnemyWave : Singleton<GenerateEnemyWave>
             enemyTypes = Paper.Instance.enemyTypes;
         }else{
             enemyTypes = GenerateEnemyWaves(
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Prince},
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Prince},
                     new EnemyType.Enemytype[] { EnemyType.Enemytype.Prince}
                 );
         }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: godATK
   m_EditorClassIdentifier: 
   _cardName: SigmaATK
-  cardType: 0
+  cardType: 3
   _value: 1000000
   cardDes: This House is Bitching
   animator: {fileID: 0}
