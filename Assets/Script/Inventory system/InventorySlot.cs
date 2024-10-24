@@ -171,12 +171,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         if (inventory != null)
         {
             inventory.DeselectedAllSlot();
+            selectedShader.SetActive(true);
         }
         if (battleInventory != null)
         {
             battleInventory.DeselectedAllSlot();
         }
-        selectedShader.SetActive(true);
         isSelected = true;
         string sound = " ";
         int rand = Random.Range(0, 3);
@@ -407,8 +407,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                         bIOutline.gameObject.SetActive(true);
                     }
                     draggableItem.SetParent(parentAfterDrag);
+                    draggableItem.SetAsFirstSibling();
                     draggableItem.transform.position = beforeDragPos.transform.position;
                     battleImage.transform.position = draggableItem.transform.position;
+                    UpdateDisplay();
                 }
             }
 
@@ -463,6 +465,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        ChangeAnimationState(NORMAL, 0.5f);
+        if(!isSelected){
+            ChangeAnimationState(NORMAL, 0.5f);
+        }else{
+            ChangeAnimationState(SELECTED , 0.1f);
+        }
     }
 }
