@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public GameObject tutorial;
     public GameObject cardTutorial;
 
+    public Collider2D dice;
     public List<string> scenes;
     public List<int> wentRoom { get; private set; }
     public int currentRoom;
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     [Header("Inventory Related")]
     public Room selectedRoom;
     public Inventory inventory;
+    public GameObject WarningButton;
     [Tooltip("Card to give to paper instance")]
     public CardSO[] cardSOs;
     public GameObject lockIn;
@@ -45,9 +47,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void Debugger(string a)
+    public void DiceAllow()
     {
-        Debug.Log(a);
+        dice.enabled = true;
     }
 
     public void LoadData(GameData data)
@@ -153,6 +155,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             
             Debug.Log("make all various Type");
+            WarningButton.SetActive(true);
             return;
         }
         GetPureCardSOfromArr();

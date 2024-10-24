@@ -113,7 +113,7 @@ public class BattleController : MonoBehaviour
             case Turn.EnemyThink:
                 Debug.Log("Enemy's Thinking Turn");
                 ShowTurn.text = "Enemy Turn !";
-                yield return StartCoroutine(WaitforDebug(1f)); // Coroutine waiting
+                yield return StartCoroutine(WaitforDebug(.3f)); // Coroutine waiting
                 StartCoroutine(ChangeTurn(Turn.Enemyattack));
                 break;
             case Turn.Enemyattack:
@@ -233,7 +233,7 @@ public class BattleController : MonoBehaviour
         GameOver();
         isPlayerTurn = true;
         // ShowCurrentTurn();
-        yield return new WaitForSeconds(1f); // Add delay before continuing
+        yield return new WaitForSeconds(.5f); // Add delay before continuing
         StartCoroutine(ChangeTurn(Turn.EnemyAnim));
     }
 

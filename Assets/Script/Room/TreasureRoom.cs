@@ -4,14 +4,19 @@ public class TreasureRoom : Room
 {
     //reward
     public CardSO _cardReward;
+    private GameObject inventoryObj;
 
     void Awake()
     {
         Treasure = true;
+        inventoryObj = GameObject.FindGameObjectWithTag("inventory");
     }
 
     public override void OnPlayerAttack()
     {
+        if(inventoryObj.activeSelf)
+        {inventoryObj.SetActive(false);}
+
         Inventory inventory = FindObjectOfType<Inventory>();
         SoundManager.Instance.PlaySFX("GetCard");
         Paper.Instance.SetSceneName("treasure");

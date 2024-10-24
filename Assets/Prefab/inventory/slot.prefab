@@ -432,6 +432,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 31820fe93ef735d40b987534e73d2a29, type: 3}
   beforeDragPos: {fileID: 3924812108834148568}
   inventorySlot: {fileID: 0}
+  enemyHolder: {fileID: 0}
   draggableItem: {fileID: 3424941520075928110}
   _animator: {fileID: 3211817388852594081}
   isBar: 0

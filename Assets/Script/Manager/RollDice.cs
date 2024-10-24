@@ -7,7 +7,7 @@ public class RollDice : MonoBehaviour
     public List<int> thiswentRoom;
     public Animator animator;
     public TMP_Text rolledTextUI;
-    private bool canRoll;
+    [SerializeField] private bool canRoll;
     private int rolledRoom;
     private void Start()
     {

@@ -53,6 +53,7 @@ MonoBehaviour:
   thiswentRoom: 
   animator: {fileID: 0}
   rolledTextUI: {fileID: 0}
+  canRoll: 0
 --- !u!114 &1129693709579419506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,16 +114,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   StarterPack:
-  - {fileID: 11400000, guid: 2919d37e997d754438311a6e24512933, type: 2}
-  - {fileID: 11400000, guid: e2d71adb67ca2e04490224e09d62fa82, type: 2}
-  - {fileID: 11400000, guid: f1690fceb56f23346a392bf8adc108b3, type: 2}
-  - {fileID: 11400000, guid: 5db3639a482a87340962b330bb1308ef, type: 2}
-  - {fileID: 11400000, guid: efab52740acff584f95c5c7764499892, type: 2}
+  - {fileID: 11400000, guid: f56e61f2285d84c41b6994d0e12e08b4, type: 2}
+  - {fileID: 11400000, guid: 5958709b545ef144e91c67fd2a7a01bd, type: 2}
   image: {fileID: 0}
   cardName: {fileID: 0}
   cardImage: {fileID: 0}
   cardType: {fileID: 0}
   cardStat: {fileID: 0}
+  cardDes: {fileID: 0}
   types:
   - {fileID: 21300000, guid: 312d122717245d84b9b2e98f70c09845, type: 3}
   - {fileID: 21300000, guid: f3ca159e614fe9243a74800bf7ac75d2, type: 3}
@@ -139,6 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc7688d7dc8af6047948b5e554e08eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorial: {fileID: 0}
+  cardTutorial: {fileID: 0}
   scenes: []
   currentRoom: 0
   allrooms:
@@ -164,6 +165,7 @@ MonoBehaviour:
   - {fileID: 0}
   selectedRoom: {fileID: 0}
   inventory: {fileID: 1129693709579419506}
+  WarningButton: {fileID: 0}
   cardSOs: []
   lockIn: {fileID: 0}
   bar: {fileID: 0}
@@ -229,6 +231,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   life: 0
-  heart: {fileID: 21300000, guid: d00d21feaee13564eb9d6fc5610c2b72, type: 3}
-  noheart: {fileID: 21300000, guid: 23a4174f24f71b04fb584de77386f120, type: 3}
+  heart: {fileID: 1792996478, guid: de309e9b2016c6c4aa1e9d7a2f9331d7, type: 3}
+  noheart: {fileID: -925995680, guid: 514a2cbf9c7d9a449940f6e732b8659b, type: 3}
   playerManager: {fileID: 456975048583834433}

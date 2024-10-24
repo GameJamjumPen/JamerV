@@ -170,7 +170,7 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
             {
                 continue;
             }
-            if (slots[i].cardSO.cardType == CardType.ATK)
+            if (slots[i].cardSO.cardType == CardType.ATK || slots[i].cardSO.cardType == CardType.ATKV2 || slots[i].cardSO.cardType == CardType.ATKV3)
             {
                 ATKalr = true;
             }
