@@ -16,6 +16,7 @@ public class RollDice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private static string HOVER = "OnMouseHover";
     private static string PRESS = "OnMousePress";
     private static string NORMAL = "Idle";
+    private static string ROLL = "dice";
 
     private void Start()
     {
@@ -51,7 +52,7 @@ public class RollDice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (canRoll)
         {
             ChangeAnimationState(PRESS , 0.00001f);
-            animator.SetTrigger("roll");
+            ChangeAnimationState(ROLL, 0.00001f);
             SoundManager.Instance.PlaySFX("Dice");
             canRoll = false;
             isRolling = true; // Set the rolling flag when rolling starts
