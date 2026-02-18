@@ -108,63 +108,65 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             if (inventory != null)
             {
                 slotImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
-                slotImage.gameObject.SetActive(true);
-                slotImageOutline.gameObject.SetActive(true);
+                ShowInventoryImages();
                 slotValueText.text = cardSO._value.ToString();
             }
             if (battleInventory != null)
             {
                 battleImage.sprite = cardLoader.Instance.sprites[cardSO._cardName];
-                battleImage.gameObject.SetActive(true);
-                bIOutline.gameObject.SetActive(true);
-                float damage = cardSO._value;
-                switch (cardSO.cardType)
-                {
-                    case CardType.ATK:
-                        slotValueText.text = ((int)(damage * (1 + (battleInventory.strength * 0.2)))).ToString();
-                        break;
-                    case CardType.ATKV2:
-                        slotValueText.text = ((int)(damage * (1 + (battleInventory.strength * 0.2)))).ToString();
-                        break;
-                    case CardType.ATKV3:
-                        slotValueText.text = ((int)(damage * (1 + (battleInventory.strength * 0.2)))).ToString();
-                        break;
-                    case CardType.DEF:
-                        slotValueText.text = ((int)(damage * (1 + (battleInventory.defence * 0.2)))).ToString();
-                        break;
-                    case CardType.SUP:
-                        slotValueText.text = ((int)(damage * (1 + (battleInventory.heals * 0.2)))).ToString();
-                        break;
-                }
+                ShowBattleImages();
             }
+
+            // Consolidated switch for both damage calculation and type sprite
+            float damage = cardSO._value;
             switch (cardSO.cardType)
             {
                 case CardType.ATK:
-                    slotType.sprite = types[0];
-                    break;
                 case CardType.ATKV2:
-                    slotType.sprite = types[0];
-                    break;
                 case CardType.ATKV3:
+                    if (battleInventory != null)
+                        slotValueText.text = ((int)(damage * (1 + (battleInventory.strength * 0.2)))).ToString();
                     slotType.sprite = types[0];
                     break;
                 case CardType.DEF:
+                    if (battleInventory != null)
+                        slotValueText.text = ((int)(damage * (1 + (battleInventory.defence * 0.2)))).ToString();
                     slotType.sprite = types[1];
                     break;
                 case CardType.SUP:
+                    if (battleInventory != null)
+                        slotValueText.text = ((int)(damage * (1 + (battleInventory.heals * 0.2)))).ToString();
                     slotType.sprite = types[2];
                     break;
             }
         }
         else
         {
-            slotImage.gameObject.SetActive(false);
-            slotType.gameObject.SetActive(false);
-            slotImageOutline.gameObject.SetActive(false);
-            battleImage.gameObject.SetActive(false);
-            bIOutline.gameObject.SetActive(false);
+            HideAllImages();
         }
     }
+
+    private void ShowInventoryImages()
+    {
+        slotImage.gameObject.SetActive(true);
+        slotImageOutline.gameObject.SetActive(true);
+    }
+
+    private void ShowBattleImages()
+    {
+        battleImage.gameObject.SetActive(true);
+        bIOutline.gameObject.SetActive(true);
+    }
+
+    private void HideAllImages()
+    {
+        slotImage.gameObject.SetActive(false);
+        slotType.gameObject.SetActive(false);
+        slotImageOutline.gameObject.SetActive(false);
+        battleImage.gameObject.SetActive(false);
+        bIOutline.gameObject.SetActive(false);
+    }
+
     #region Selected/Deselected Slot
     public void OnSelected()
     {
@@ -222,7 +224,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             }
             else
             {
-                Debug.Log("this.cardSO = null");
+                // Debug.Log("this.cardSO = null");
             }
         }
     }
@@ -259,7 +261,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
 
             //ChangeAnimationState(DRAG  , slotImage.GetComponent<Animator>());
-            Debug.Log("Begin Drag");
+            // Debug.Log("Begin Drag");
         }
         if (battleInventory != null)
         {
@@ -268,7 +270,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             {
                 if (cardSO != null)
                 {
-                    if (cardSO.cardType == CardType.ATK || cardSO.cardType == CardType.ATKV2|| cardSO.cardType == CardType.ATKV3)
+                    if (cardSO.cardType == CardType.ATK || cardSO.cardType == CardType.ATKV2 || cardSO.cardType == CardType.ATKV3)
                     {
                         parentAfterDrag = transform;
                         draggableItem.SetParent(transform.root);
@@ -297,14 +299,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
             // Use the generic method for InventorySlot
             inventorySlot = GetComponentUnderMouse<InventorySlot>(eventData);
-            if (inventorySlot != null)
-            {
-                Debug.Log("InventorySlot found: " + inventorySlot);
-            }
-            else
-            {
-                Debug.Log("No InventorySlot found under mouse.");
-            }
         }
         if (battleInventory != null && cardSO != null)
         {
@@ -325,17 +319,20 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
                 if (enemyHolder != null)
                 {
-                    Debug.Log("enemyHolder found: " + enemyHolder);
-                    if(cardSO.cardType != CardType.ATKV2){                        
-                    battleInventory.enemyHolder = enemyHolder;
-                    battleInventory.enemyHolder.Selected();
-                    }else{
+                    // Debug.Log("enemyHolder found: " + enemyHolder);
+                    if (cardSO.cardType != CardType.ATKV2)
+                    {
+                        battleInventory.enemyHolder = enemyHolder;
+                        battleInventory.enemyHolder.Selected();
+                    }
+                    else
+                    {
                         battleInventory.SelectedAllHolder();
                     }
                 }
                 else
                 {
-                    Debug.Log("No enemyHolder found under mouse.");
+                    // Debug.Log("No enemyHolder found under mouse.");
                     battleInventory.enemyHolder = null;
                     battleInventory.DeselectedAllHolder();
                 }
@@ -378,10 +375,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                     inventorySlot.AddItem(cardSO);
                     RemoveItem();
                     ChangeAnimationState(NORMAL);
-                    Debug.Log("Added");
+                    // Debug.Log("Added");
                 }
             }
-            Debug.Log("End Drag");
+            // Debug.Log("End Drag");
             //ChangeAnimationState(NORMAL  , slotImage.GetComponent<Animator>());
             draggableItem.SetParent(parentAfterDrag);
             draggableItem.transform.position = beforeDragPos.transform.position;
@@ -393,7 +390,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
             if (!isSelected) return;
             if (isSelected && cardSO != null)
             {
-                if (cardSO.cardType == CardType.ATK || cardSO.cardType == CardType.ATKV2|| cardSO.cardType == CardType.ATKV3)
+                if (cardSO.cardType == CardType.ATK || cardSO.cardType == CardType.ATKV2 || cardSO.cardType == CardType.ATKV3)
                 {
                     if (enemyHolder != null)
                     {
@@ -426,7 +423,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         }
         currentstate = state;
         _animator.CrossFadeInFixedTime(state, 0.1f);
-        Debug.Log("Change state to" + state);
+        // Debug.Log("Change state to" + state);
     }
     public void ChangeAnimationState(string state, float time)
     {
@@ -436,7 +433,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         }
         currentstate = state;
         _animator.CrossFadeInFixedTime(state, time);
-        Debug.Log("Change state to" + state);
+        // Debug.Log("Change state to" + state);
     }
     #endregion
     public void OnUse()
@@ -460,15 +457,18 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        ChangeAnimationState(HOVER, 0.5f);
+        ChangeAnimationState(HOVER, 0.01f);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(!isSelected){
-            ChangeAnimationState(NORMAL, 0.5f);
-        }else{
-            ChangeAnimationState(SELECTED , 0.1f);
+        if (!isSelected)
+        {
+            ChangeAnimationState(NORMAL, 0.01f);
+        }
+        else
+        {
+            ChangeAnimationState(SELECTED, 0.01f);
         }
     }
 }

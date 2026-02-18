@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
-        if(!PlayerPrefs.HasKey(tutorial.gameObject.name))
+        if (!PlayerPrefs.HasKey(tutorial.gameObject.name))
         {
             tutorial.SetActive(true);
         }
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     {
         this.currentRoom = data.currentRoom;
         this.wentRoom = Paper.Instance.wentRoom;
-        
+
         PlaceRooms(data.wentRoom);
 
     }
@@ -122,14 +122,14 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
         else
         { //no item in inventory slot
-            if (!inventory.inv.activeSelf && !selectedRoom.Treasure)
+            if (!inventory.invObject.activeSelf && !selectedRoom.Treasure)
             {
-                if(!PlayerPrefs.HasKey(cardTutorial.gameObject.name))
+                if (!PlayerPrefs.HasKey(cardTutorial.gameObject.name))
                 {
                     cardTutorial.SetActive(true);
                 }
-                
-                inventory.inv.SetActive(true);
+
+                inventory.invObject.SetActive(true);
                 bar.SetActive(true);
                 lockIn.SetActive(true);
                 inventory.istoggleable = false;
@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
         if (!inventory.CheckType(inventory.actualSlots, true, true, false))
         {
-            
+
             Debug.Log("make all various Type");
             WarningButton.SetActive(true);
             return;

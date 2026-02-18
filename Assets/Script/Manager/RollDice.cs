@@ -51,7 +51,7 @@ public class RollDice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if (canRoll)
         {
-            ChangeAnimationState(PRESS , 0.00001f);
+            ChangeAnimationState(PRESS, 0.00001f);
             ChangeAnimationState(ROLL, 0.00001f);
             SoundManager.Instance.PlaySFX("Dice");
             canRoll = false;
@@ -91,7 +91,7 @@ public class RollDice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         currentstate = state;
         animator.CrossFadeInFixedTime(state, 0.1f);
-        Debug.Log("Change state to " + state);
+        // Debug.Log("Change state to " + state);
     }
 
     public void ChangeAnimationState(string state, float time)
@@ -102,6 +102,6 @@ public class RollDice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         currentstate = state;
         animator.CrossFadeInFixedTime(state, time);
-        Debug.Log("Change state to " + state);
+        // Debug.Log("Change state to " + state);
     }
 }

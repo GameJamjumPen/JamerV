@@ -9,11 +9,8 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
     #region Declare Variable
     public KeyCode openCloseKey = KeyCode.Tab;
     public bool istoggleable;
-    public GameObject backPackSystem;
-    public GameObject pocketSystem;
-    public GameObject stats;
     public Collider2D dice;
-    public GameObject inv;
+    public GameObject invObject;
     public Image cardAddedTreasure;
     public GameObject newCardPopup;
 
@@ -24,8 +21,7 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
     public InventorySlot[] allSlots;
     public List<CardSO> StarterPack;
 
-    [Header("Display")]
-    public Image image;
+    [Header("Main Card Display")]
     public TextMeshProUGUI cardName;
     public Image cardImage;
     public Image cardType;
@@ -39,7 +35,7 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
     public void Awake()
     {
         istoggleable = true;
-        inv.SetActive(false);
+        invObject.SetActive(false);
     }
 
     public void LoadData(GameData data)
@@ -93,18 +89,17 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
     {
         if (istoggleable)
         {
+
             if (Input.GetKeyDown(openCloseKey))
             {
-                if (image.enabled)
+                if (invObject.gameObject.activeSelf)
                 {
-                    image.enabled = false;
-                    inv.SetActive(false);
+                    invObject.SetActive(false);
                     dice.enabled = true;
                 }
                 else
                 {
-                    image.enabled = true;
-                    inv.SetActive(true);
+                    invObject.SetActive(true);
                     dice.enabled = false;
                 }
             }
