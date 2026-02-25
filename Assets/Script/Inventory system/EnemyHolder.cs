@@ -1,44 +1,54 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-
-public class EnemyHolder : MonoBehaviour ,IPointerClickHandler
+/// <summary>
+/// Enemy slot with image holder supposed to be use when drag inventory slot that are in battle scene into it shouldn't be able to selected
+/// </summary>
+public class EnemyHolder : MonoBehaviour, IPointerClickHandler
 {
     public EnemyModel enemyContain;
     public bool isSelected;
     public BattleInventory battleInventory;
     public GameObject selectedShader;
 
-    public void Awake(){
+    public void Awake()
+    {
         battleInventory = FindObjectOfType<BattleInventory>();
     }
-    public void Deselected(){
+    public void Deselected()
+    {
         isSelected = false;
         DisplaySelected();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(eventData.button == PointerEventData.InputButton.Left){
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
             Selected();
         }
     }
 
-    public void Selected(){
+    public void Selected()
+    {
         battleInventory.DeselectedAllHolder();
         isSelected = true;
         battleInventory.enemyHolder = this;
         DisplaySelected();
         Debug.Log($"Selected with {enemyContain.Name}");
     }
-    public void DisplaySelected(){
-        if(isSelected){
+    public void DisplaySelected()
+    {
+        if (isSelected)
+        {
             selectedShader.SetActive(true);
         }
-        else{
+        else
+        {
             selectedShader.SetActive(false);
         }
     }
-    public void FakeSelected(){
+    public void FakeSelected()
+    {
         selectedShader.SetActive(true);
     }
 }

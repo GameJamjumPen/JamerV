@@ -6,21 +6,20 @@ using UnityEngine.SceneManagement;
 public class HostileRoom : Room
 {
     public GameObject roomNumber;
-    public List<List<EnemyType.Enemytype> > enemyTypes = new List<List<EnemyType.Enemytype> >();
+    public List<List<EnemyType.Enemytype>> enemyTypes = new List<List<EnemyType.Enemytype>>();
     public int minscore;
     public int maxscore;
     public RoomType roomType;
     public Sprite _background;
     [Scene]
     public string combatScene;
-    public void Awake(){
+    public void Awake()
+    {
         SetEnemyWaves();
-       // Debug.Log("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
     }
     public override void OnPlayerAttack()
     {
         SetEnemyWaves();
-        //Debug.Log("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
         Paper.Instance.SetScore(UnityEngine.Random.Range(minscore, maxscore));
         Paper.Instance.SetCard(GameManager.singleton.cardSOs);
         Paper.Instance.SetBackground(_background);
@@ -31,7 +30,7 @@ public class HostileRoom : Room
     // New function to generate a wave of enemies
     private List<List<EnemyType.Enemytype>> GenerateEnemyWaves(EnemyType.Enemytype[] wave1, EnemyType.Enemytype[] wave2, EnemyType.Enemytype[] wave3)
     {
-        List<List<EnemyType.Enemytype>> sth =  new List<List<EnemyType.Enemytype>> {
+        List<List<EnemyType.Enemytype>> sth = new List<List<EnemyType.Enemytype>> {
             new List<EnemyType.Enemytype>(wave1), // First wave
             new List<EnemyType.Enemytype>(wave2), // Second wave
             new List<EnemyType.Enemytype>(wave3)  // Third wave
@@ -41,7 +40,7 @@ public class HostileRoom : Room
     }
     private List<List<EnemyType.Enemytype>> GenerateEnemyWaves(EnemyType.Enemytype[] wave1)
     {
-        List<List<EnemyType.Enemytype>> sth =  new List<List<EnemyType.Enemytype>> {
+        List<List<EnemyType.Enemytype>> sth = new List<List<EnemyType.Enemytype>> {
             new List<EnemyType.Enemytype>(wave1), // First wave
         };
         Debug.Log("Size of gen" + sth.Count.ToString());
@@ -56,20 +55,20 @@ public class HostileRoom : Room
         {
             case 1: //boss
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Prince}
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Prince }
                 );
                 break;
             case 3: //hard
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee,EnemyType.Enemytype.Bee,EnemyType.Enemytype.Bee},
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee},
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee}
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee }
                 );
                 break;
             case 4: //easy
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish},
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish},
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish },
                     new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish }
                 );
                 break;
@@ -82,9 +81,9 @@ public class HostileRoom : Room
                 break;
             case 8: //Hard
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee},
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee},
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee}
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee },
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Bee, EnemyType.Enemytype.Bee }
                 );
                 break;
             case 17: //medium
@@ -97,7 +96,7 @@ public class HostileRoom : Room
             case 15: //easy
                 enemyTypes = GenerateEnemyWaves(
                     new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish },
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish},
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish },
                     new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish }
                 );
                 break;
@@ -110,7 +109,7 @@ public class HostileRoom : Room
                 break;
             case 20: //easy
                 enemyTypes = GenerateEnemyWaves(
-                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish},
+                    new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish },
                     new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish },
                     new EnemyType.Enemytype[] { EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish, EnemyType.Enemytype.Fish }
                 );
@@ -130,4 +129,4 @@ public class HostileRoom : Room
     }
 }
 
-public enum RoomType{Easy, Medium , Hard, Boss }
+public enum RoomType { Easy, Medium, Hard, Boss }

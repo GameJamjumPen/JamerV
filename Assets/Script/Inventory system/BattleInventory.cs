@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
 {
+    [Header("Singleton")]
+    public static BattleInventory instance;
     public PlayerModel player;
     public List<CardSO> cardSOPools;
-    public InventorySlot[] slotDisplay;
-    public InventorySlot useSlot;
+    public BattleInventorySlot[] slotDisplay;
+    public BattleInventorySlot useSlot;
     public GameObject shuffleUI;
     public CardSO cardSelected;
     public BattleController battleController;
@@ -59,14 +61,25 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
     /// </summary>
     public void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
         enemyHolders = FindObjectsOfType<EnemyHolder>();
         enemyUIManager = battleController.enemyUIManager;
         playerUIManager = battleController.playerUIManager;
         player = battleController.player;
-        if(!GodMode.Instance.isGod){
+        if (!GodMode.Instance.isGod)
+        {
             getCard(Paper.Instance.cardSOs);
         }
-        else{
+        else
+        {
             getCard(GodMode.Instance.godPools);
         }
         // AddDeck(3);
@@ -85,7 +98,8 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
     /// <summary>
     /// This is for fake selected and not affecting any variable in enemy holder just show a selected shader only
     /// </summary>
-    public void SelectedAllHolder(){
+    public void SelectedAllHolder()
+    {
         for (int i = 0; i < enemyHolders.Length; i++)
         {
             enemyHolders[i].FakeSelected();
@@ -115,7 +129,7 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
     {
         for (int i = 0; i < slotDisplay.Length; i++)
         {
-            if (!slotDisplay[i].isFull)
+            if (!slotDisplay[i].hasCard)
             {
                 slotDisplay[i].AddItem(_card);
                 return;
@@ -128,12 +142,12 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
     /// </summary>
     /// <param name="slots">The array of slots to check.</param>
     /// <returns>True if more than one slot is empty, otherwise false.</returns>
-    public bool CheckFull(InventorySlot[] slots)
+    public bool CheckFull(BattleInventorySlot[] slots)
     {
         int c = 0;
         for (int i = 0; i < slots.Length; i++)
         {
-            if (!slots[i].isFull)
+            if (!slots[i].hasCard)
             {
                 c += 1;
             }
@@ -153,13 +167,13 @@ public class BattleInventory : MonoBehaviour, IInventorable, IDataPersistence
     /// </summary>
     public void DeselectedAllSlot()
     {
-        foreach (InventorySlot inventorySlot in slotDisplay)
+        foreach (BattleInventorySlot inventorySlot in slotDisplay)
         {
             inventorySlot.OnDeselected();
         }
     }
 
-    
+
 
     /// <summary>
     /// Executes the selected card’s action (attack, defend, heal, etc.) on the appropriate target based on the card type.

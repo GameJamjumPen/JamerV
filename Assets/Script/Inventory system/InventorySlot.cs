@@ -215,18 +215,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IBeginDragHand
                 inventory.DisplayDeselected();
             }
         }
-        if (battleInventory != null)
-        {
-            if (this.cardSO != null)
-            {
-                battleInventory.cardSelected = this.cardSO;
-                battleInventory.useSlot = this;
-            }
-            else
-            {
-                // Debug.Log("this.cardSO = null");
-            }
-        }
     }
     public void OnDeselected()
     {

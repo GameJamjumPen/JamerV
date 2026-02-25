@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -6,7 +7,9 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
 {
+
     #region Declare Variable
+    public static Inventory instance;
     public KeyCode openCloseKey = KeyCode.Tab;
     public bool istoggleable;
     public Collider2D dice;
@@ -16,9 +19,9 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
 
     [Header("Slots")]
     public CardSO cardSelected;
-    public InventorySlot[] itemSlots;
-    public InventorySlot[] actualSlots;
-    public InventorySlot[] allSlots;
+    public MainInventorySlot[] itemSlots;
+    public MainInventorySlot[] actualSlots;
+    public MainInventorySlot[] allSlots;
     public List<CardSO> StarterPack;
 
     [Header("Main Card Display")]
@@ -34,6 +37,15 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
     #endregion
     public void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
         istoggleable = true;
         invObject.SetActive(false);
     }
@@ -64,7 +76,7 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
     public void SaveData(ref GameData data)
     {
         List<CardSO> slotToSave = new List<CardSO>();
-        foreach (InventorySlot card in itemSlots)
+        foreach (MainInventorySlot card in itemSlots)
         {
             if (card.cardSO != null)
             {
@@ -73,7 +85,7 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
         }
 
         List<CardSO> LoadoutToSave = new List<CardSO>();
-        foreach (InventorySlot card in actualSlots)
+        foreach (MainInventorySlot card in actualSlots)
         {
             if (card.cardSO != null)
             {
@@ -112,7 +124,7 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
     {
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (!itemSlots[i].isFull)
+            if (!itemSlots[i].hasCard)
             {
                 itemSlots[i].AddItem(_card);
                 return;
@@ -120,11 +132,11 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
         }
     }
 
-    public bool CheckFull(InventorySlot[] slots)
+    public bool CheckFull(MainInventorySlot[] slots)
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].isFull)
+            if (slots[i].hasCard)
             {
                 return true;
             }
@@ -136,7 +148,7 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
     {
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (!itemSlots[i].isFull)
+            if (!itemSlots[i].hasCard)
             {
                 itemSlots[i].AddItem(_card);
                 newCardPopup.SetActive(true);
@@ -152,7 +164,7 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
         newCardPopup.SetActive(false);
     }
 
-    public bool CheckType(InventorySlot[] slots, bool isAttack, bool isDefence, bool isSupport)
+    public bool CheckType(MainInventorySlot[] slots, bool isAttack, bool isDefence, bool isSupport)
     {
         bool ATKalr = false;
         bool DEFalr = false;
@@ -190,7 +202,7 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
     #region SlotSelected
     public void DeselectedAllSlot()
     {
-        foreach (InventorySlot slot in allSlots)
+        foreach (MainInventorySlot slot in allSlots)
         {
             slot.OnDeselected();
         }
@@ -198,6 +210,7 @@ public class Inventory : MonoBehaviour, IInventorable, IDataPersistence
 
     public void DisplaySelected()
     {
+        //TODO : handle when the selected has no cardSO and still able to perform smoothly
         if (!cardName.gameObject.activeSelf) cardName.gameObject.SetActive(true);
         if (!cardImage.gameObject.activeSelf) cardImage.gameObject.SetActive(true);
         if (!cardType.gameObject.activeSelf) cardType.gameObject.SetActive(true);
