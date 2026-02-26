@@ -33,7 +33,7 @@ public class BattleInventorySlot : MonoBehaviour, IPointerEnterHandler, IDragHan
     // Transform parentAfterDrag;
     // public Transform draggableItem;
     [Header("Animation")]
-    // [SerializeField] private Animator _animator;
+    [SerializeField] private Animator _animator;
     private string currentstate;
     private static string NORMAL = "Idle";
     private static string DRAG = "OnDragSlot";
@@ -175,7 +175,8 @@ public class BattleInventorySlot : MonoBehaviour, IPointerEnterHandler, IDragHan
                 break;
         }
         SoundManager.Instance.PlaySFX(sound);
-        // ChangeAnimationState(SELECTED);
+        if (hasCard)
+            ChangeAnimationState(SELECTED);
         BattleInventory.instance.cardSelected = this.cardSO;
         BattleInventory.instance.useSlot = this;
         UpdateDisplay();
@@ -188,7 +189,8 @@ public class BattleInventorySlot : MonoBehaviour, IPointerEnterHandler, IDragHan
             BattleInventory.instance.cardSelected = null;
         }
         UpdateDisplay();
-        // ChangeAnimationState(NORMAL);
+        if (hasCard)
+            ChangeAnimationState(NORMAL);
     }
     #endregion
     #region Dragging
@@ -220,7 +222,7 @@ public class BattleInventorySlot : MonoBehaviour, IPointerEnterHandler, IDragHan
         if (cardSO.cardType == CardType.ATK || cardSO.cardType == CardType.ATKV2 || cardSO.cardType == CardType.ATKV3)
         {
 
-            // ChangeAnimationState(DRAG);
+            ChangeAnimationState(DRAG);
             // Convert screen pointer to canvas local point and move the icon there
             RectTransform canvasRect = rootCanvas.transform as RectTransform;
             if (canvasRect != null)
@@ -324,7 +326,7 @@ public class BattleInventorySlot : MonoBehaviour, IPointerEnterHandler, IDragHan
             return;
         }
         currentstate = state;
-        // _animator.CrossFadeInFixedTime(state, 0.1f);
+        _animator.CrossFadeInFixedTime(state, 0.1f);
         // Debug.Log("Change state to" + state);
     }
     public void ChangeAnimationState(string state, float time)
@@ -334,7 +336,7 @@ public class BattleInventorySlot : MonoBehaviour, IPointerEnterHandler, IDragHan
             return;
         }
         currentstate = state;
-        // _animator.CrossFadeInFixedTime(state, time);
+        _animator.CrossFadeInFixedTime(state, time);
         // Debug.Log("Change state to" + state);
     }
     #endregion
@@ -352,18 +354,21 @@ public class BattleInventorySlot : MonoBehaviour, IPointerEnterHandler, IDragHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // ChangeAnimationState(HOVER, 0.01f);
+        if (hasCard)
+            ChangeAnimationState(HOVER, 0.01f);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (!hasCard) return;
+
         if (!isSelected)
         {
-            // ChangeAnimationState(NORMAL, 0.01f);
+            ChangeAnimationState(NORMAL, 0.01f);
         }
         else
         {
-            // ChangeAnimationState(SELECTED, 0.01f);
+            ChangeAnimationState(SELECTED, 0.01f);
         }
 
     }
